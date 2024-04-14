@@ -87,8 +87,9 @@
   const removeChatListener = (listener) => {
     listeners.splice(listeners.indexOf(listener), 1);
   };
-  const chatEmitter = (uname, content, isFan) => {
-    listeners.forEach((listener) => listener(uname, content, isFan));
+  const chatEmitter = (user, content, isFan) => {
+    // console.log(user, content, isFan);
+    listeners.forEach((listener) => listener(user, content, isFan));
   };
 
   const observer = new MutationObserver((mutations) => {
@@ -98,8 +99,29 @@
       if (!target.className.includes("chatting_list_item")) return;
       const c = target.children[0].children[0];
       const uname = c.children[0].textContent;
+      const ucolor =
+        c.children[0].children[c.children[0].childElementCount - 1].style.color;
       const content = c.children[1].textContent;
-      chatEmitter(uname, content, false);
+      const isFan = c.children[0].childElementCount > 1;
+      const badges = [];
+      if (isFan) {
+        const base = c.children[0].children[0];
+        // console.log(base);
+        for (let i = 0; i < base.childElementCount; i++) {
+          const cont = base.children[i].children[0].children[0].src;
+          badges.push(cont);
+        }
+      }
+      chatEmitter(
+        {
+          name: uname,
+          color: ucolor,
+          isFan,
+          badges,
+        },
+        content,
+        isFan
+      );
     });
   });
   observer.observe(boxContainer, {
@@ -156,6 +178,16 @@
   // ============================================== Data ==============================================
   const myUI = `
     <div id="ext-main">
+        <div id="ext-modal">
+          <div id="ext-modal-content">
+            <h2 id="ext-modal-title">투표자 목록</h2>
+            <div id="ext-modal-contentinner">
+
+            </div>
+          </div>
+          <div id="ext-modal-bg">
+          </div>
+        </div>
         <header id="ext-header">
             <h2 id="ext-title">치지직 채팅 툴</h2>
         </header>
@@ -185,14 +217,19 @@
             </div>
       </div>
       <div class="ext-list-cont">
-          <input class="ext-list-name" value="" placeholder="내용을 입력하세요" />
+          <div class="ext-row">
+            <input class="ext-list-name" value="" placeholder="내용을 입력하세요" />
+            <div class="ext-showp">
+              투표자 보기
+            </div>
+          </div>
           <div class="ext-progress">
-              <div class="ext-progress-bar" style="width: 100%"></div>
+              <div class="ext-progress-bar" style="width: 0%"></div>
           </div>
       </div>
       <div class="ext-list-statics">
-          <div class="ext-list-static">?명</div>
-          <div class="ext-list-static static-desc">?%</div>
+          <div class="ext-list-static">0명</div>
+          <div class="ext-list-static static-desc">0.00%</div>
       </div>
   </div>`;
   const myCSS = `
@@ -208,6 +245,7 @@
    #chzzkExt-root {
     flex: 1;
     flex-grow: 1;
+    position: relative;
    }
    #ext-main {
     min-width: fit-content;
@@ -358,6 +396,70 @@
         margin: 13px 0;
         text-align: center;
     }
+    .ext-row {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+    .ext-showp {
+        color: var(--color-content-04);
+        font-size: 14px;
+        cursor: pointer;
+        flex: 1;
+        min-width: fit-content;
+        display: none;
+    }
+
+    #ext-modal {
+      position: absolute;
+      display: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+    }
+    #ext-modal-bg {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      z-index: 101;
+    }
+    #ext-modal-content {
+      z-index: 102;
+      background-color: var(--color-bg-layer-04);
+      width: min(90%, 500px);
+      height: 90%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 10px;
+
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    #ext-modal-title {
+      font-size: 20px;
+      padding: 13px;
+      text-align: center;
+    }
+
+    #ext-modal-contentinner {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background: var(--color-bg-layer-02);
+    }
+
+    .ext-person {
+      border-radius: 6px;
+      padding: 4px 2px;
+    }
   `;
   let state = {
     isVoting: false,
@@ -405,6 +507,11 @@
       rerenderIndex();
     });
   });
+  document.getElementById("ext-modal-bg").addEventListener("click", () => {
+    document.getElementById("ext-modal").style.display = "none";
+    document.getElementById("ext-modal-contentinner").innerHTML = "";
+    document.getElementById("ext-modal-contentinner").scrollTop = 0;
+  });
 
   const rerenderStatics = () => {
     const list = document.getElementById("ext-list");
@@ -437,41 +544,80 @@
   };
   /**
    *
-   * @param {string} uname sender
+   * @param {string} user sender
    * @param {string} content content
    * @param {boolean} isFan
    * @returns
    */
-  const voteListner = (uname, content, isFan) => {
+  const voteListner = (user, content, isFan) => {
     if (!content.startsWith("!투표 ")) return;
     const voteContent = content.slice(4);
     const isNumber = !isNaN(voteContent);
     if (!isNumber) return;
 
-    if (state.voters.includes(uname)) return;
-    state.voters.push(uname);
-    state.voteState[parseInt(voteContent) - 1].push(uname);
+    // const voteContent = "1";
+
+    if (state.voters.includes(user.name)) return;
+    state.voters.push(user.name);
+    state.voteState[parseInt(voteContent) - 1].push(user);
     rerenderStatics();
   };
   document.getElementById("toggle-vote").addEventListener("click", () => {
+    if (
+      !state.isVoting &&
+      document.getElementById("ext-list").childElementCount === 0
+    ) {
+      appendAlert("투표 항목을 추가해주세요.");
+      return;
+    }
     state.isVoting = !state.isVoting;
     document.getElementById("ext-button-vote-content").textContent =
       state.isVoting ? "추첨 종료" : "추첨 시작";
 
     if (state.isVoting) {
       state.voteState = [];
-      const voteItemcnt = document.getElementById("ext-list").childElementCount;
+      const lst = document.getElementById("ext-list");
+      const voteItemcnt = lst.childElementCount;
       for (let i = 0; i < voteItemcnt; i++) {
         state.voteState.push([]);
       }
       state.voters = [];
       rerenderStatics();
 
+      for (let i = 0; i < voteItemcnt; i++) {
+        lst.children[i]
+          .querySelector(".ext-showp")
+          .addEventListener("click", () => {
+            const modal = document.getElementById("ext-modal");
+            const modalContent = document.getElementById(
+              "ext-modal-contentinner"
+            );
+            modalContent.innerHTML = "";
+            state.voteState[i].forEach((x) => {
+              const div = document.createElement("div");
+              div.textContent = x.name;
+              div.style.color = x.color;
+              div.classList.add("ext-person");
+              x.badges.forEach((badge) => {
+                div.innerHTML = `<img src="${badge}" width="18" height="18" /> ${div.innerHTML}`;
+              });
+              modalContent.appendChild(div);
+            });
+            modal.style.display = "block";
+          });
+      }
+
       addChatListener(voteListner);
       appendAlert("투표가 시작되었습니다.");
+      document.querySelectorAll(".ext-showp").forEach((x) => {
+        x.style.display = "none";
+      });
     } else {
       removeChatListener(voteListner);
       appendAlert("투표가 종료되었습니다.");
+      document.querySelectorAll(".ext-showp").forEach((x) => {
+        x.style.display = "block";
+      });
     }
   });
 

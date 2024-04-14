@@ -1,6 +1,6 @@
 {
   "name": "치지직 채팅 툴",
-  "version": "1.0",
+  "version": "1.1",
   "description": "chzzk.naver.com 채팅 툴",
   "manifest_version": 3,
   "content_scripts": [
