@@ -1,0 +1,30 @@
+{
+  "name": "치지직 채팅 툴",
+  "version": "1.0",
+  "description": "chzzk.naver.com 채팅 툴",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chzzk.naver.com/live/*/chat?ext",
+        "https://*.chzzk.naver.com/live/*/chat?ext"
+      ],
+      "js": ["inject.js"]
+    },
+    {
+      "matches": [
+        "https://chzzk.naver.com/live/*",
+        "https://*.chzzk.naver.com/live/*"
+      ],
+      "js": ["open.js"]
+    }
+  ],
+  "icons": {
+    "16": "assets/logo16.png",
+    "48": "assets/logo48.png",
+    "64": "assets/logo64.png",
+    "128": "assets/logo128.png",
+    "256": "assets/logo256.png",
+    "512": "assets/logo512.png"
+  }
+}
