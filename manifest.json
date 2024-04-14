@@ -9,7 +9,7 @@
         "https://chzzk.naver.com/live/*/chat?ext",
         "https://*.chzzk.naver.com/live/*/chat?ext"
       ],
-      "js": ["inject.js"]
+      "js": ["injecter.js"]
     },
     {
       "matches": [
@@ -17,6 +17,12 @@
         "https://*.chzzk.naver.com/live/*"
       ],
       "js": ["open.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {
