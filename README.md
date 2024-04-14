@@ -1,4 +1,4 @@
-![치지직 채팅 툴 로고](https://github.com/Oein/chzzkExt/raw/main/assets/logo512.png)
+<img src="https://github.com/Oein/chzzkExt/raw/main/assets/logo512.png" height="256" />
 
 # 치지직 채팅 툴
 
