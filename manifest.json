@@ -1,7 +1,7 @@
 {
-  "name": "치지직 채팅 툴",
+  "name": "치직치지직",
   "version": "1.1",
-  "description": "chzzk.naver.com 채팅 툴",
+  "description": "치지직을 더 유용하게!",
   "manifest_version": 3,
   "content_scripts": [
     {
@@ -32,5 +32,10 @@
     "128": "assets/logo128.png",
     "256": "assets/logo256.png",
     "512": "assets/logo512.png"
+  },
+  "permissions": ["declarativeNetRequest", "storage"],
+  "host_permissions": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"],
+  "background": {
+    "service_worker": "background.js"
   }
 }
