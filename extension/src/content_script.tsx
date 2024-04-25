@@ -1,4 +1,5 @@
 import initAdBlock from "./components/initAdBlock";
+import initAdSkip from "./components/initAdSkip";
 import initHideDonation from "./components/initHideDonation";
 import initReverseChat from "./components/initReverseChat";
 import initVote from "./components/initVote";
@@ -64,6 +65,7 @@ async function main() {
     initVote(
       config.voteTool && comparePath("/live/*/chat") && sp.get("ext") != null
     );
+    initAdSkip(config.adskip && comparePath("/live/*"));
     initVoteOpenButton(config.voteTool && comparePath("/live/*"));
     initAdBlock(config.adblock);
     initHideDonation(config.hideDonation);

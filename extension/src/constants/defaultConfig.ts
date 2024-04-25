@@ -1,5 +1,6 @@
 const defaultConfig = {
-  adblock: true,
+  adblock: false,
+  adskip: true,
   voteTool: false,
   hideDonation: false,
   reversedChat: false,
