@@ -5,4 +5,10 @@ const defaultConfig = {
   reversedChat: false,
 };
 
+type BoolKV = {
+  [key: string]: boolean;
+};
+
+export type { BoolKV };
+
 export default defaultConfig;

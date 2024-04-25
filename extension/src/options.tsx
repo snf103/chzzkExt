@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import defaultConfig from "./constants/defaultConfig";
-
-type KV = {
-  [key: string]: boolean;
-};
+import defaultConfig, { BoolKV } from "./constants/defaultConfig";
 
 const Options = () => {
   const [config, setConfig] = useState<typeof defaultConfig>(defaultConfig);
@@ -22,7 +18,7 @@ const Options = () => {
     ikey: string;
     iname?: string;
   }) => {
-    const state = !!(config as KV)[key];
+    const state = (config as BoolKV)[key];
     return (
       <div
         key={key}
@@ -46,7 +42,7 @@ const Options = () => {
         <div>
           <div
             onClick={() => {
-              const newValue = !!!(config as KV)[key];
+              const newValue = !!!(config as BoolKV)[key];
               setConfig({
                 ...config,
                 [key]: newValue,

@@ -1,7 +1,7 @@
 export default function log(
   type: string,
   category: string,
-  ...messages: any[]
+  ...messages: (string | boolean | object | number)[]
 ) {
   if (messages.length > 0)
     console.log(

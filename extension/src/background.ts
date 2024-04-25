@@ -1,4 +1,4 @@
-import defaultConfig from "./constants/defaultConfig";
+import defaultConfig, { BoolKV } from "./constants/defaultConfig";
 import log from "./log";
 
 let config: typeof defaultConfig = defaultConfig;
@@ -52,9 +52,9 @@ const readConfig = () => {
             "Set default config",
             key,
             "as",
-            (defaultConfig as any)[key]
+            (defaultConfig as BoolKV)[key]
           );
-          nconf[key] = (defaultConfig as any)[key];
+          nconf[key] = (defaultConfig as BoolKV)[key];
           need2save = true;
         }
       }
