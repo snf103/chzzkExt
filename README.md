@@ -2,6 +2,8 @@
 
 # 치직치지직
 
+[![CodeFactor](https://www.codefactor.io/repository/github/oein/chzzkext/badge)](https://www.codefactor.io/repository/github/oein/chzzkext)
+
 치직치지직은 치지직을 더욱 유용하게 사용하기 위한 기능들이 다수 포함된 확장 프로그램입니다.
 
 # 포함된 기능
