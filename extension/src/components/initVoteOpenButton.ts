@@ -1,4 +1,10 @@
-const initVoteOpenButton = async () => {
+const initVoteOpenButton = async (enable: boolean) => {
+  if (!enable) {
+    document.getElementById("chzzk-vote-open-button")?.remove();
+    window.chzzkExt.voteButtonApplied = false;
+    return;
+  }
+  if (window.chzzkExt.voteButtonApplied) return;
   const selector = () => {
     return document.querySelector(
       "#layout-body > section > aside > div > div:nth-child(3)"
@@ -17,6 +23,7 @@ const initVoteOpenButton = async () => {
   };
   const box = await waitForSel();
   const myBtn = document.createElement("button");
+  myBtn.id = "chzzk-vote-open-button";
   myBtn.style.color = "var(--color-content-04)";
   myBtn.style.padding = "8px";
   myBtn.style.cursor = "pointer";
@@ -46,6 +53,7 @@ const initVoteOpenButton = async () => {
     mbc.style.padding = "0px";
     mbc.style.margin = "0px";
   });
+  window.chzzkExt.voteButtonApplied = true;
 };
 
 export default initVoteOpenButton;

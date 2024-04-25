@@ -115,6 +115,7 @@ const Options = () => {
         <Title>시청자용</Title>
         <ConfigItem ikey="adblock" iname="광고 차단" />
         <ConfigItem ikey="hideDonation" iname="후원 숨기기" />
+        <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
         <Spacer />
         <Title>스트리머용</Title>
         <ConfigItem ikey="voteTool" iname="채팅 투표" />

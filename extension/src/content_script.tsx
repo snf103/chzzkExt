@@ -1,3 +1,6 @@
+import initAdBlock from "./components/initAdBlock";
+import initHideDonation from "./components/initHideDonation";
+import initReverseChat from "./components/initReverseChat";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
 import defaultConfig from "./constants/defaultConfig";
@@ -25,54 +28,44 @@ declare global {
 }
 
 async function main() {
-  window.chzzkExt = window.chzzkExt || {};
+  window.chzzkExt = window.chzzkExt || {
+    lastConfig: "",
+  };
 
   const apply = () => {
     if (!recvconfig) return;
 
     const nowPath = window.location.pathname;
+    const npsp = nowPath.split("/");
     const sp = new URLSearchParams(window.location.search);
 
-    log("Main", "Apply", window.location.href, "with config", config);
-
-    if (window.chzzkExt.lastAppliedURL == window.location.href) return;
-    window.chzzkExt.lastAppliedURL = window.location.href;
-
-    if (config.voteTool) {
-      if (/live\/.*\/chat/.test(nowPath)) {
-        if (sp.has("ext")) initVote();
-      } else if (/live\/.*/.test(nowPath)) initVoteOpenButton();
-    }
-
-    if (config.adblock) {
-      if (typeof window.chzzkExt.adblock !== "undefined")
-        clearInterval(window.chzzkExt.adblock);
-      window.chzzkExt.adblock = setInterval(() => {
-        document
-          .querySelectorAll(`iframe[title="AD"]`)
-          .forEach((x) => x.remove());
-      }, 100);
-    } else if (typeof window.chzzkExt.adblock !== "undefined") {
-      clearInterval(window.chzzkExt.adblock);
-      delete window.chzzkExt.adblock;
-    }
+    const comparePath = (p: string) => {
+      const psp = p.split("/");
+      if (psp.length != npsp.length) return false;
+      for (let i = 0; i < psp.length; i++) {
+        if (psp[i] == "*") continue;
+        if (psp[i] != npsp[i]) return false;
+      }
+      return true;
+    };
 
     if (
-      (config.hideDonation && /live\/.*\/chat/.test(nowPath)) ||
-      /live\/.*/.test(nowPath)
-    ) {
-      window.chzzkExt.hideDonation = setInterval(() => {
-        document
-          .querySelectorAll(`[class*="live_chatting_list_donation"]`)
-          .forEach((x) => ((x as HTMLDivElement).style.display = "none"));
-      }, 100);
-    } else if (
-      !config.hideDonation &&
-      typeof window.chzzkExt.hideDonation !== "undefined"
-    ) {
-      clearInterval(window.chzzkExt.hideDonation);
-      delete window.chzzkExt.hideDonation;
-    }
+      window.chzzkExt.lastAppliedURL == window.location.href &&
+      window.chzzkExt.lastAppliedConfig == JSON.stringify(config)
+    )
+      return;
+
+    log("Main", "Apply", window.location.href, "with config", config);
+    window.chzzkExt.lastAppliedURL = window.location.href;
+    window.chzzkExt.lastAppliedConfig = JSON.stringify(config);
+
+    initVote(
+      config.voteTool && comparePath("/live/*/chat") && sp.get("ext") != null
+    );
+    initVoteOpenButton(config.voteTool && comparePath("/live/*"));
+    initAdBlock(config.adblock);
+    initHideDonation(config.hideDonation);
+    initReverseChat(config.reversedChat);
   };
 
   // on path change

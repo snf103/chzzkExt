@@ -5,7 +5,15 @@ type ICUser = {
   badges: string[];
 };
 
-const initVote = async () => {
+const initVote = async (enable: boolean) => {
+  if (!enable) {
+    try {
+      const dtc = window.chzzkExt.voteTool.detatch;
+      if (dtc) dtc();
+    } catch (e) {}
+    return;
+  }
+  if (window.chzzkExt.voteToolApplied) return;
   // ============================================== Chat Interact Functions ==============================================
   /**
    * 채팅 상자로 추정되는 요소들을 가져옴
@@ -640,11 +648,20 @@ const initVote = async () => {
     }
   });
 
+  window.chzzkExt.voteToolApplied = true;
   window.chzzkExt.voteTool = {
     state,
     chatEmitter,
     addChatListener,
     removeChatListener,
+    detatch: () => {
+      observer.disconnect();
+      document.getElementById("chzzkExt-root")?.remove();
+      document.head.removeChild(style);
+      delete window.chzzkExt.voteTool;
+      listeners.length = 0;
+      window.chzzkExt.voteToolApplied = false;
+    },
   };
 };
 
