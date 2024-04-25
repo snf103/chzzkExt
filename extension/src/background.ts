@@ -44,7 +44,7 @@ const readConfig = () => {
     if (data.config) {
       const requiredKey = Object.keys(defaultConfig);
       let need2save = false;
-      let nconf = data.config || {};
+      const nconf = data.config || {};
       for (const key of requiredKey) {
         if (typeof nconf[key] == "undefined") {
           log(

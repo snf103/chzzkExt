@@ -8,7 +8,6 @@ function injectScript(file_path: string, tag: string) {
   node.appendChild(script);
   script.addEventListener("load", () => {
     chrome.storage.local.get("config", (items) => {
-      console.log("Sendconfig");
       window.postMessage(
         "chzzkExt~" +
           btoa(JSON.stringify({ type: "config", config: items.config }))
@@ -44,5 +43,3 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     }
   }
 });
-
-// send config to content script

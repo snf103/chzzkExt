@@ -8,10 +8,11 @@ import log from "./log";
 
 let config: typeof defaultConfig = defaultConfig;
 let recvconfig = false;
+
 window.addEventListener("message", (event) => {
   if (typeof event.data !== "string") return;
   if (event.data.indexOf("chzzkExt~") != 0) return;
-  let data = JSON.parse(atob(event.data.substr(9)));
+  const data = JSON.parse(atob(event.data.substr(9)));
   if (data.type == "config") {
     recvconfig = true;
     log("MessageListener", "Received config", data.config);
