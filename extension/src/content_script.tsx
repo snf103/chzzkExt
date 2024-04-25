@@ -51,7 +51,27 @@ async function main() {
         document
           .querySelectorAll(`iframe[title="AD"]`)
           .forEach((x) => x.remove());
-      }, 1000);
+      }, 100);
+    } else if (typeof window.chzzkExt.adblock !== "undefined") {
+      clearInterval(window.chzzkExt.adblock);
+      delete window.chzzkExt.adblock;
+    }
+
+    if (
+      (config.hideDonation && /live\/.*\/chat/.test(nowPath)) ||
+      /live\/.*/.test(nowPath)
+    ) {
+      window.chzzkExt.hideDonation = setInterval(() => {
+        document
+          .querySelectorAll(`[class*="live_chatting_list_donation"]`)
+          .forEach((x) => ((x as HTMLDivElement).style.display = "none"));
+      }, 100);
+    } else if (
+      !config.hideDonation &&
+      typeof window.chzzkExt.hideDonation !== "undefined"
+    ) {
+      clearInterval(window.chzzkExt.hideDonation);
+      delete window.chzzkExt.hideDonation;
     }
   };
 
