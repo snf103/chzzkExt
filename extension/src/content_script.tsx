@@ -65,7 +65,7 @@ async function main() {
     initVote(
       config.voteTool && comparePath("/live/*/chat") && sp.get("ext") != null
     );
-    initAdSkip(config.adskip && comparePath("/live/*"));
+    initAdSkip(config.adskip);
     initVoteOpenButton(config.voteTool && comparePath("/live/*"));
     initAdBlock(config.adblock);
     initHideDonation(config.hideDonation);
