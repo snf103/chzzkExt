@@ -11,7 +11,7 @@ let recvconfig = false;
 window.addEventListener("message", (event) => {
   if (typeof event.data !== "string") return;
   if (event.data.indexOf("chzzkExt~") != 0) return;
-  var data = JSON.parse(atob(event.data.substr(9)));
+  let data = JSON.parse(atob(event.data.substr(9)));
   if (data.type == "config") {
     recvconfig = true;
     log("MessageListener", "Received config", data.config);
@@ -78,18 +78,16 @@ async function main() {
 
   (() => {
     const oldPushState = history.pushState;
-    history.pushState = function pushState() {
-      // @ts-ignore
-      const ret = oldPushState.apply(this, arguments);
+    history.pushState = function pushState(...args) {
+      const ret = oldPushState.apply(this, args);
       window.dispatchEvent(new Event("pushstate"));
       window.dispatchEvent(new Event("locationchange"));
       return ret;
     };
 
     const oldReplaceState = history.replaceState;
-    history.replaceState = function replaceState() {
-      // @ts-ignore
-      const ret = oldReplaceState.apply(this, arguments);
+    history.replaceState = function replaceState(...args) {
+      const ret = oldReplaceState.apply(this, args);
       window.dispatchEvent(new Event("replacestate"));
       window.dispatchEvent(new Event("locationchange"));
       return ret;

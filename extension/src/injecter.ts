@@ -1,8 +1,8 @@
 import log from "./log";
 
 function injectScript(file_path: string, tag: string) {
-  var node = document.getElementsByTagName(tag)[0];
-  var script = document.createElement("script");
+  const node = document.getElementsByTagName(tag)[0];
+  const script = document.createElement("script");
   script.setAttribute("type", "text/javascript");
   script.setAttribute("src", file_path);
   node.appendChild(script);
@@ -19,8 +19,8 @@ function injectScript(file_path: string, tag: string) {
 injectScript(chrome.runtime.getURL("js/content_script.js"), "body");
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
-  for (var key in changes) {
-    var storageChange = changes[key];
+  for (const key in changes) {
+    const storageChange = changes[key];
     log(
       "Injecter",
       "storage",

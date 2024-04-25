@@ -70,8 +70,8 @@ const readConfig = () => {
   });
 };
 
-chrome.storage.onChanged.addListener((changes, namespace) => {
-  for (var key in changes) {
+chrome.storage.onChanged.addListener((changes) => {
+  for (const key in changes) {
     if (key == "config") readConfig();
   }
 });
