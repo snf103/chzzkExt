@@ -2,20 +2,10 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import defaultConfig from "./constants/defaultConfig";
 
+type KV = { [key: string]: any };
+
 const Options = () => {
   const [config, setConfig] = useState<typeof defaultConfig>(defaultConfig);
-  const clear = () => {
-    chrome.storage.local.clear(() => {
-      chrome.storage.local.set(
-        {
-          config: defaultConfig,
-        },
-        () => {
-          console.log("cleared");
-        }
-      );
-    });
-  };
 
   useEffect(() => {
     chrome.storage.local.get(["config"], (result) => {
@@ -54,7 +44,7 @@ const Options = () => {
         <div>
           <div
             onClick={() => {
-              const newValue = !(config as any)[key];
+              const newValue = !!!(config as KV)[key];
               setConfig({
                 ...config,
                 [key]: newValue,
