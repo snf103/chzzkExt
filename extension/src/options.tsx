@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import defaultConfig from "./constants/defaultConfig";
 
-type KV = { [key: string]: any };
+type KV = {
+  [key: string]: boolean;
+};
 
 const Options = () => {
   const [config, setConfig] = useState<typeof defaultConfig>(defaultConfig);
@@ -20,7 +22,7 @@ const Options = () => {
     ikey: string;
     iname?: string;
   }) => {
-    const state = !!(config as any)[key];
+    const state = !!(config as KV)[key];
     return (
       <div
         key={key}

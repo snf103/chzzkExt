@@ -231,7 +231,7 @@ const initVote = async (enable: boolean) => {
     return !reg.test(x);
   };
 
-  const voteListner = (user: ICUser, content: string, isFan: boolean) => {
+  const voteListner = (user: ICUser, content: string) => {
     if (!content.startsWith("!투표 ")) return;
     const voteContent = content.slice(4);
     const isNumber = !isNaN(voteContent);
