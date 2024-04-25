@@ -1,0 +1,30 @@
+:root {
+  --switch-enable-bg: #0957d0;
+  --switch-enable-border: #0957d0;
+  --switch-enable-knoob: #fff;
+
+  --switch-disable-bg: #e1e3e1;
+  --switch-disable-border: #757775;
+  --switch-disable-knoob: #757775;
+}
+
+body {
+  background: #fff;
+  color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --switch-enable-bg: #a8c7fa;
+    --switch-enable-border: #a8c7fa;
+    --switch-enable-knoob: #072e6f;
+
+    --switch-disable-bg: #454746;
+    --switch-disable-border: #8f918f;
+    --switch-disable-knoob: #8f918f;
+  }
+  body {
+    background: #292a2d;
+    color: #fff;
+  }
+}

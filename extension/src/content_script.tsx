@@ -60,6 +60,7 @@ async function main() {
     window.chzzkExt.lastAppliedURL = window.location.href;
     window.chzzkExt.lastAppliedConfig = JSON.stringify(config);
 
+    // ======================== 여기에 적용할 기능을 추가하세요 ========================
     initVote(
       config.voteTool && comparePath("/live/*/chat") && sp.get("ext") != null
     );
@@ -67,6 +68,7 @@ async function main() {
     initAdBlock(config.adblock);
     initHideDonation(config.hideDonation);
     initReverseChat(config.reversedChat);
+    // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };
 
   // on path change

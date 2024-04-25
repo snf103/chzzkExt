@@ -19,6 +19,7 @@ const Options = () => {
     iname?: string;
   }) => {
     const state = (config as BoolKV)[key];
+    const ed = state ? "enable" : "disable";
     return (
       <div
         key={key}
@@ -58,11 +59,11 @@ const Options = () => {
               width: 30,
               height: 16,
               borderRadius: 15,
-              backgroundColor: state ? "#0957D0" : "#E1E3E1",
+              backgroundColor: `var(--switch-${ed}-bg)`,
               cursor: "pointer",
               position: "relative",
               transition: "all 0.2s",
-              border: state ? "1px solid #0957D0" : "1px solid #757775",
+              border: `1px solid var(--switch-${ed}-border)`,
             }}
           >
             <div
@@ -74,7 +75,7 @@ const Options = () => {
                 width: 12,
                 height: 12,
                 borderRadius: "50%",
-                backgroundColor: state ? "white" : "#757775",
+                backgroundColor: `var(--switch-${ed}-knoob)`,
                 transition: "all 0.2s",
               }}
             />
