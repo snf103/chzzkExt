@@ -22,7 +22,7 @@
 
 ## 치지직 채팅 툴
 
-![치지직 채팅 툴](https://github.com/Oein/chzzkExt/raw/main/screenshot.png)
+![치지직 채팅 툴](https://github.com/Oein/chzzkExt/raw/main/assets/screenshot.png)
 
 1. 원하는 채널에 들어가 채팅 오른쪽 위에 있는 투표 버튼을 누릅니다.
 2. 투표를 구성합니다.
