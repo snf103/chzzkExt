@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+
+  "name": "치직치지직",
+  "description": "치지직을 더 유용하게!",
+  "version": "2.0",
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "assets/logo16.png",
+    "48": "assets/logo48.png",
+    "64": "assets/logo64.png",
+    "128": "assets/logo128.png",
+    "256": "assets/logo256.png",
+    "512": "assets/logo512.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/vendor.js", "js/injecter.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/content_script.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": ["declarativeNetRequest", "storage"],
+  "host_permissions": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"]
+}
