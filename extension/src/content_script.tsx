@@ -77,19 +77,19 @@ async function main() {
   window.addEventListener("chzzkExtConfig", apply);
 
   (() => {
-    let oldPushState = history.pushState;
+    const oldPushState = history.pushState;
     history.pushState = function pushState() {
       // @ts-ignore
-      let ret = oldPushState.apply(this, arguments);
+      const ret = oldPushState.apply(this, arguments);
       window.dispatchEvent(new Event("pushstate"));
       window.dispatchEvent(new Event("locationchange"));
       return ret;
     };
 
-    let oldReplaceState = history.replaceState;
+    const oldReplaceState = history.replaceState;
     history.replaceState = function replaceState() {
       // @ts-ignore
-      let ret = oldReplaceState.apply(this, arguments);
+      const ret = oldReplaceState.apply(this, arguments);
       window.dispatchEvent(new Event("replacestate"));
       window.dispatchEvent(new Event("locationchange"));
       return ret;

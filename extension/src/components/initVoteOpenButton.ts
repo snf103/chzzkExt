@@ -12,8 +12,8 @@ const initVoteOpenButton = async (enable: boolean) => {
   };
   const waitForSel = async () => {
     return new Promise<HTMLDivElement>((resolve, reject) => {
-      let interval = setInterval(() => {
-        let sel = selector();
+      const interval = setInterval(() => {
+        const sel = selector();
         if (sel) {
           clearInterval(interval);
           resolve(sel as HTMLDivElement);

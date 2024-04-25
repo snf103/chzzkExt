@@ -38,8 +38,8 @@ const initVote = async (enable: boolean) => {
     }
     return list[0][0] as HTMLDivElement;
   };
-  let boxContainer = await waitForBox();
 
+  const boxContainer = await waitForBox();
   const createCustomAlertBox = (content: string) => {
     const outer = document.createElement("div");
     outer.style.padding = "4px 8px";
@@ -157,7 +157,7 @@ const initVote = async (enable: boolean) => {
       }
       return list[0][0];
     };
-    let button = await waitForButton();
+    const button = await waitForButton();
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         // console.log(mutation);
@@ -472,7 +472,7 @@ const initVote = async (enable: boolean) => {
       padding: 4px 2px;
     }
   `;
-  let state: {
+  const state: {
     isVoting: boolean;
     voteState: any[];
     voters: any[];
@@ -499,7 +499,7 @@ const initVote = async (enable: boolean) => {
     }
     return ui;
   };
-  let ui = await waitForUI();
+  await waitForUI();
   appendAlert("치지직 채팅 툴이 적용되었습니다.");
 
   // ============================================== UI Handlers ==============================================
@@ -562,7 +562,7 @@ const initVote = async (enable: boolean) => {
   const vc = document.getElementById("ext-button-vote-content");
   if (vc) vc.textContent = "추첨 시작";
   const isNaN = (x: string) => {
-    var reg = /^\d+$/;
+    const reg = /^\d+$/;
     return !reg.test(x);
   };
 
