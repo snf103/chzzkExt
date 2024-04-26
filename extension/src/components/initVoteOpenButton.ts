@@ -1,10 +1,9 @@
 const initVoteOpenButton = async (enable: boolean) => {
   if (!enable) {
     document.getElementById("chzzk-vote-open-button")?.remove();
-    window.chzzkExt.voteButtonApplied = false;
     return;
   }
-  if (window.chzzkExt.voteButtonApplied) return;
+  if (document.getElementById("chzzk-vote-open-button") != null) return;
   const selector = () => {
     return document.querySelector(
       "#layout-body > section > aside > div > div:nth-child(3)"
@@ -53,7 +52,6 @@ const initVoteOpenButton = async (enable: boolean) => {
     mbc.style.padding = "0px";
     mbc.style.margin = "0px";
   });
-  window.chzzkExt.voteButtonApplied = true;
 };
 
 export default initVoteOpenButton;
