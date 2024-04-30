@@ -4,10 +4,8 @@ import initHideDonation from "./components/initHideDonation";
 import initReverseChat from "./components/initReverseChat";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
-import defaultConfig from "./constants/defaultConfig";
+import configInstance, { defaultConfig } from "./constants/config";
 import log from "./log";
-
-let config: typeof defaultConfig = defaultConfig;
 let recvconfig = false;
 
 window.addEventListener("message", (event) => {
@@ -17,8 +15,8 @@ window.addEventListener("message", (event) => {
   if (data.type == "config") {
     recvconfig = true;
     log("MessageListener", "Received config", data.config);
-    config = data.config;
-    window.chzzkExt.config = config;
+    configInstance.load(data.config);
+    window.chzzkExt.config = data.config;
     window.dispatchEvent(new Event("chzzkExtConfig"));
   }
 });
@@ -32,6 +30,7 @@ declare global {
 async function main() {
   window.chzzkExt = window.chzzkExt || {
     lastConfig: "",
+    configInstance,
   };
 
   const apply = () => {
@@ -53,23 +52,38 @@ async function main() {
 
     if (
       window.chzzkExt.lastAppliedURL == window.location.href &&
-      window.chzzkExt.lastAppliedConfig == JSON.stringify(config)
+      window.chzzkExt.lastAppliedConfig == JSON.stringify(configInstance.config)
     )
       return;
 
-    log("Main", "Apply", window.location.href, "with config", config);
+    log(
+      "Main",
+      "Apply",
+      window.location.href,
+      "with config",
+      configInstance.config
+    );
     window.chzzkExt.lastAppliedURL = window.location.href;
-    window.chzzkExt.lastAppliedConfig = JSON.stringify(config);
+    window.chzzkExt.lastAppliedConfig = JSON.stringify(configInstance.config);
 
     // ======================== 여기에 적용할 기능을 추가하세요 ========================
     initVote(
-      config.voteTool && comparePath("/live/*/chat") && sp.get("ext") != null
+      configInstance.get("voteTool", defaultConfig.voteTool) &&
+        comparePath("/live/*/chat") &&
+        sp.get("ext") != null
     );
-    initAdSkip(config.adskip);
-    initVoteOpenButton(config.voteTool && comparePath("/live/*"));
-    initAdBlock(config.adblock);
-    initHideDonation(config.hideDonation);
-    initReverseChat(config.reversedChat);
+    initAdSkip(configInstance.get("adskip", defaultConfig.adskip));
+    initVoteOpenButton(
+      configInstance.get("voteTool", defaultConfig.voteTool) &&
+        comparePath("/live/*")
+    );
+    initAdBlock(configInstance.get("adblock", defaultConfig.adblock));
+    initHideDonation(
+      configInstance.get("hideDonation", defaultConfig.hideDonation)
+    );
+    initReverseChat(
+      configInstance.get("reversedChat", defaultConfig.reversedChat)
+    );
     // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };
 

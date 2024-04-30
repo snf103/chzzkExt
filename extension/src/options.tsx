@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import defaultConfig, { BoolKV } from "./constants/defaultConfig";
+import configInstance, { defaultConfig } from "./constants/config";
 
 const Options = () => {
-  const [config, setConfig] = useState<typeof defaultConfig>(defaultConfig);
-
-  useEffect(() => {
-    chrome.storage.local.get(["config"], (result) => {
-      setConfig(result.config || defaultConfig);
-    });
-  }, []);
-
   const ConfigItem = ({
     ikey: key,
     iname,
@@ -18,8 +10,19 @@ const Options = () => {
     ikey: string;
     iname?: string;
   }) => {
-    const state = (config as BoolKV)[key];
+    const [state, setState] = useState(
+      configInstance.get<boolean>(key, (defaultConfig as any)[key])
+    );
     const ed = state ? "enable" : "disable";
+
+    useEffect(() => {
+      configInstance.addListener(key, (k, v) => {
+        if (k == key) {
+          setState(v as boolean);
+        }
+      });
+    });
+
     return (
       <div
         key={key}
@@ -43,17 +46,9 @@ const Options = () => {
         <div>
           <div
             onClick={() => {
-              const newValue = !!!(config as BoolKV)[key];
-              setConfig({
-                ...config,
-                [key]: newValue,
-              });
-              chrome.storage.local.set({
-                config: {
-                  ...config,
-                  [key]: newValue,
-                },
-              });
+              configInstance.set(key, !state);
+              configInstance.save();
+              setState(!state);
             }}
             style={{
               width: 30,

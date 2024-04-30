@@ -1,7 +1,5 @@
-import defaultConfig, { BoolKV } from "./constants/defaultConfig";
+import configInstance, { defaultConfig } from "./constants/config";
 import log from "./log";
-
-let config: typeof defaultConfig = defaultConfig;
 
 const applyAdBlock = () => {
   const apply = (enable: boolean) => {
@@ -28,50 +26,13 @@ const applyAdBlock = () => {
       });
   };
 
-  apply(config.adblock);
+  apply(configInstance.get("adblock", defaultConfig.adblock));
 };
 
 const main = () => {
-  if (config == undefined) {
-    return;
-  }
-  log("Main", "Run with config", config);
+  log("Main", "Run with config", configInstance.config);
   applyAdBlock();
 };
 
-const readConfig = () => {
-  chrome.storage.local.get("config", (data) => {
-    if (data.config) {
-      const requiredKey = Object.keys(defaultConfig);
-      let need2save = false;
-      const nconf = data.config || {};
-      for (const key of requiredKey) {
-        if (typeof nconf[key] == "undefined") {
-          log(
-            "Read config",
-            "Set default config",
-            key,
-            "as",
-            (defaultConfig as BoolKV)[key]
-          );
-          nconf[key] = (defaultConfig as BoolKV)[key];
-          need2save = true;
-        }
-      }
-      if (need2save) {
-        chrome.storage.local.set({ config: nconf });
-        return;
-      } else config = data.config;
-    } else {
-      chrome.storage.local.set({ config: defaultConfig });
-      config = defaultConfig;
-    }
-    main();
-  });
-};
-
-chrome.storage.onChanged.addListener((changes) => {
-  for (const key in changes) {
-    if (key == "config") readConfig();
-  }
-});
+main();
+configInstance.addAnyListener(main);
