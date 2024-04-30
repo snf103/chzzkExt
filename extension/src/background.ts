@@ -13,8 +13,7 @@ const applyAdBlock = () => {
               type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
             },
             condition: {
-              urlFilter:
-                "https://nam.veta.naver.com/vas?vsi=LIVE_CHZZK_NDP_SCH&vcl=-1&so=0&rl=pre%3A1%2Cmid%3A1%2Cpost%3A1&ct=web",
+              urlFilter: "*://nam.veta.naver.com/vas*",
             },
           },
         ],
