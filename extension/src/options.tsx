@@ -112,7 +112,7 @@ const Options = () => {
         <Title>채팅</Title>
         <ConfigItem ikey="hideDonation" iname="후원 숨기기" />
         <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
-        <ConfigItem ikey="autoShowChat" iname="채팅을 숨김 처리 자동 보기" />
+        <ConfigItem ikey="autoShowChat" iname="채팅 숨김 처리 자동으로 끄기" />
 
         <Spacer />
         <Title>스트리머용</Title>

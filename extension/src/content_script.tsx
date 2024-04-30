@@ -1,5 +1,6 @@
 import initAdBlock from "./components/initAdBlock";
 import initAdSkip from "./components/initAdSkip";
+import initautoShowChat from "./components/initautoShowChat";
 import initHideDonation from "./components/initHideDonation";
 import initReverseChat from "./components/initReverseChat";
 import initVote from "./components/initVote";
@@ -83,6 +84,9 @@ async function main() {
     );
     initReverseChat(
       configInstance.get("reversedChat", defaultConfig.reversedChat)
+    );
+    initautoShowChat(
+      configInstance.get("autoShowChat", defaultConfig.autoShowChat)
     );
     // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };

@@ -4,6 +4,7 @@ export const defaultConfig = {
   voteTool: false,
   hideDonation: false,
   reversedChat: false,
+  autoShowChat: false,
 };
 
 type ConfigData = string | boolean | number;
