@@ -93,14 +93,27 @@ const Options = () => {
 
   const Spacer = () => <div style={{ height: 20 }} />;
 
+  let [show, setShow] = useState(false);
+  useEffect(() => {
+    configInstance.loadFromStorage().then(() => {
+      setShow(true);
+    });
+  }, []);
+
+  if (!show) return <></>;
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Title>시청자용</Title>
         <ConfigItem ikey="adblock" iname="광고 차단" />
         <ConfigItem ikey="adskip" iname="광고 스킵" />
+
+        <Spacer />
+        <Title>채팅</Title>
         <ConfigItem ikey="hideDonation" iname="후원 숨기기" />
         <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
+        <ConfigItem ikey="autoShowChat" iname="채팅을 숨김 처리 자동 보기" />
+
         <Spacer />
         <Title>스트리머용</Title>
         <ConfigItem ikey="voteTool" iname="채팅 투표" />
