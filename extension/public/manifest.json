@@ -3,7 +3,7 @@
 
   "name": "치직치지직",
   "description": "치지직을 더 유용하게!",
-  "version": "2.1.1",
+  "version": "2.2",
 
   "options_ui": {
     "page": "options.html"
