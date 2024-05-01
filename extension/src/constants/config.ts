@@ -5,6 +5,8 @@ export const defaultConfig = {
   hideDonation: false,
   reversedChat: false,
   autoShowChat: false,
+  latencyView: false,
+  showBuffer: false,
 };
 
 type ConfigData = string | boolean | number;

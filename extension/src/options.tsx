@@ -111,8 +111,10 @@ const Options = () => {
         <Spacer />
         <Title>채팅</Title>
         <ConfigItem ikey="hideDonation" iname="후원 숨기기" />
-        <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
+        <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
         <ConfigItem ikey="autoShowChat" iname="채팅 숨김 처리 자동으로 끄기" />
+        <ConfigItem ikey="latencyView" iname="레이턴시 표시" />
+        <ConfigItem ikey="showBuffer" iname="버퍼량 표시" />
 
         <Spacer />
         <Title>스트리머용</Title>

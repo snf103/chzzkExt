@@ -2,6 +2,7 @@ import initAdBlock from "./components/initAdBlock";
 import initAdSkip from "./components/initAdSkip";
 import initautoShowChat from "./components/initautoShowChat";
 import initHideDonation from "./components/initHideDonation";
+import initLatencyView from "./components/initLatencyView";
 import initReverseChat from "./components/initReverseChat";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
@@ -25,6 +26,16 @@ window.addEventListener("message", (event) => {
 declare global {
   interface Window {
     chzzkExt: any;
+    __getLiveInfo: () => {
+      // ex : 1080p
+      resolution: string;
+      // ex : 8000
+      bitrate: number;
+      // ex : 60.0
+      fps: string;
+      // milisecond
+      latency: number;
+    };
   }
 }
 
@@ -87,6 +98,10 @@ async function main() {
     );
     initautoShowChat(
       configInstance.get("autoShowChat", defaultConfig.autoShowChat)
+    );
+    initLatencyView(
+      configInstance.get("latencyView", defaultConfig.latencyView),
+      configInstance.get("showBuffer", defaultConfig.showBuffer)
     );
     // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };
