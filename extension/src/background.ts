@@ -77,12 +77,23 @@ const applyTrackerBlock = () => {
               urlFilter: "*://localhost:17080/api/v1/qoe*",
             },
           },
+
+          {
+            id: 1006,
+            priority: 1,
+            action: {
+              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+            },
+            condition: {
+              urlFilter: "*://lcs.naver.com/m*",
+            },
+          },
         ],
-        removeRuleIds: [1002, 1003, 1004, 1005],
+        removeRuleIds: [1002, 1003, 1004, 1005, 1006],
       });
     else
       chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [1002, 1003, 1004, 1005],
+        removeRuleIds: [1002, 1003, 1004, 1005, 1006],
       });
   };
 
