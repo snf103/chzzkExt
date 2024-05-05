@@ -8,7 +8,7 @@ const applyAdBlock = () => {
       chrome.declarativeNetRequest.updateDynamicRules({
         addRules: [
           {
-            id: 1001,
+            id: 1101,
             priority: 1,
             action: {
               type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
@@ -18,11 +18,11 @@ const applyAdBlock = () => {
             },
           },
         ],
-        removeRuleIds: [1001],
+        removeRuleIds: [1101],
       });
     else
       chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [1001],
+        removeRuleIds: [1101],
       });
   };
 
@@ -31,70 +31,45 @@ const applyAdBlock = () => {
 const applyTrackerBlock = () => {
   // https://apis.naver.com/mcollector/mcollector/qoe
   const apply = (enable: boolean) => {
-    if (enable)
+    const trackerQs = [
+      "*://apis.naver.com/mcollector/mcollector/qoe",
+      "*://apis.naver.com/mcollector/mcollector/qoe*",
+      "*://localhost:17080/api/v1/qoe",
+      "*://localhost:17080/api/v1/qoe*",
+      "*://lcs.naver.com/m*",
+      "*://siape.veta.naver.com/openrtb/nurl",
+      "*://siape.veta.naver.com/openrtb/nurl*",
+      "*://gfp.veta.naver.com/",
+      "*://gfp.veta.naver.com/*",
+      "*://apis.naver.com/policy/policy/policy",
+      "*://apis.naver.com/policy/policy/policy*",
+      "*://ssl.pstatic.net/static/nng/resource/p/static/js/lcslog.js",
+    ];
+    const indexes: number[] = [];
+    for (let i = 0; i < trackerQs.length; i++) {
+      indexes.push(1002 + i);
+    }
+    if (enable) {
       chrome.declarativeNetRequest.updateDynamicRules({
-        addRules: [
-          {
-            id: 1002,
+        addRules: trackerQs.map((urlFilter, index) => {
+          return {
+            id: 1002 + index,
             priority: 1,
             action: {
               type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
             },
             condition: {
-              urlFilter: "*://apis.naver.com/mcollector/mcollector/qoe",
+              urlFilter,
             },
-          },
-
-          {
-            id: 1003,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter: "*://apis.naver.com/mcollector/mcollector/qoe*",
-            },
-          },
-
-          {
-            id: 1004,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter: "*://localhost:17080/api/v1/qoe",
-            },
-          },
-
-          {
-            id: 1005,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter: "*://localhost:17080/api/v1/qoe*",
-            },
-          },
-
-          {
-            id: 1006,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter: "*://lcs.naver.com/m*",
-            },
-          },
-        ],
-        removeRuleIds: [1002, 1003, 1004, 1005, 1006],
+          };
+        }),
+        removeRuleIds: indexes,
       });
-    else
+    } else {
       chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [1002, 1003, 1004, 1005, 1006],
+        removeRuleIds: indexes,
       });
+    }
   };
 
   apply(configInstance.get("blocktracker", defaultConfig.blocktracker));

@@ -11,7 +11,9 @@ const Options = () => {
     iname?: string;
   }) => {
     const [state, setState] = useState(
-      configInstance.get<boolean>(key, (defaultConfig as any)[key])
+      Object.keys(configInstance.config).includes(key)
+        ? configInstance.config[key]
+        : (defaultConfig as any)[key]
     );
     const ed = state ? "enable" : "disable";
 
@@ -97,6 +99,7 @@ const Options = () => {
   useEffect(() => {
     configInstance.loadFromStorage().then(() => {
       setShow(true);
+      console.log("Loaded config", configInstance.config);
     });
   }, []);
 
@@ -112,6 +115,7 @@ const Options = () => {
         <ConfigItem ikey="adblock" iname="광고 차단" />
         <ConfigItem ikey="adskip" iname="광고 스킵" />
         <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
+        <ConfigItem ikey="bypassNaver" iname="플러그인 없이 고화질 재생" />
 
         <Spacer />
         <Title>채팅</Title>

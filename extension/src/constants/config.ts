@@ -9,6 +9,7 @@ export const defaultConfig = {
   showBuffer: false,
   vodDownload: false,
   blocktracker: true,
+  bypassNaver: true,
 };
 
 type ConfigData = string | boolean | number;
@@ -39,9 +40,13 @@ class ConfigInstance {
     this.emitAny();
   }
   public save() {
-    chrome.storage.local.set({
-      config: this.config,
-    });
+    chrome.storage.local
+      .set({
+        config: this.config,
+      })
+      .then((c) => {
+        console.log("Saved config", c);
+      });
   }
   public async loadFromStorage(): Promise<void> {
     return new Promise((resolve) => {
@@ -75,7 +80,7 @@ class ConfigInstance {
     this.listeners[key].forEach((l) => l(key, newData));
   }
 
-  anyListeners: AnyListener[] = [];
+  anyListeners: AnyListener[];
   public addAnyListener(listener: AnyListener): void {
     this.anyListeners.push(listener);
   }
@@ -87,6 +92,7 @@ class ConfigInstance {
   }
 
   constructor() {
+    this.anyListeners = [];
     if (!chrome) return;
     if (!chrome.storage) return;
     if (!chrome.storage.local) return;

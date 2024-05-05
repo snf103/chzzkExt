@@ -9,7 +9,7 @@ import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
 import configInstance, { defaultConfig } from "./constants/config";
 import log from "./log";
-import openModal, { initModal } from "./ui/modal";
+import { initModal } from "./ui/modal";
 let recvconfig = false;
 
 window.addEventListener("message", (event) => {
@@ -46,10 +46,16 @@ async function main() {
     lastConfig: "",
     configInstance,
   };
-
   const apply = () => {
     initModal();
     if (!recvconfig) return;
+    if (configInstance.get("bypassNaver", defaultConfig.bypassNaver)) {
+      Object.defineProperty(navigator, "userAgent", {
+        get: () => {
+          return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) <ChzzkExt>";
+        },
+      });
+    }
     const nowPath = window.location.pathname;
     const npsp = nowPath.split("/");
     const sp = new URLSearchParams(window.location.search);
