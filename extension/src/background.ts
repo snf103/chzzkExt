@@ -44,12 +44,45 @@ const applyTrackerBlock = () => {
               urlFilter: "*://apis.naver.com/mcollector/mcollector/qoe",
             },
           },
+
+          {
+            id: 1003,
+            priority: 1,
+            action: {
+              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+            },
+            condition: {
+              urlFilter: "*://apis.naver.com/mcollector/mcollector/qoe*",
+            },
+          },
+
+          {
+            id: 1004,
+            priority: 1,
+            action: {
+              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+            },
+            condition: {
+              urlFilter: "*://localhost:17080/api/v1/qoe",
+            },
+          },
+
+          {
+            id: 1005,
+            priority: 1,
+            action: {
+              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+            },
+            condition: {
+              urlFilter: "*://localhost:17080/api/v1/qoe*",
+            },
+          },
         ],
-        removeRuleIds: [1002],
+        removeRuleIds: [1002, 1003, 1004, 1005],
       });
     else
       chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [1002],
+        removeRuleIds: [1002, 1003, 1004, 1005],
       });
   };
 
