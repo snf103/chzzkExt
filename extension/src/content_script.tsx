@@ -4,10 +4,12 @@ import initautoShowChat from "./components/initautoShowChat";
 import initHideDonation from "./components/initHideDonation";
 import initLatencyView from "./components/initLatencyView";
 import initReverseChat from "./components/initReverseChat";
+import initVod from "./components/initVod";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
 import configInstance, { defaultConfig } from "./constants/config";
 import log from "./log";
+import openModal, { initModal } from "./ui/modal";
 let recvconfig = false;
 
 window.addEventListener("message", (event) => {
@@ -46,8 +48,8 @@ async function main() {
   };
 
   const apply = () => {
+    initModal();
     if (!recvconfig) return;
-
     const nowPath = window.location.pathname;
     const npsp = nowPath.split("/");
     const sp = new URLSearchParams(window.location.search);
@@ -102,6 +104,10 @@ async function main() {
     initLatencyView(
       configInstance.get("latencyView", defaultConfig.latencyView),
       configInstance.get("showBuffer", defaultConfig.showBuffer)
+    );
+    initVod(
+      configInstance.get("vodDownload", defaultConfig.vodDownload) &&
+        comparePath("/video/*")
     );
     // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };

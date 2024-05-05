@@ -104,9 +104,14 @@ const Options = () => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
+        <Title>공통</Title>
+        <ConfigItem ikey="blocktracker" iname="트래커 차단" />
+
+        <Spacer />
         <Title>시청자용</Title>
         <ConfigItem ikey="adblock" iname="광고 차단" />
         <ConfigItem ikey="adskip" iname="광고 스킵" />
+        <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
 
         <Spacer />
         <Title>채팅</Title>

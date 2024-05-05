@@ -1,4 +1,5 @@
-import { itemHTML, myCSS, myUI } from "../constants/voteui";
+import styler from "../styler";
+import { itemHTML, myCSS, myUI } from "../ui/voteui";
 
 type IBadge = string;
 type ICUser = {
@@ -152,9 +153,7 @@ const initVote = async (enable: boolean) => {
   uiRoot.innerHTML = myUI;
   uiRoot.id = "chzzkExt-root";
   document.body.insertBefore(uiRoot, document.body.firstChild);
-  const style = document.createElement("style");
-  style.innerHTML = myCSS;
-  document.head.appendChild(style);
+  styler("voteui", myCSS);
 
   const waitForUI = async () => {
     let ui = document.getElementById("chzzkExt-root");
@@ -313,7 +312,6 @@ const initVote = async (enable: boolean) => {
     detatch: () => {
       observer.disconnect();
       document.getElementById("chzzkExt-root")?.remove();
-      document.head.removeChild(style);
       delete window.chzzkExt.voteTool;
       listeners.length = 0;
       window.chzzkExt.voteToolApplied = false;

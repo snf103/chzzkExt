@@ -7,6 +7,8 @@ export const defaultConfig = {
   autoShowChat: false,
   latencyView: false,
   showBuffer: false,
+  vodDownload: false,
+  blocktracker: true,
 };
 
 type ConfigData = string | boolean | number;
@@ -21,7 +23,11 @@ class ConfigInstance {
   public get<T = ConfigData>(key: string): T | undefined;
   public get<T = ConfigData>(key: string, defaultValue: T): T;
   public get<T = ConfigData>(key: string, defaultValue?: T): T {
-    return (this.config[key] || defaultValue) as T;
+    try {
+      return (this.config[key] || defaultValue) as T;
+    } catch (e) {
+      return defaultValue as T;
+    }
   }
   public set(key: string, value: ConfigData): void {
     this.config[key] = value;

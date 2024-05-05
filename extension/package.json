@@ -16,6 +16,7 @@
     "url": "https://github.com/Oein/chzzkExt.git"
   },
   "dependencies": {
+    "fast-xml-parser": "^4.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
