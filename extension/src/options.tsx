@@ -95,7 +95,7 @@ const Options = () => {
 
   const Spacer = () => <div style={{ height: 20 }} />;
 
-  let [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
   useEffect(() => {
     configInstance.loadFromStorage().then(() => {
       setShow(true);

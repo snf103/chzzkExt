@@ -84,7 +84,7 @@ const main = () => {
 vod();
 configInstance.addAnyListener(main);
 configInstance.loadFromStorage().then(main);
-chrome.runtime.onInstalled.addListener(function (details) {
+chrome.runtime.onInstalled.addListener(function () {
   log("Oninstall", "Thank you for installing!");
   main();
 });

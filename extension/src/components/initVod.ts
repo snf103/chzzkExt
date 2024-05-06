@@ -63,8 +63,8 @@ export default function initVod(enable: boolean) {
       voddllist.style.flexDirection = "column";
       voddllist.style.gap = "5px";
 
-      let id = Math.random().toString(36).substr(2, 9);
-      let onclis: Array<() => void> = [];
+      const id = Math.random().toString(36).substr(2, 9);
+      const onclis: Array<() => void> = [];
       const createVodItem = (v: VOD) => {
         const voditem = document.createElement("button");
         voditem.style.width = "100%";
@@ -107,7 +107,7 @@ export default function initVod(enable: boolean) {
 
           // Step 3: read the data
           let receivedLength = 0; // received that many bytes at the moment
-          let chunks = []; // array of received binary chunks (comprises the body)
+          const chunks = []; // array of received binary chunks (comprises the body)
           while (true) {
             const { done, value } = await reader.read();
 
@@ -125,9 +125,9 @@ export default function initVod(enable: boolean) {
             ).toFixed(2)}% 다운로드중`;
           }
 
-          let blob = new Blob(chunks);
-          let url = window.URL.createObjectURL(blob);
-          let a = document.createElement("a");
+          const blob = new Blob(chunks);
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
           a.style.display = "none";
           a.href = url;
           a.download = `vod_${v.quality}p_${v.frameRate}fps.mp4`;
