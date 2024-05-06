@@ -4,6 +4,7 @@ import initautoShowChat from "./components/initautoShowChat";
 import initHideDonation from "./components/initHideDonation";
 import initLatencyView from "./components/initLatencyView";
 import initReverseChat from "./components/initReverseChat";
+import initUI_ED from "./components/initUI_ed";
 import initVod from "./components/initVod";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
@@ -50,11 +51,13 @@ async function main() {
     initModal();
     if (!recvconfig) return;
     if (configInstance.get("bypassNaver", defaultConfig.bypassNaver)) {
-      Object.defineProperty(navigator, "userAgent", {
-        get: () => {
-          return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) <ChzzkExt>";
-        },
-      });
+      try {
+        Object.defineProperty(navigator, "userAgent", {
+          get: () => {
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) <ChzzkExt>";
+          },
+        });
+      } catch (e) {}
     }
     const nowPath = window.location.pathname;
     const npsp = nowPath.split("/");
@@ -115,6 +118,12 @@ async function main() {
       configInstance.get("vodDownload", defaultConfig.vodDownload) &&
         comparePath("/video/*")
     );
+    initUI_ED();
+    // UI fetch후 다시 적용
+    setTimeout(initUI_ED, 500);
+    setTimeout(initUI_ED, 1000);
+    setTimeout(initUI_ED, 1500);
+    setTimeout(initUI_ED, 2000);
     // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };
 

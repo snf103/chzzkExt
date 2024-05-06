@@ -11,6 +11,8 @@
 body {
   background: #fff;
   color: #000;
+  max-height: 800px;
+  overflow: auto;
 }
 
 @media (prefers-color-scheme: dark) {

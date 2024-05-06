@@ -10,6 +10,29 @@ export const defaultConfig = {
   vodDownload: false,
   blocktracker: true,
   bypassNaver: true,
+
+  // ui settings
+  ed_chz: false,
+  ed_tic: false,
+  ed_noti: false,
+  ed_mi_ban: false,
+  ed_rec_live: false,
+  ed_si_sd: false,
+
+  ed_si_game: false,
+  ed_si_esp: false,
+  ed_si_ori: false,
+  ed_si_pcg: false,
+  ed_si_chr: false,
+
+  ed_su_al: false,
+  ed_si_rw: false,
+  ed_si_ct: false,
+  ed_si_fl: false,
+
+  ed_sc_fl: false,
+  ed_sc_rc: false,
+  ed_sc_pt: false,
 };
 
 type ConfigData = string | boolean | number;
