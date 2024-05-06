@@ -62,8 +62,8 @@ export default function vod() {
       });
       const [{ result }] = resp;
       if (!result) return;
-      let body = parser.parse(result);
-      let items: VideoSet[] = body.MPD.Period.AdaptationSet.at(
+      const body = parser.parse(result);
+      const items: VideoSet[] = body.MPD.Period.AdaptationSet.at(
         0
       ).Representation.map((el: VideoSet) => new VideoSet(el));
       const urls = items
