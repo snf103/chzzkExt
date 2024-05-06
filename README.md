@@ -35,6 +35,10 @@
 
 치직치지직을 우클릭 후, 설정을 누르면 나옵니다. 혹은 확장 프로그램 세부정보 페이지에서 `확장 프로그램 옵션`을 눌러 설정 창을 열 수 있습니다.
 
+|                                                                             |                                                                             |                                                                             |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| ![치지직 설정창](https://github.com/Oein/chzzkExt/raw/main/assets/opt1.png) | ![치지직 설정창](https://github.com/Oein/chzzkExt/raw/main/assets/opt2.png) | ![치지직 설정창](https://github.com/Oein/chzzkExt/raw/main/assets/opt3.png) |
+
 ## 치지직 채팅 툴
 
 ![치지직 채팅 툴](https://github.com/Oein/chzzkExt/raw/main/assets/screenshot.png)
