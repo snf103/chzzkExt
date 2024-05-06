@@ -42,7 +42,6 @@ export default function vod() {
       });
       if (exr) return;
 
-      let urls;
       const parser = new XMLParser();
       const resp = await chrome.scripting.executeScript({
         target: {
@@ -67,7 +66,7 @@ export default function vod() {
       let items: VideoSet[] = body.MPD.Period.AdaptationSet.at(
         0
       ).Representation.map((el: VideoSet) => new VideoSet(el));
-      urls = items
+      const urls = items
         .sort((a, b) =>
           b.quality - a.quality
             ? b.quality - a.quality
