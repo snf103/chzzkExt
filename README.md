@@ -1,4 +1,4 @@
-<img src="https://github.com/Oein/chzzkExt/raw/main/assets/logo512.png" height="256" />
+<img src="https://github.com/Oein/chzzkExt/raw/main/assets/webstore_res/smallpro.png" height="256" style="aspect-ratio: 3/1; object-fit: cover;" />
 
 # 치직치지직
 
@@ -20,6 +20,7 @@
 - VOD 다운로드
 - 트레커 차단 (공공장소 보안 향상)
 - 네이버 동영상 플러그인없이 고화질 재생
+- VOD 마지막 재생위치 기억
 - 커스텀 치지직 UI
   > 필요없는 버튼이나 기능들을 안보이게 만들 수 있어요.
 
