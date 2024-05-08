@@ -10,6 +10,7 @@ export const defaultConfig = {
   vodDownload: false,
   blocktracker: true,
   bypassNaver: true,
+  saveVodLoc: true,
 
   // ui settings
   ed_chz: false,

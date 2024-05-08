@@ -3,7 +3,7 @@
 
   "name": "치직치지직 (ChzkChzzk)",
   "description": "치지직(chzzk.naver.com)을 더 유용하게!",
-  "version": "2.6",
+  "version": "2.7",
 
   "options_ui": {
     "page": "options.html"
@@ -36,6 +36,10 @@
     {
       "resources": ["js/content_script.js"],
       "matches": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"]
+    },
+    {
+      "resources": ["assets/logo512.png", "assets/smallpro.png"],
+      "matches": ["<all_urls>"]
     }
   ],
 

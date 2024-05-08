@@ -6,6 +6,7 @@ import initLatencyView from "./components/initLatencyView";
 import initReverseChat from "./components/initReverseChat";
 import initUI_ED from "./components/initUI_ed";
 import initVod from "./components/initVod";
+import initVodLoc from "./components/initVodLoc";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
 import configInstance, { defaultConfig } from "./constants/config";
@@ -116,6 +117,10 @@ async function main() {
     );
     initVod(
       configInstance.get("vodDownload", defaultConfig.vodDownload) &&
+        comparePath("/video/*")
+    );
+    initVodLoc(
+      configInstance.get("saveVodLoc", defaultConfig.saveVodLoc) &&
         comparePath("/video/*")
     );
     initUI_ED();

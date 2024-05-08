@@ -82,6 +82,31 @@ const Options = () => {
     );
   };
 
+  const SuperTitle = ({ children }: { children: any }) => (
+    <div
+      style={{
+        margin: "0px",
+        fontSize: 24,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        fontWeight: "bold",
+        gap: "8px",
+        lineHeight: "1",
+      }}
+    >
+      {children}
+      <div
+        style={{
+          height: "0px",
+          flexGrow: 1,
+          borderBottom: "2px dotted #cccccc50",
+        }}
+      />
+    </div>
+  );
+
   const Title = ({ children }: { children: string }) => (
     <div
       style={{
@@ -153,6 +178,24 @@ const Options = () => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* <SuperTitle>
+          <span>치직치지직</span>
+        </SuperTitle> */}
+
+        <a href="https://github.com/Oein/chzzkExt" target="_blank">
+          <img
+            src="assets/smallpro.png"
+            style={{
+              borderRadius: ".5rem",
+              width: "100%",
+              aspectRatio: "3/1",
+              objectFit: "cover",
+              marginBottom: "1rem",
+              boxShadow: "0 0 10px rgba(0,0,0,.2)",
+            }}
+          />
+        </a>
+
         <Title>공통</Title>
         <ConfigItem ikey="blocktracker" iname="트래커 차단" />
         <Desc>세로고침이 필요합니다</Desc>
@@ -164,6 +207,7 @@ const Options = () => {
         <ConfigItem ikey="adskip" iname="광고 스킵" />
         <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
         <ConfigItem ikey="bypassNaver" iname="플러그인 없이 고화질 재생" />
+        <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
 
         <Spacer />
         <Title>채팅</Title>
