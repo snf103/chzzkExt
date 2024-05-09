@@ -4,7 +4,9 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/oein/chzzkext/badge)](https://www.codefactor.io/repository/github/oein/chzzkext)
 
-[![Available in the Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/HRs9MPufa1J1h5glNhut.png)](https://chromewebstore.google.com/detail/%EC%B9%98%EC%A7%81%EC%B9%98%EC%A7%80%EC%A7%81-chzkchzzk/gnhkgfmbflpjnkigambjmfndopabaoaj)
+<a href="https://chromewebstore.google.com/detail/%EC%B9%98%EC%A7%81%EC%B9%98%EC%A7%80%EC%A7%81-chzkchzzk/gnhkgfmbflpjnkigambjmfndopabaoaj">
+  <img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/HRs9MPufa1J1h5glNhut.png" alt="Available in the Chrome Web Store" width="192" />
+</a>
 
 치직치지직은 치지직을 더욱 유용하게 사용하기 위한 기능들이 다수 포함된 확장 프로그램이에요.
 
