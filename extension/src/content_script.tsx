@@ -40,6 +40,11 @@ declare global {
       // milisecond
       latency: number;
     };
+
+    gladsdk: {
+      displayAd: () => void;
+      destroyAdSlots: () => void;
+    };
   }
 }
 

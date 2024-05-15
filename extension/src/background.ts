@@ -132,6 +132,92 @@ const applyBannerBlock = () => {
 
   apply(configInstance.get("ed_mi_ban", defaultConfig.ed_mi_ban));
 };
+const applySidebarBlock = () => {
+  // 추천 스트리머
+  (() => {
+    const apply = (enable: boolean) => {
+      if (enable)
+        chrome.declarativeNetRequest.updateDynamicRules({
+          addRules: [
+            {
+              id: 1300,
+              priority: 1,
+              action: {
+                type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+              },
+              condition: {
+                urlFilter:
+                  "*://api.chzzk.naver.com/service/v1/home/recommendation-channels",
+              },
+            },
+          ],
+          removeRuleIds: [1300],
+        });
+      else
+        chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: [1300],
+        });
+    };
+
+    apply(configInstance.get("ed_sc_rc", defaultConfig.ed_sc_rc));
+  })();
+  // 파트너 스트리머
+  (() => {
+    const apply = (enable: boolean) => {
+      if (enable)
+        chrome.declarativeNetRequest.updateDynamicRules({
+          addRules: [
+            {
+              id: 1301,
+              priority: 1,
+              action: {
+                type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+              },
+              condition: {
+                urlFilter:
+                  "*://api.chzzk.naver.com/service/v1/streamer-partners/recommended",
+              },
+            },
+          ],
+          removeRuleIds: [1301],
+        });
+      else
+        chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: [1301],
+        });
+    };
+
+    apply(configInstance.get("ed_sc_pt", defaultConfig.ed_sc_pt));
+  })();
+  // 팔로우 스트리머
+  (() => {
+    const apply = (enable: boolean) => {
+      if (enable)
+        chrome.declarativeNetRequest.updateDynamicRules({
+          addRules: [
+            {
+              id: 1302,
+              priority: 1,
+              action: {
+                type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
+              },
+              condition: {
+                urlFilter:
+                  "*://api.chzzk.naver.com/service/v1/channels/followings/live",
+              },
+            },
+          ],
+          removeRuleIds: [1302],
+        });
+      else
+        chrome.declarativeNetRequest.updateDynamicRules({
+          removeRuleIds: [1302],
+        });
+    };
+
+    apply(configInstance.get("ed_sc_fl", defaultConfig.ed_sc_fl));
+  })();
+};
 
 const main = () => {
   log("Main", "Run with config", configInstance.config);
@@ -139,6 +225,7 @@ const main = () => {
   applyTrackerBlock();
   // applyRecBlock();
   applyBannerBlock();
+  applySidebarBlock();
 };
 
 vod();
