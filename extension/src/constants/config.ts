@@ -11,6 +11,7 @@ export const defaultConfig = {
   blocktracker: true,
   bypassNaver: true,
   saveVodLoc: true,
+  chat950: true,
 
   // ui settings
   ed_chz: false,

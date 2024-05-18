@@ -1,6 +1,7 @@
 import initAdBlock from "./components/initAdBlock";
 import initAdSkip from "./components/initAdSkip";
 import initautoShowChat from "./components/initautoShowChat";
+import intiChatFix from "./components/initChatFix";
 import initHideDonation from "./components/initHideDonation";
 import initLatencyView from "./components/initLatencyView";
 import initReverseChat from "./components/initReverseChat";
@@ -128,6 +129,7 @@ async function main() {
       configInstance.get("saveVodLoc", defaultConfig.saveVodLoc) &&
         comparePath("/video/*")
     );
+    intiChatFix(configInstance.get("chat950", defaultConfig.chat950));
     initUI_ED();
     // UI fetch후 다시 적용
     setTimeout(initUI_ED, 500);

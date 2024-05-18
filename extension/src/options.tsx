@@ -211,8 +211,13 @@ const Options = () => {
 
         <Spacer />
         <Title>채팅</Title>
+        <ConfigItem ikey="chat950" iname="작은 너비에서 아래에 두기" />
         <ConfigItem ikey="hideDonation" iname="후원 숨기기" />
         <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
+        <Desc>
+          "작은 너비에서 아래에 두기"와 같이 실행되있을경우 "작은 너비에서
+          아래에 두기"가 먼저 적용됩니다.
+        </Desc>
         <ConfigItem ikey="autoShowChat" iname="채팅 숨김 처리 자동으로 끄기" />
         <ConfigItem ikey="latencyView" iname="레이턴시 표시" />
         <ConfigItem ikey="showBuffer" iname="버퍼량 표시" />
