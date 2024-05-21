@@ -1,3 +1,5 @@
+import log from "../log";
+
 export const defaultConfig = {
   adblock: false,
   adskip: true,
@@ -11,7 +13,7 @@ export const defaultConfig = {
   blocktracker: true,
   bypassNaver: true,
   saveVodLoc: true,
-  chat950: true,
+  chat_nfo: true,
 
   // ui settings
   ed_chz: false,
@@ -50,7 +52,9 @@ class ConfigInstance {
   public get<T = ConfigData>(key: string, defaultValue: T): T;
   public get<T = ConfigData>(key: string, defaultValue?: T): T {
     try {
-      return (this.config[key] || defaultValue) as T;
+      return (
+        typeof this.config[key] == "undefined" ? defaultValue : this.config[key]
+      ) as T;
     } catch (e) {
       return defaultValue as T;
     }

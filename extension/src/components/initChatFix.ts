@@ -6,12 +6,13 @@ export default function intiChatFix(enable: boolean) {
       clearInterval(window.chzzkExt.cfix);
       delete window.chzzkExt.cfix;
     }
-    const chat950 = document.querySelector('style[chzzkExt="chat950"]');
+    const chat950 = document.querySelector('[chzzkExt="chat950"]');
     if (chat950) chat950.remove();
     return;
   }
 
   window.chzzkExt.cfix = setInterval(() => {
+    if (!enable) return;
     const chat950 = document.querySelector('style[chzzkExt="chat950"]');
     if (chat950) return;
 

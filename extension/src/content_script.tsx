@@ -129,7 +129,7 @@ async function main() {
       configInstance.get("saveVodLoc", defaultConfig.saveVodLoc) &&
         comparePath("/video/*")
     );
-    intiChatFix(configInstance.get("chat950", defaultConfig.chat950));
+    intiChatFix(configInstance.get("chat_nfo", defaultConfig.chat_nfo));
     initUI_ED();
     // UI fetch후 다시 적용
     setTimeout(initUI_ED, 500);
