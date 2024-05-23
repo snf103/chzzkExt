@@ -6,6 +6,10 @@ export const _before950 = `@media (max-width: 950px) {
         box-sizing: border-box! important;
     }
 
+    section[class*="live_container"][class*="live_is_large"] {
+        width: 100vw! important;
+    }
+
     main[class*="live_information_container"] {
         height: fit-content! important;
         overflow-y: initial! important;
