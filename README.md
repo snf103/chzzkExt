@@ -4,9 +4,15 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/oein/chzzkext/badge)](https://www.codefactor.io/repository/github/oein/chzzkext)
 
-<a href="https://chromewebstore.google.com/detail/%EC%B9%98%EC%A7%81%EC%B9%98%EC%A7%80%EC%A7%81-chzkchzzk/gnhkgfmbflpjnkigambjmfndopabaoaj">
-  <img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/HRs9MPufa1J1h5glNhut.png" alt="Available in the Chrome Web Store" width="192" />
-</a>
+<div style="display: flex; gap: 5px; flex-wrap: wrap;">
+  <a href="https://chromewebstore.google.com/detail/%EC%B9%98%EC%A7%81%EC%B9%98%EC%A7%80%EC%A7%81-chzkchzzk/gnhkgfmbflpjnkigambjmfndopabaoaj">
+    <img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/HRs9MPufa1J1h5glNhut.png" alt="Available in the Chrome Web Store" height="50" />
+  </a>
+
+  <a href="https://store.whale.naver.com/detail/kfcaglfimpnnkigffhlbfmgdbhipbpjg">
+    <img src="https://store.whale.naver.com/assets/whalestore_logo.75786f6231ec39f905ab4c9a13a58060.png" alt="Available in the Naver Whale Store" height="50" style="background: white; box-sizing: border-box; padding: 10px;" />
+  </a>
+</div>
 
 치직치지직은 치지직을 더욱 유용하게 사용하기 위한 기능들이 다수 포함된 확장 프로그램이에요.
 
