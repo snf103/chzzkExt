@@ -6,30 +6,33 @@ import log from "./log";
 10__ => trackblock
 11__ => adblock
 12__ => recblock(not working), bannerblock
+13__ => sidebarblock
 */
-
+let enableRules: string[] = [];
+let disableRules: string[] = [];
+const clearRule = () => {
+  enableRules.length = 0;
+};
+const enableRule = (ruleId: string) => {
+  enableRules.push(ruleId);
+};
+const disableRule = (ruleId: string) => {
+  disableRules.push(ruleId);
+};
+const applyRule = async () => {
+  await chrome.declarativeNetRequest.updateEnabledRulesets({
+    enableRulesetIds: enableRules,
+    disableRulesetIds: disableRules,
+  });
+  log("ApplyRule", "Apply rules", {
+    enableRules,
+    disableRules,
+  });
+};
 const applyAdBlock = () => {
   const apply = (enable: boolean) => {
-    if (enable)
-      chrome.declarativeNetRequest.updateDynamicRules({
-        addRules: [
-          {
-            id: 1101,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter: "*://nam.veta.naver.com/vas*",
-            },
-          },
-        ],
-        removeRuleIds: [1101],
-      });
-    else
-      chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [1101],
-      });
+    if (enable) enableRule("adblock");
+    else disableRule("adblock");
   };
 
   apply(configInstance.get("adblock", defaultConfig.adblock));
@@ -37,97 +40,16 @@ const applyAdBlock = () => {
 const applyTrackerBlock = () => {
   // https://apis.naver.com/mcollector/mcollector/qoe
   const apply = (enable: boolean) => {
-    const trackerQs = [
-      "*://apis.naver.com/mcollector/mcollector/qoe",
-      "*://apis.naver.com/mcollector/mcollector/qoe*",
-      "*://localhost:17080/api/v1/qoe",
-      "*://localhost:17080/api/v1/qoe*",
-      "*://lcs.naver.com/m*",
-      "*://siape.veta.naver.com/openrtb/nurl",
-      "*://siape.veta.naver.com/openrtb/nurl*",
-      "*://gfp.veta.naver.com/",
-      "*://gfp.veta.naver.com/*",
-      "*://apis.naver.com/policy/policy/policy",
-      "*://apis.naver.com/policy/policy/policy*",
-      "*://ssl.pstatic.net/static/nng/resource/p/static/js/lcslog.js",
-    ];
-    const indexes: number[] = [];
-    for (let i = 0; i < trackerQs.length; i++) {
-      indexes.push(1002 + i);
-    }
-    if (enable) {
-      chrome.declarativeNetRequest.updateDynamicRules({
-        addRules: trackerQs.map((urlFilter, index) => {
-          return {
-            id: 1002 + index,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter,
-            },
-          };
-        }),
-        removeRuleIds: indexes,
-      });
-    } else {
-      chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: indexes,
-      });
-    }
+    if (enable) enableRule("trackerblock");
+    else disableRule("trackerblock");
   };
 
   apply(configInstance.get("blocktracker", defaultConfig.blocktracker));
 };
-// const applyRecBlock = () => {
-//   const apply = (enable: boolean) => {
-//     if (enable)
-//       chrome.declarativeNetRequest.updateDynamicRules({
-//         addRules: [
-//           {
-//             id: 1201,
-//             priority: 1,
-//             action: {
-//               type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-//             },
-//             condition: {
-//               urlFilter: "*://api.chzzk.naver.com/service/v1/home/recommended*",
-//             },
-//           },
-//         ],
-//         removeRuleIds: [1201],
-//       });
-//     else
-//       chrome.declarativeNetRequest.updateDynamicRules({
-//         removeRuleIds: [1201],
-//       });
-//   };
-
-//   apply(configInstance.get("ed_rec_live", defaultConfig.ed_rec_live));
-// };
 const applyBannerBlock = () => {
   const apply = (enable: boolean) => {
-    if (enable)
-      chrome.declarativeNetRequest.updateDynamicRules({
-        addRules: [
-          {
-            id: 1202,
-            priority: 1,
-            action: {
-              type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-            },
-            condition: {
-              urlFilter: "*://api.chzzk.naver.com/service/v1/banners",
-            },
-          },
-        ],
-        removeRuleIds: [1202],
-      });
-    else
-      chrome.declarativeNetRequest.updateDynamicRules({
-        removeRuleIds: [1202],
-      });
+    if (enable) enableRule("bannerblock");
+    else disableRule("bannerblock");
   };
 
   apply(configInstance.get("ed_mi_ban", defaultConfig.ed_mi_ban));
@@ -136,27 +58,8 @@ const applySidebarBlock = () => {
   // 추천 스트리머
   (() => {
     const apply = (enable: boolean) => {
-      if (enable)
-        chrome.declarativeNetRequest.updateDynamicRules({
-          addRules: [
-            {
-              id: 1300,
-              priority: 1,
-              action: {
-                type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-              },
-              condition: {
-                urlFilter:
-                  "*://api.chzzk.naver.com/service/v1/home/recommendation-channels",
-              },
-            },
-          ],
-          removeRuleIds: [1300],
-        });
-      else
-        chrome.declarativeNetRequest.updateDynamicRules({
-          removeRuleIds: [1300],
-        });
+      if (enable) enableRule("main_recstr");
+      else disableRule("main_recstr");
     };
 
     apply(configInstance.get("ed_sc_rc", defaultConfig.ed_sc_rc));
@@ -164,27 +67,8 @@ const applySidebarBlock = () => {
   // 파트너 스트리머
   (() => {
     const apply = (enable: boolean) => {
-      if (enable)
-        chrome.declarativeNetRequest.updateDynamicRules({
-          addRules: [
-            {
-              id: 1301,
-              priority: 1,
-              action: {
-                type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-              },
-              condition: {
-                urlFilter:
-                  "*://api.chzzk.naver.com/service/v1/streamer-partners/recommended",
-              },
-            },
-          ],
-          removeRuleIds: [1301],
-        });
-      else
-        chrome.declarativeNetRequest.updateDynamicRules({
-          removeRuleIds: [1301],
-        });
+      if (enable) enableRule("main_recptn");
+      else disableRule("main_recptn");
     };
 
     apply(configInstance.get("ed_sc_pt", defaultConfig.ed_sc_pt));
@@ -192,27 +76,8 @@ const applySidebarBlock = () => {
   // 팔로우 스트리머
   (() => {
     const apply = (enable: boolean) => {
-      if (enable)
-        chrome.declarativeNetRequest.updateDynamicRules({
-          addRules: [
-            {
-              id: 1302,
-              priority: 1,
-              action: {
-                type: chrome.declarativeNetRequest.RuleActionType.BLOCK,
-              },
-              condition: {
-                urlFilter:
-                  "*://api.chzzk.naver.com/service/v1/channels/followings/live",
-              },
-            },
-          ],
-          removeRuleIds: [1302],
-        });
-      else
-        chrome.declarativeNetRequest.updateDynamicRules({
-          removeRuleIds: [1302],
-        });
+      if (enable) enableRule("main_recflw");
+      else disableRule("main_recflw");
     };
 
     apply(configInstance.get("ed_sc_fl", defaultConfig.ed_sc_fl));
@@ -221,11 +86,14 @@ const applySidebarBlock = () => {
 
 const main = () => {
   log("Main", "Run with config", configInstance.config);
+  clearRule();
+  // ===============================
   applyAdBlock();
   applyTrackerBlock();
-  // applyRecBlock();
   applyBannerBlock();
   applySidebarBlock();
+  // ===============================
+  applyRule();
 };
 
 vod();

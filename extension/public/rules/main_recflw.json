@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1302,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://api.chzzk.naver.com/service/v1/channels/followings/live"
+    }
+  }
+]
