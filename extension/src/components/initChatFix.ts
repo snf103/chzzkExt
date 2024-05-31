@@ -1,4 +1,4 @@
-import { _before950 } from "../ui/chatFix";
+import _before950 from "../static/chatFix.static.css";
 
 export default function intiChatFix(enable: boolean) {
   if (!enable) {

@@ -36,10 +36,11 @@
     "imagemin-svgo": "^10.0.1",
     "json-minimizer-webpack-plugin": "^5.0.0",
     "prettier": "^2.2.1",
+    "raw-loader": "^4.0.2",
     "rimraf": "^3.0.2 ",
     "ts-loader": "^8.0.0",
     "typescript": "^5.0.4",
-    "webpack": "^5.76.0",
+    "webpack": "^5.91.0",
     "webpack-cli": "^4.0.0",
     "webpack-merge": "^5.0.0"
   }

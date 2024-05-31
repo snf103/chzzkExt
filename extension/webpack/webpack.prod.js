@@ -5,7 +5,6 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
-
 module.exports = merge(common, {
   mode: "production",
   module: {
@@ -77,4 +76,5 @@ module.exports = merge(common, {
       new JsonMinimizerPlugin(),
     ],
   },
+  plugins: [],
 });
