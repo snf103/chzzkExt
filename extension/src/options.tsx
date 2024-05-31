@@ -212,7 +212,9 @@ const Options = () => {
         <Spacer />
         <Title>채팅</Title>
         <ConfigItem ikey="chat_nfo" iname="작은 너비에서 아래에 두기" />
-        <ConfigItem ikey="hideDonation" iname="후원 숨기기" />
+        <ConfigItem ikey="hideDonation" iname="후원 채팅 숨기기" />
+        {/* handled in initUI_ed.ts */}
+        <ConfigItem ikey="disable_donate_rank" iname="후원 순위 숨기기" />
         <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
         <Desc>
           "작은 너비에서 아래에 두기"와 같이 실행되있을경우 "작은 너비에서

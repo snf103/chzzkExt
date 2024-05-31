@@ -1,87 +1,77 @@
 import configInstance, { defaultConfig } from "../constants/config";
-import styler from "../styler";
+import onoffer from "../utils/onoffer";
 
 export default function initUI_ED() {
-  styler(
-    "chzzkUI",
-    `[chzzkUI="off"] { display: none! important; margin: 0px! important; padding: 0px! important; }`
-  );
-
-  const onoff = (element: HTMLElement | null, hide: boolean) => {
-    if (!element) return;
-    if (hide) {
-      element.setAttribute("chzzkUI", "off");
-    } else {
-      element.setAttribute("chzzkUI", "on");
-    }
-  };
-
   // 상단바
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/profile#cash"]`),
     configInstance.get("ed_chz", defaultConfig.ed_chz)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/ticket"]`),
     configInstance.get("ed_tic", defaultConfig.ed_tic)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/notify"]`),
     configInstance.get("ed_noti", defaultConfig.ed_noti)
   );
 
   // 메인메뉴
-  onoff(
+  onoffer(
     document.querySelector(`[class*="top_banner_container"]`),
     configInstance.get("ed_mi_ban", defaultConfig.ed_mi_ban)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[class*="recommend_live_container"]`),
     configInstance.get("ed_rec_live", defaultConfig.ed_rec_live)
   );
 
   // 사이드바 하단
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com"]`),
     configInstance.get("ed_si_game", defaultConfig.ed_si_game)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/esports"]`),
     configInstance.get("ed_si_esp", defaultConfig.ed_si_esp)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/original_series"]`),
     configInstance.get("ed_si_ori", defaultConfig.ed_si_ori)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/pcgame"]`),
     configInstance.get("ed_si_pcg", defaultConfig.ed_si_pcg)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="https://game.naver.com/lounge/chzzk/home"]`),
     configInstance.get("ed_si_chr", defaultConfig.ed_si_chr)
   );
 
   // 사이드바 상단
-  onoff(
+  onoffer(
     document.querySelector(`[href="/lives"]`),
     configInstance.get("ed_su_al", defaultConfig.ed_su_al)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="/videos"]`),
     configInstance.get("ed_si_rw", defaultConfig.ed_si_rw)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="/category"]`),
     configInstance.get("ed_si_ct", defaultConfig.ed_si_ct)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[href="/following"]`),
     configInstance.get("ed_si_fl", defaultConfig.ed_si_fl)
   );
-  onoff(
+  onoffer(
     document.querySelector(`[class*="toolbar_studio"]`),
     configInstance.get("ed_si_sd", defaultConfig.ed_si_sd)
+  );
+  onoffer(
+    document.querySelector(`[class*="live_chatting_ranking_container"]`),
+    configInstance.get("disable_donate_rank", defaultConfig.disable_donate_rank)
   );
 
   // 사이드바 navi
@@ -97,15 +87,15 @@ export default function initUI_ED() {
       }
     }
 
-    onoff(
+    onoffer(
       contents["팔로우"],
       configInstance.get("ed_sc_fl", defaultConfig.ed_sc_fl)
     );
-    onoff(
+    onoffer(
       contents["추천"],
       configInstance.get("ed_sc_rc", defaultConfig.ed_sc_rc)
     );
-    onoff(
+    onoffer(
       contents["파트너"],
       configInstance.get("ed_sc_pt", defaultConfig.ed_sc_pt)
     );
@@ -136,7 +126,7 @@ export default function initUI_ED() {
         minc.includes(sectionTitle) &&
         configInstance.get(matchHKey[sectionTitle], false);
 
-      onoff(sections[i] as HTMLDivElement, hide);
+      onoffer(sections[i] as HTMLDivElement, hide);
     }
   }
 }

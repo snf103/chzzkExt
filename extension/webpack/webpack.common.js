@@ -29,6 +29,10 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/,
       },
+      { test: /\.static\.txt$/, use: "raw-loader" },
+      { test: /\.static\.css$/, use: "raw-loader" },
+      { test: /\.static\.html$/, use: "raw-loader" },
+      { test: /\.static\.data$/, use: "raw-loader" },
     ],
   },
   resolve: {
