@@ -15,6 +15,8 @@ export const defaultConfig = {
   saveVodLoc: true,
   chat_nfo: true,
 
+  disable_donate_rank: false, //handled in initUI_ed.ts
+
   // ui settings
   ed_chz: false,
   ed_tic: false,
