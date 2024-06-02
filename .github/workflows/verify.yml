@@ -1,0 +1,29 @@
+name: Github Audit
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+  push:
+    branches:
+      - main
+
+jobs:
+  Audit-Pull-Request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install node_modules
+        run: npm ci
+        working-directory: ./extension
+      - name: Build chrome extension
+        run: npm run build:chrome
+        working-directory: ./extension
+      - name: Build firefox extension
+        run: npm run build:firefox
+        working-directory: ./extension
