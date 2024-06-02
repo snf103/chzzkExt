@@ -118,5 +118,15 @@
     "condition": {
       "urlFilter": "*://ssl.pstatic.net/static/nng/resource/p/static/js/lcslog.js"
     }
+  },
+  {
+    "id": 1014,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://ssl.pstatic.net/tveta/libs/glad/prod/gfp-core.js"
+    }
   }
 ]
