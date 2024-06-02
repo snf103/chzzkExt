@@ -27,3 +27,11 @@ jobs:
       - name: Build firefox extension
         run: npm run build:firefox
         working-directory: ./extension
+  notification:
+    name: Notify
+    runs-on: ubuntu-latest
+    needs: [Audit-Pull-Request]
+    if: always()
+    steps:
+      - uses: martialonline/workflow-status@v3
+        id: check
