@@ -42,4 +42,4 @@ jobs:
           name: firefox
           path: ./extension/dist-firefox
       - name: Report status
-        run: echo "::set-output name=audit::success"
+        run: echo "audit=success" >> $GITHUB_OUTPUT
