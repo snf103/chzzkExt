@@ -15,17 +15,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - uses: oven-sh/setup-bun@v1
       - name: Install node_modules
-        run: npm install
+        run: bun install
         working-directory: ./extension
       - name: Build chrome extension
-        run: npm run build:chrome
+        run: bun run build:chrome
         working-directory: ./extension
       - name: Build firefox extension
-        run: npm run build:firefox
+        run: bun run build:firefox
         working-directory: ./extension
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
