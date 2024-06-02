@@ -43,9 +43,6 @@
     }
   ],
 
-  "background": {
-    "service_worker": "js/background.js"
-  },
   "permissions": [
     "declarativeNetRequest",
     "storage",

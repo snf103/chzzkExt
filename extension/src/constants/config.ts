@@ -1,4 +1,5 @@
 import log from "../log";
+import { isChrome, isFirefox } from "../utils/browserInfo";
 
 export const defaultConfig = {
   adblock: false,
@@ -124,31 +125,60 @@ class ConfigInstance {
 
   constructor() {
     this.anyListeners = [];
-    if (!chrome) return;
-    if (!chrome.storage) return;
-    if (!chrome.storage.local) return;
-    this.loadFromStorage();
-    chrome.storage.onChanged.addListener((changes) => {
-      for (const key in changes) {
-        if (key == "config") {
-          // get diff from new value and my value
-          const newConfig = changes.config.newValue;
-          const oldConfig = this.config;
-          const diff = new Set([
-            ...Object.keys(newConfig),
-            ...Object.keys(oldConfig),
-          ]);
-          const diffs = Array.from(diff).filter(
-            (key) => newConfig[key] !== oldConfig[key]
-          );
-          for (const key of diffs) {
-            this.emit(key, newConfig[key]);
+    if (isChrome) {
+      if (!chrome) return;
+      if (!chrome.storage) return;
+      if (!chrome.storage.local) return;
+      this.loadFromStorage();
+      chrome.storage.onChanged.addListener((changes) => {
+        for (const key in changes) {
+          if (key == "config") {
+            // get diff from new value and my value
+            const newConfig = changes.config.newValue;
+            const oldConfig = this.config;
+            const diff = new Set([
+              ...Object.keys(newConfig),
+              ...Object.keys(oldConfig),
+            ]);
+            const diffs = Array.from(diff).filter(
+              (key) => newConfig[key] !== oldConfig[key]
+            );
+            for (const key of diffs) {
+              this.emit(key, newConfig[key]);
+            }
+            this.config = newConfig;
+            this.emitAny();
           }
-          this.config = newConfig;
-          this.emitAny();
         }
-      }
-    });
+      });
+    }
+    if (isFirefox) {
+      if (!browser) return;
+      if (!browser.storage) return;
+      if (!browser.storage.local) return;
+      this.loadFromStorage();
+      browser.storage.onChanged.addListener((changes) => {
+        for (const key in changes) {
+          if (key == "config") {
+            // get diff from new value and my value
+            const newConfig = changes.config.newValue;
+            const oldConfig = this.config;
+            const diff = new Set([
+              ...Object.keys(newConfig),
+              ...Object.keys(oldConfig),
+            ]);
+            const diffs = Array.from(diff).filter(
+              (key) => newConfig[key] !== oldConfig[key]
+            );
+            for (const key of diffs) {
+              this.emit(key, newConfig[key]);
+            }
+            this.config = newConfig;
+            this.emitAny();
+          }
+        }
+      });
+    }
   }
 }
 

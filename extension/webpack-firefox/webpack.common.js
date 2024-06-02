@@ -2,6 +2,8 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const srcDir = path.join(__dirname, "..", "src");
+const distDir = path.join(__dirname, "..", "dist-firefox");
+const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -11,7 +13,7 @@ module.exports = {
     injecter: path.join(srcDir, "injecter.ts"),
   },
   output: {
-    path: path.join(__dirname, "../dist/js"),
+    path: path.join(distDir, "js"),
     filename: "[name].js",
   },
   optimization: {
@@ -42,6 +44,12 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: ".", to: "../", context: "public" }],
       options: {},
+    }),
+    new MergeJsonWebpackPlugin({
+      files: ["./manifests/base.json", "./manifests/firefox.json"],
+      output: {
+        fileName: "../manifest.json",
+      },
     }),
   ],
 };

@@ -4,10 +4,10 @@
   "description": "chzzk-ext",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --config webpack/webpack.dev.js --watch",
-    "build": "webpack --config webpack/webpack.prod.js",
-    "clean": "rimraf dist",
-    "style": "prettier --write \"src/**/*.{ts,tsx}\""
+    "watch:chrome": "webpack --config webpack-chrome/webpack.dev.js --watch",
+    "build:chrome": "webpack --config webpack-chrome/webpack.prod.js",
+    "watch:firefox": "webpack --config webpack-firefox/webpack.dev.js --watch",
+    "build:firefox": "webpack --config webpack-firefox/webpack.prod.js"
   },
   "author": "",
   "license": "MIT",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.158",
+    "@types/firefox-webext-browser": "^120.0.3",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
     "copy-webpack-plugin": "^9.0.1",
@@ -35,9 +36,8 @@
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^10.0.1",
     "json-minimizer-webpack-plugin": "^5.0.0",
-    "prettier": "^2.2.1",
+    "merge-jsons-webpack-plugin": "^2.0.1",
     "raw-loader": "^4.0.2",
-    "rimraf": "^3.0.2 ",
     "ts-loader": "^8.0.0",
     "typescript": "^5.0.4",
     "webpack": "^5.91.0",
