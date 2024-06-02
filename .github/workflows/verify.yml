@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 18
       - name: Install node_modules
-        run: npm ci
+        run: npm install
         working-directory: ./extension
       - name: Build chrome extension
         run: npm run build:chrome
