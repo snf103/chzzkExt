@@ -27,22 +27,16 @@ jobs:
       - name: Build firefox extension
         run: npm run build:firefox
         working-directory: ./extension
-      - name: Compress build output (chrome)
-        run: zip -r chrome.zip ./dist-chrome
-        working-directory: ./extension
-      - name: Compress build output (firefox)
-        run: zip -r firefox.zip ./dist-firefox
-        working-directory: ./extension
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: chrome
-          path: ./extension/chrome.zip
+          path: ./extension/dist-chrome
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: firefox
-          path: ./extension/firefox.zip
+          path: ./extension/dist-firefox
   notification:
     name: Notify
     runs-on: ubuntu-latest
