@@ -294,6 +294,10 @@ const Options = () => {
             });
           }}
         />
+        <Desc>
+          광고도 스트리머에게 중요한 수입원이에요. 사용하지 않는걸 적극
+          권장드려요
+        </Desc>
         <Desc>새로고침이 필요합니다</Desc>
         <ConfigItem ikey="adskip" iname="광고 스킵" />
         <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
