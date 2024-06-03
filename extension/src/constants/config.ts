@@ -3,7 +3,7 @@ import { isChrome, isFirefox } from "../utils/browserInfo";
 
 export const defaultConfig = {
   adblock: false,
-  adskip: true,
+  adskip: false,
   voteTool: false,
   hideDonation: false,
   reversedChat: false,

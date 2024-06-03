@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import configInstance, { defaultConfig } from "./constants/config";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import "./static/calertfix.css";
 
 const Options = () => {
   const ConfigItem = ({
     ikey: key,
     iname,
+    askBefore,
   }: {
     ikey: string;
     iname?: string;
+    askBefore?: (newV: boolean) => Promise<boolean>;
   }) => {
     const [state, setState] = useState(
       Object.keys(configInstance.config).includes(key)
@@ -47,7 +52,10 @@ const Options = () => {
         </label>
         <div>
           <div
-            onClick={() => {
+            onClick={async () => {
+              if (askBefore) {
+                if (!(await askBefore(!state))) return;
+              }
               configInstance.set(key, !state);
               configInstance.save();
               setState(!state);
@@ -202,7 +210,90 @@ const Options = () => {
 
         <Spacer />
         <Title>시청자용</Title>
-        <ConfigItem ikey="adblock" iname="광고 차단" />
+        <ConfigItem
+          ikey="adblock"
+          iname="광고 차단"
+          askBefore={(newV) => {
+            const shuffle = (array: any[]) => {
+              let currentIndex = array.length;
+
+              // While there remain elements to shuffle...
+              while (currentIndex != 0) {
+                // Pick a remaining element...
+                let randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                  array[randomIndex],
+                  array[currentIndex],
+                ];
+              }
+              return array;
+            };
+            return new Promise((resolve) => {
+              if (!newV) return resolve(true);
+              const makeNot = (msg: string) => {
+                return {
+                  label: msg,
+                  onClick: () => resolve(false),
+                };
+              };
+              confirmAlert({
+                title: "진짜로 사용하실꺼에요?",
+                message: "스트리머의 소중한 수익원인 광고를 차단합니다.",
+                onClickOutside: () => resolve(false),
+                onKeypressEscape: () => resolve(false),
+                buttons: shuffle([
+                  {
+                    label: "네",
+                    onClick: () =>
+                      setTimeout(() =>
+                        confirmAlert({
+                          title: "진짜로 한번만 다시 생각해주세요",
+                          message:
+                            "남일이 아니라 당신의 소중한 스트리머의 수익원을 차단하고 계십니다.",
+                          onClickOutside: () => resolve(false),
+                          onKeypressEscape: () => resolve(false),
+                          buttons: shuffle([
+                            makeNot("차단하지 않기"),
+                            {
+                              label: "그래도 차단하기",
+                              onClick: () =>
+                                setTimeout(() =>
+                                  confirmAlert({
+                                    title: "정말로요?",
+                                    message:
+                                      "그렇게 원하신다면 어쩔 수 없지만, 다시 한번 생각해주세요.",
+                                    buttons: shuffle([
+                                      makeNot("차단하지 않기"),
+                                      makeNot("광고 보기"),
+                                      makeNot("취소"),
+                                      makeNot("Cancel"),
+                                      {
+                                        label: "차단하기",
+                                        onClick: () => resolve(true),
+                                      },
+                                      makeNot("未遮断"),
+                                      makeNot("未切斷"),
+                                      makeNot("ไม่ต้องบล็อก"),
+                                    ]),
+                                    onClickOutside: () => resolve(false),
+                                    onKeypressEscape: () => resolve(false),
+                                  })
+                                ),
+                            },
+                            makeNot("취소"),
+                          ]),
+                        })
+                      ),
+                  },
+                  makeNot("아니요"),
+                ]),
+              });
+            });
+          }}
+        />
         <Desc>새로고침이 필요합니다</Desc>
         <ConfigItem ikey="adskip" iname="광고 스킵" />
         <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />

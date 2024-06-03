@@ -35,6 +35,10 @@ module.exports = {
       { test: /\.static\.css$/, use: "raw-loader" },
       { test: /\.static\.html$/, use: "raw-loader" },
       { test: /\.static\.data$/, use: "raw-loader" },
+      {
+        test: /(?<!\.static)\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   resolve: {
