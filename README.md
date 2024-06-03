@@ -2,6 +2,8 @@
 
 # 치직치지직
 
+> 그.. 미래의 네이버님 치직치지직을 스토어에서 바로 차단하지 마시고, 삭제해야될 부분만 이메일로 알려주세요..!
+
 [![CodeFactor](https://www.codefactor.io/repository/github/oein/chzzkext/badge)](https://www.codefactor.io/repository/github/oein/chzzkext)
 
 <div style="display: flex; gap: 5px; flex-wrap: wrap;">
