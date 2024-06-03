@@ -198,12 +198,12 @@ const Options = () => {
 
         <Title>공통</Title>
         <ConfigItem ikey="blocktracker" iname="트래커 차단" />
-        <Desc>세로고침이 필요합니다</Desc>
+        <Desc>새로고침이 필요합니다</Desc>
 
         <Spacer />
         <Title>시청자용</Title>
         <ConfigItem ikey="adblock" iname="광고 차단" />
-        <Desc>세로고침이 필요합니다</Desc>
+        <Desc>새로고침이 필요합니다</Desc>
         <ConfigItem ikey="adskip" iname="광고 스킵" />
         <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
         <ConfigItem ikey="bypassNaver" iname="플러그인 없이 고화질 재생" />
@@ -256,10 +256,10 @@ const Options = () => {
 
         <SubTitle>메인메뉴</SubTitle>
         <ConfigItem ikey="ed_mi_ban" iname="상단 배너 숨기기" />
-        <Desc>세로고침이 필요합니다</Desc>
+        <Desc>새로고침이 필요합니다</Desc>
         <ConfigItem ikey="ed_rec_live" iname="추천 라이브 숨기기" />
         <Desc>
-          세로고침이 필요합니다, 사라지는것 뿐이지 재생은 되고있는거에요!
+          새로고침이 필요합니다, 사라지는것 뿐이지 재생은 되고있는거에요!
         </Desc>
         <ConfigItem ikey="ed_hm_fl" iname="'팔로잉 채널 라이브' 숨기기" />
         <ConfigItem ikey="ed_hm_how" iname="'이 라이브 어때요?' 숨기기" />

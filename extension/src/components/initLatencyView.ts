@@ -30,10 +30,10 @@ export default function initLatencyView(
           if (window.__getLiveInfo) {
             const lat = window.__getLiveInfo().latency;
             if (isNaN(lat)) {
-              showStr.push("레이턴시: 세로고침필요");
+              showStr.push("레이턴시: 새로고침필요");
             } else showStr.push(`레이턴시: ${lat}ms`);
           } else {
-            showStr.push("레이턴시: 세로고침필요");
+            showStr.push("레이턴시: 새로고침필요");
           }
         }
         if (enableBuf) {
