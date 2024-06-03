@@ -360,6 +360,7 @@ const Options = () => {
         <ConfigItem ikey="ed_si_fl" iname="팔로잉 숨기기" />
 
         <SubTitle>사이드바 채널추천</SubTitle>
+        <ConfigItem ikey="refreshSidebar" iname="30초마다 채널 새로고침" />
         <ConfigItem ikey="ed_sc_fl" iname="팔로우 숨기기" />
         <ConfigItem ikey="ed_sc_rc" iname="추천 숨기기" />
         <ConfigItem ikey="ed_sc_pt" iname="파트너 숨기기" />

@@ -17,6 +17,7 @@ export const defaultConfig = {
   chat_nfo: true,
 
   disable_donate_rank: false, //handled in initUI_ed.ts
+  refreshSidebar: true,
 
   // ui settings
   ed_chz: false,

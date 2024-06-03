@@ -4,6 +4,7 @@ import initautoShowChat from "./components/initautoShowChat";
 import intiChatFix from "./components/initChatFix";
 import initHideDonation from "./components/initHideDonation";
 import initLatencyView from "./components/initLatencyView";
+import initRefreshSidebar from "./components/initRefreshSidebar";
 import initReverseChat from "./components/initReverseChat";
 import initUI_ED from "./components/initUI_ed";
 import initVod from "./components/initVod";
@@ -130,6 +131,9 @@ async function main() {
         comparePath("/video/*")
     );
     intiChatFix(configInstance.get("chat_nfo", defaultConfig.chat_nfo));
+    initRefreshSidebar(
+      configInstance.get("refreshSidebar", defaultConfig.refreshSidebar)
+    );
     initUI_ED();
     // UI fetch후 다시 적용
     setTimeout(initUI_ED, 500);
