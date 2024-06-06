@@ -11,6 +11,7 @@ import initVod from "#c/initVod";
 import initVodLoc from "#c/initVodLoc";
 import initVote from "#c/initVote";
 import initVoteOpenButton from "#c/initVoteOpenButton";
+import initRemoveOfflineChannel from "#c/initRemoveOfflineChannel";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
@@ -135,6 +136,13 @@ async function main() {
     initRefreshSidebar(
       configInstance.get("refreshSidebar", defaultConfig.refreshSidebar)
     );
+    initRemoveOfflineChannel(
+      configInstance.get(
+        "remove_offline_channel",
+        defaultConfig.remove_offline_channel
+      )
+    );
+
     initUI_ED();
     // UI fetch후 다시 적용
     setTimeout(initUI_ED, 500);

@@ -368,6 +368,10 @@ const Options = () => {
         <ConfigItem ikey="ed_sc_fl" iname="팔로우 숨기기" />
         <ConfigItem ikey="ed_sc_rc" iname="추천 숨기기" />
         <ConfigItem ikey="ed_sc_pt" iname="파트너 숨기기" />
+        <ConfigItem
+          ikey="remove_offline_channel"
+          iname="오프라인 채널 숨기기"
+        />
 
         <SubTitle>사이드바 하단</SubTitle>
         <ConfigItem ikey="ed_si_game" iname="게임 숨기기" />

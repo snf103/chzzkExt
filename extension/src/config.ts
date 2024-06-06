@@ -19,6 +19,8 @@ export const defaultConfig = {
   disable_donate_rank: false, //handled in initUI_ed.ts
   refreshSidebar: true,
 
+  remove_offline_channel: false,
+
   // ui settings
   ed_chz: false,
   ed_tic: false,
