@@ -1,4 +1,4 @@
-import styler from "./styler";
+import styler from "#u/styler";
 
 export default function onoffer(element: HTMLElement | null, hide: boolean) {
   if (!element) return;

@@ -1,19 +1,20 @@
-import initAdBlock from "./components/initAdBlock";
-import initAdSkip from "./components/initAdSkip";
-import initautoShowChat from "./components/initautoShowChat";
-import intiChatFix from "./components/initChatFix";
-import initHideDonation from "./components/initHideDonation";
-import initLatencyView from "./components/initLatencyView";
-import initRefreshSidebar from "./components/initRefreshSidebar";
-import initReverseChat from "./components/initReverseChat";
-import initUI_ED from "./components/initUI_ed";
-import initVod from "./components/initVod";
-import initVodLoc from "./components/initVodLoc";
-import initVote from "./components/initVote";
-import initVoteOpenButton from "./components/initVoteOpenButton";
-import configInstance, { defaultConfig } from "./config";
-import log from "./log";
-import { initModal } from "./ui/modal";
+import initAdBlock from "#c/initAdBlock";
+import initAdSkip from "#c/initAdSkip";
+import initautoShowChat from "#c/initautoShowChat";
+import intiChatFix from "#c/initChatFix";
+import initHideDonation from "#c/initHideDonation";
+import initLatencyView from "#c/initLatencyView";
+import initRefreshSidebar from "#c/initRefreshSidebar";
+import initReverseChat from "#c/initReverseChat";
+import initUI_ED from "#c/initUI_ed";
+import initVod from "#c/initVod";
+import initVodLoc from "#c/initVodLoc";
+import initVote from "#c/initVote";
+import initVoteOpenButton from "#c/initVoteOpenButton";
+
+import configInstance, { defaultConfig } from "@config";
+import log from "@log";
+import { initModal } from "@/ui/modal";
 let recvconfig = false;
 
 window.addEventListener("message", (event) => {

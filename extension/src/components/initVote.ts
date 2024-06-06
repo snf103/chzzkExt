@@ -1,7 +1,7 @@
-import styler from "../utils/styler";
-import itemHTML from "../static/voteItem.static.html";
-import myCSS from "../static/voteui.static.css";
-import myUI from "../static/voteui.static.html";
+import styler from "#u/styler";
+import itemHTML from "#s/voteItem.static.html";
+import myCSS from "#s/voteui.static.css";
+import myUI from "#s/voteui.static.html";
 
 type IBadge = string;
 type ICUser = {

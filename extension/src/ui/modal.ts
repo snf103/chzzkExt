@@ -1,5 +1,5 @@
-import css from "../static/modelui.static.css";
-import styler from "../utils/styler";
+import css from "#s/modelui.static.css";
+import styler from "#u/styler";
 
 export function initModal() {
   styler("modal", css);

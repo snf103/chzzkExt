@@ -1,4 +1,4 @@
-import configInstance, { defaultConfig } from "../config";
+import configInstance, { defaultConfig } from "@config";
 import { XMLParser } from "fast-xml-parser";
 
 class VideoSet {

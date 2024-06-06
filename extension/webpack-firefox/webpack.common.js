@@ -4,6 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const srcDir = path.join(__dirname, "..", "src");
 const distDir = path.join(__dirname, "..", "dist-firefox");
 const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -43,6 +44,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
+    plugins: [new TsconfigPathsPlugin({})],
   },
   plugins: [
     new CopyPlugin({

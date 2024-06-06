@@ -1,4 +1,4 @@
-import openModal from "../ui/modal";
+import openModal from "@/ui/modal";
 
 interface VOD {
   quality: number;

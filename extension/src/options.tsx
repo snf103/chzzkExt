@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import configInstance, { defaultConfig } from "./config";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import "./static/calertfix.css";
+
+import "#s/calertfix.css";
+import configInstance, { defaultConfig } from "@config";
 
 const Options = () => {
   const ConfigItem = ({

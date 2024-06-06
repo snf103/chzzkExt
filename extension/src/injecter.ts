@@ -1,4 +1,4 @@
-import log from "./log";
+import log from "@log";
 
 function injectScript(file_path: string, tag: string) {
   const node = document.getElementsByTagName(tag)[0];

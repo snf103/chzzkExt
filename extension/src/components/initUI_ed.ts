@@ -1,5 +1,5 @@
-import configInstance, { defaultConfig } from "../config";
-import onoffer from "../utils/onoffer";
+import configInstance, { defaultConfig } from "@config";
+import onoffer from "#u/onoffer";
 
 export default function initUI_ED() {
   // 상단바

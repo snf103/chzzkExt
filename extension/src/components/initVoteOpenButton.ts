@@ -1,4 +1,4 @@
-import svg from "../static/voteButton.static.data";
+import svg from "#s/voteButton.static.data";
 
 const initVoteOpenButton = async (enable: boolean) => {
   if (!enable) {

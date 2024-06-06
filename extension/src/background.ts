@@ -1,6 +1,6 @@
-import vod from "./backgrounds/vod";
-import configInstance, { defaultConfig } from "./config";
-import log from "./log";
+import vod from "@/backgrounds/vod";
+import configInstance, { defaultConfig } from "@config";
+import log from "@log";
 
 /*
 10__ => trackblock

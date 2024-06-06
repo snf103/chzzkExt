@@ -23,3 +23,14 @@
 
 `*.static.txt`, `*.static.css`, `*.static.html`, `*.static.data`로 구성된 파일들을 import 하여 string 형태로 사용하실 수 있습니다.
 `src/static` 폴더에 배치하는 것을 권장합니다.
+
+# Alias
+
+`@`는 root 로써, `#`은 shortcut으로써 사용합니다.
+
+- `@config` : `src/config.ts`
+- `@log` : `src/log.ts`
+- `@/*` : `src/*"`
+- `#c/*` : `src/components/*`
+- `#u/*` : `src/utils/*`
+- `#s/*` : `src/static/*`
