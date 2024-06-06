@@ -305,24 +305,26 @@ const Options = () => {
         <ConfigItem
           ikey="bypassNaver"
           iname="플러그인 없이 고화질 재생"
-          askBefore={() =>
-            new Promise<boolean>((r) =>
-              confirmAlert({
-                title: "힌반만 더 생각해주세요",
-                message:
-                  "그리드가 불편한거 알지만, 그래도 치지직이 망사용료로 트위치처럼 되는건 싫잖아요. 한번만 생각해 주세요.",
-                buttons: [
-                  {
-                    label: "사용",
-                    onClick: () => r(true),
-                  },
-                  {
-                    label: "취소",
-                    onClick: () => r(false),
-                  },
-                ],
-              })
-            )
+          askBefore={(newV) =>
+            newV == false
+              ? Promise.resolve(true)
+              : new Promise<boolean>((r) =>
+                  confirmAlert({
+                    title: "힌반만 더 생각해주세요",
+                    message:
+                      "그리드가 불편한거 알지만, 그래도 치지직이 망사용료로 트위치처럼 되는건 싫잖아요. 한번만 생각해 주세요.",
+                    buttons: [
+                      {
+                        label: "사용",
+                        onClick: () => r(true),
+                      },
+                      {
+                        label: "취소",
+                        onClick: () => r(false),
+                      },
+                    ],
+                  })
+                )
           }
         />
         <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
