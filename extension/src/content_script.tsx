@@ -11,7 +11,7 @@ import initVod from "./components/initVod";
 import initVodLoc from "./components/initVodLoc";
 import initVote from "./components/initVote";
 import initVoteOpenButton from "./components/initVoteOpenButton";
-import configInstance, { defaultConfig } from "./constants/config";
+import configInstance, { defaultConfig } from "./config";
 import log from "./log";
 import { initModal } from "./ui/modal";
 let recvconfig = false;

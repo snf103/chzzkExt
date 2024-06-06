@@ -1,4 +1,4 @@
-import configInstance, { defaultConfig } from "../constants/config";
+import configInstance, { defaultConfig } from "../config";
 import onoffer from "../utils/onoffer";
 
 export default function initUI_ED() {

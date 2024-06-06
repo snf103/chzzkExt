@@ -1,5 +1,5 @@
-import log from "../log";
-import { isChrome, isFirefox } from "../utils/browserInfo";
+import log from "./log";
+import { isChrome, isFirefox } from "./utils/browserInfo";
 
 export const defaultConfig = {
   adblock: false,

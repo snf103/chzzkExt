@@ -1,5 +1,5 @@
 import vod from "./backgrounds/vod";
-import configInstance, { defaultConfig } from "./constants/config";
+import configInstance, { defaultConfig } from "./config";
 import log from "./log";
 
 /*
