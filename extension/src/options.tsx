@@ -5,6 +5,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 
 import "#s/calertfix.css";
 import configInstance, { defaultConfig } from "@config";
+import log from "@log";
 
 const Options = () => {
   const ConfigItem = ({
@@ -179,7 +180,7 @@ const Options = () => {
   useEffect(() => {
     configInstance.loadFromStorage().then(() => {
       setShow(true);
-      console.log("Loaded config", configInstance.config);
+      log("UseEffect", "Loaded config", configInstance.config);
     });
   }, []);
 

@@ -1,4 +1,5 @@
 import { isChrome, isFirefox } from "#u/browserInfo";
+import log from "@log";
 
 export const defaultConfig = {
   adblock: false,
@@ -76,8 +77,8 @@ class ConfigInstance {
       .set({
         config: this.config,
       })
-      .then((c) => {
-        console.log("Saved config", c);
+      .then(() => {
+        log("ConfigInstance", "Saved config");
       });
   }
   public async loadFromStorage(): Promise<void> {

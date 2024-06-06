@@ -1,3 +1,5 @@
+import log from "@log";
+
 const tryRefresh = () => {
   const sidebar = document.querySelector("#navigation");
   if (!sidebar) return;
@@ -10,7 +12,6 @@ const tryRefresh = () => {
   while (parent != null) {
     let state = parent.memoizedState;
     while (state != null) {
-      console.log(state);
       if (
         state.memoizedState != null &&
         state.memoizedState.tag === 8 &&
@@ -36,8 +37,7 @@ export default function initRefreshSidebar(enable: boolean) {
     return;
   }
   window.chzzkExt.refreshSidebarInterval = setInterval(() => {
-    console.log("Refreshing sidebar...");
+    log("Sidebar Refresher", "Refreshing sidebar...");
     const state = tryRefresh();
-    console.log(state);
   }, 30000);
 }

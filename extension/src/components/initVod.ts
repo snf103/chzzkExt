@@ -1,4 +1,5 @@
 import openModal from "@/ui/modal";
+import log from "@log";
 
 interface VOD {
   quality: number;
@@ -27,7 +28,6 @@ export default function initVod(enable: boolean) {
     if (document.querySelector(`button[chzzkExt="voddl"]`)) return;
     if (!apcont) return;
     const parsed = JSON.parse(dls) as VOD[];
-    // console.log(parsed);
 
     const dlrow = document.createElement("div");
     dlrow.style.marginTop = "15px";
@@ -118,7 +118,7 @@ export default function initVod(enable: boolean) {
             chunks.push(value);
             receivedLength += value.length;
 
-            console.log(`Received ${receivedLength} of ${contentLength}`);
+            log(`Downloader`, `Received ${receivedLength} of ${contentLength}`);
             voditem.innerText = `${(
               (receivedLength / contentLength) *
               100
