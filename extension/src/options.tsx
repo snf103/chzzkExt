@@ -159,6 +159,115 @@ const Options = () => {
     });
   }, []);
 
+  const askBefore_adblock = (newV: boolean) => {
+    const shuffle = (
+      array: {
+        label: string;
+        onClick: () => void;
+      }[]
+    ) => {
+      let currentIndex = array.length;
+
+      // While there remain elements to shuffle...
+      while (currentIndex != 0) {
+        // Pick a remaining element...
+        const randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex],
+          array[currentIndex],
+        ];
+      }
+      return array;
+    };
+    return new Promise<boolean>((resolve) => {
+      if (!newV) return resolve(true);
+      const makeNot = (msg: string) => {
+        return {
+          label: msg,
+          onClick: () => resolve(false),
+        };
+      };
+      const step3 = [
+        makeNot("차단하지 않기"),
+        makeNot("광고 보기"),
+        makeNot("취소"),
+        makeNot("Cancel"),
+        {
+          label: "차단하기",
+          onClick: () => resolve(true),
+        },
+        makeNot("未遮断"),
+        makeNot("未切斷"),
+        makeNot("ไม่ต้องบล็อก"),
+      ];
+      const step2 = [
+        makeNot("차단하지 않기"),
+        {
+          label: "그래도 차단하기",
+          onClick: () =>
+            setTimeout(() =>
+              confirmAlert({
+                title: "정말로요?",
+                message:
+                  "그렇게 원하신다면 어쩔 수 없지만, 다시 한번 생각해주세요.",
+                buttons: shuffle(step3),
+                onClickOutside: () => resolve(false),
+                onKeypressEscape: () => resolve(false),
+              })
+            ),
+        },
+        makeNot("취소"),
+      ];
+      const step1 = [
+        {
+          label: "네",
+          onClick: () =>
+            setTimeout(() =>
+              confirmAlert({
+                title: "진짜로 한번만 다시 생각해주세요",
+                message:
+                  "남일이 아니라 당신의 소중한 스트리머의 수익원을 차단하고 계십니다.",
+                onClickOutside: () => resolve(false),
+                onKeypressEscape: () => resolve(false),
+                buttons: shuffle(step2),
+              })
+            ),
+        },
+        makeNot("아니요"),
+      ];
+      confirmAlert({
+        title: "진짜로 사용하실꺼에요?",
+        message: "스트리머의 소중한 수익원인 광고를 차단합니다.",
+        onClickOutside: () => resolve(false),
+        onKeypressEscape: () => resolve(false),
+        buttons: shuffle(step1),
+      });
+    });
+  };
+  const askBefore_bypassNaver = (newV: boolean) =>
+    newV == false
+      ? Promise.resolve(true)
+      : new Promise<boolean>((r) =>
+          confirmAlert({
+            title: "힌반만 더 생각해주세요",
+            message:
+              "그리드가 불편한거 알지만, 그래도 치지직이 망사용료로 트위치처럼 되는건 싫잖아요. 한번만 생각해 주세요.",
+            buttons: [
+              {
+                label: "사용",
+                onClick: () => r(true),
+              },
+              {
+                label: "취소",
+                onClick: () => r(false),
+              },
+            ],
+          })
+        );
+
   if (!show) return <></>;
   return (
     <>
@@ -186,91 +295,7 @@ const Options = () => {
         <ConfigItem
           ikey="adblock"
           iname="광고 차단"
-          askBefore={(newV) => {
-            const shuffle = (
-              array: {
-                label: string;
-                onClick: () => void;
-              }[]
-            ) => {
-              let currentIndex = array.length;
-
-              // While there remain elements to shuffle...
-              while (currentIndex != 0) {
-                // Pick a remaining element...
-                const randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-
-                // And swap it with the current element.
-                [array[currentIndex], array[randomIndex]] = [
-                  array[randomIndex],
-                  array[currentIndex],
-                ];
-              }
-              return array;
-            };
-            return new Promise((resolve) => {
-              if (!newV) return resolve(true);
-              const makeNot = (msg: string) => {
-                return {
-                  label: msg,
-                  onClick: () => resolve(false),
-                };
-              };
-              confirmAlert({
-                title: "진짜로 사용하실꺼에요?",
-                message: "스트리머의 소중한 수익원인 광고를 차단합니다.",
-                onClickOutside: () => resolve(false),
-                onKeypressEscape: () => resolve(false),
-                buttons: shuffle([
-                  {
-                    label: "네",
-                    onClick: () =>
-                      setTimeout(() =>
-                        confirmAlert({
-                          title: "진짜로 한번만 다시 생각해주세요",
-                          message:
-                            "남일이 아니라 당신의 소중한 스트리머의 수익원을 차단하고 계십니다.",
-                          onClickOutside: () => resolve(false),
-                          onKeypressEscape: () => resolve(false),
-                          buttons: shuffle([
-                            makeNot("차단하지 않기"),
-                            {
-                              label: "그래도 차단하기",
-                              onClick: () =>
-                                setTimeout(() =>
-                                  confirmAlert({
-                                    title: "정말로요?",
-                                    message:
-                                      "그렇게 원하신다면 어쩔 수 없지만, 다시 한번 생각해주세요.",
-                                    buttons: shuffle([
-                                      makeNot("차단하지 않기"),
-                                      makeNot("광고 보기"),
-                                      makeNot("취소"),
-                                      makeNot("Cancel"),
-                                      {
-                                        label: "차단하기",
-                                        onClick: () => resolve(true),
-                                      },
-                                      makeNot("未遮断"),
-                                      makeNot("未切斷"),
-                                      makeNot("ไม่ต้องบล็อก"),
-                                    ]),
-                                    onClickOutside: () => resolve(false),
-                                    onKeypressEscape: () => resolve(false),
-                                  })
-                                ),
-                            },
-                            makeNot("취소"),
-                          ]),
-                        })
-                      ),
-                  },
-                  makeNot("아니요"),
-                ]),
-              });
-            });
-          }}
+          askBefore={askBefore_adblock}
         />
         <Desc>
           광고도 스트리머에게 중요한 수입원이에요. 사용하지 않는걸 적극
@@ -282,27 +307,7 @@ const Options = () => {
         <ConfigItem
           ikey="bypassNaver"
           iname="플러그인 없이 고화질 재생"
-          askBefore={(newV) =>
-            newV == false
-              ? Promise.resolve(true)
-              : new Promise<boolean>((r) =>
-                  confirmAlert({
-                    title: "힌반만 더 생각해주세요",
-                    message:
-                      "그리드가 불편한거 알지만, 그래도 치지직이 망사용료로 트위치처럼 되는건 싫잖아요. 한번만 생각해 주세요.",
-                    buttons: [
-                      {
-                        label: "사용",
-                        onClick: () => r(true),
-                      },
-                      {
-                        label: "취소",
-                        onClick: () => r(false),
-                      },
-                    ],
-                  })
-                )
-          }
+          askBefore={askBefore_bypassNaver}
         />
         <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
 
