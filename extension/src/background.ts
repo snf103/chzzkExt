@@ -8,8 +8,8 @@ import log from "@log";
 12__ => recblock(not working), bannerblock
 13__ => sidebarblock
 */
-let enableRules: string[] = [];
-let disableRules: string[] = [];
+const enableRules: string[] = [];
+const disableRules: string[] = [];
 const clearRule = () => {
   enableRules.length = 0;
 };

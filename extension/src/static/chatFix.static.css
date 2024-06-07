@@ -42,7 +42,7 @@
   }
 
   div[class*="live_information_details"] {
-    padding: 12px 18px 12px;
+    padding: 12px 18px;
   }
 
   div[class*="video_information_row"]:last-child {
