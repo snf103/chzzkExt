@@ -15,7 +15,6 @@ import initRemoveOfflineChannel from "#c/initRemoveOfflineChannel";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
-import { initModal } from "@/ui/modal";
 let recvconfig = false;
 
 window.addEventListener("message", (event) => {
@@ -58,7 +57,6 @@ async function main() {
     configInstance,
   };
   const apply = () => {
-    initModal();
     if (!recvconfig) return;
     if (configInstance.get("bypassNaver", defaultConfig.bypassNaver)) {
       try {

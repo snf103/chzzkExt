@@ -1,15 +1,13 @@
 import css from "#s/modelui.static.css";
 import styler from "#u/styler";
 
-export function initModal() {
-  styler("modal", css);
-}
-
 export default function openModal(config: {
   title?: string;
   body: string | HTMLElement | ((close: () => void) => HTMLElement);
   onClose?: () => void;
 }) {
+  styler("modal", css);
+
   const modal = document.createElement("div");
   modal.className = "chzzkExtModalContainer";
   const cnbox = document.createElement("div");
