@@ -92,31 +92,6 @@ const Options = () => {
     );
   };
 
-  const SuperTitle = ({ children }: { children: any }) => (
-    <div
-      style={{
-        margin: "0px",
-        fontSize: 24,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        fontWeight: "bold",
-        gap: "8px",
-        lineHeight: "1",
-      }}
-    >
-      {children}
-      <div
-        style={{
-          height: "0px",
-          flexGrow: 1,
-          borderBottom: "2px dotted #cccccc50",
-        }}
-      />
-    </div>
-  );
-
   const Title = ({ children }: { children: string }) => (
     <div
       style={{
@@ -188,10 +163,6 @@ const Options = () => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        {/* <SuperTitle>
-          <span>치직치지직</span>
-        </SuperTitle> */}
-
         <a href="https://github.com/Oein/chzzkExt" target="_blank">
           <img
             src="assets/smallpro.png"
