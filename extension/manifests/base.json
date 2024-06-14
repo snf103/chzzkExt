@@ -3,7 +3,7 @@
 
   "name": "치직치지직 (ChzkChzzk)",
   "description": "치지직(chzzk.naver.com)을 더 유용하게!",
-  "version": "2.12.1",
+  "version": "2.13",
 
   "options_ui": {
     "page": "options.html"
