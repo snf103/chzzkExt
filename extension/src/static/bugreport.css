@@ -1,0 +1,20 @@
+.bugreportud {
+  /** Button **/
+  border: 1px solid var(--switch-enable-border);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: none;
+}
+
+.bugreportud:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  .bugreportud {
+    border: 1px solid var(--switch-enable-border);
+    background: none;
+    color: #fff;
+  }
+}
