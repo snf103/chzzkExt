@@ -9,10 +9,6 @@
     <img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/HRs9MPufa1J1h5glNhut.png" alt="Available in the Chrome Web Store" height="50" />
   </a>
 
-  <a href="https://store.whale.naver.com/detail/kfcaglfimpnnkigffhlbfmgdbhipbpjg">
-    <img src="https://store.whale.naver.com/assets/whalestore_logo.75786f6231ec39f905ab4c9a13a58060.png" alt="Available in the Naver Whale Store" height="50" style="background: white; box-sizing: border-box; padding: 10px;" />
-  </a>
-
   <a href="https://addons.mozilla.org/en-US/firefox/addon/%EC%B9%98%EC%A7%81%EC%B9%98%EC%A7%80%EC%A7%81-chzkchzzk/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search">
     <img src="https://extensionworkshop.com/assets/img/documentation/publish/get-the-addon-178x60px.dad84b42.png" alt="Get THE ADD-ON on Firefox add-ons" height="50" style="background: white; box-sizing: border-box; padding: 10px;" />
   </a>
