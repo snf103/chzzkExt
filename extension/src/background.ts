@@ -1,4 +1,6 @@
 import vod from "@/backgrounds/vod";
+import applyBypassNaver from "@/backgrounds/bypassNaver";
+
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
 
@@ -92,6 +94,7 @@ const main = () => {
   applyTrackerBlock();
   applyBannerBlock();
   applySidebarBlock();
+  applyBypassNaver();
   // ===============================
   applyRule();
 };

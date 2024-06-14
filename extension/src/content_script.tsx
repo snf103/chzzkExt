@@ -12,6 +12,7 @@ import initVodLoc from "#c/initVodLoc";
 import initVote from "#c/initVote";
 import initVoteOpenButton from "#c/initVoteOpenButton";
 import initRemoveOfflineChannel from "#c/initRemoveOfflineChannel";
+import bypassNaver from "#c/bypassNaver";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
@@ -59,13 +60,7 @@ async function main() {
   const apply = () => {
     if (!recvconfig) return;
     if (configInstance.get("bypassNaver", defaultConfig.bypassNaver)) {
-      try {
-        Object.defineProperty(navigator, "userAgent", {
-          get: () => {
-            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) <ChzzkExt>";
-          },
-        });
-      } catch (e) {}
+      bypassNaver();
     }
     const nowPath = window.location.pathname;
     const npsp = nowPath.split("/");
