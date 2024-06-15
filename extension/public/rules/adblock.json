@@ -8,5 +8,35 @@
     "condition": {
       "urlFilter": "*://nam.veta.naver.com/vas*"
     }
+  },
+  {
+    "id": 1102,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://ssl.pstatic.net/tveta/libs/glad/prod/gfp-core.js"
+    }
+  },
+  {
+    "id": 1103,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://*tvetamovie.pstatic.net/*"
+    }
+  },
+  {
+    "id": 1104,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://*glad-vod.pstatic.net/*"
+    }
   }
 ]
