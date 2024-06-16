@@ -13,23 +13,10 @@ import initVote from "#c/initVote";
 import initVoteOpenButton from "#c/initVoteOpenButton";
 import initRemoveOfflineChannel from "#c/initRemoveOfflineChannel";
 import bypassNaver from "#c/bypassNaver";
+import { setupGlobalReciver, request, addGlobalListener } from "#u/connection";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
-let recvconfig = false;
-
-window.addEventListener("message", (event) => {
-  if (typeof event.data !== "string") return;
-  if (event.data.indexOf("chzzkExt~") != 0) return;
-  const data = JSON.parse(atob(event.data.substr(9)));
-  if (data.type == "config") {
-    recvconfig = true;
-    log("MessageListener", "Received config", data.config);
-    configInstance.load(data.config);
-    window.chzzkExt.config = data.config;
-    window.dispatchEvent(new Event("chzzkExtConfig"));
-  }
-});
 
 declare global {
   interface Window {
@@ -57,8 +44,8 @@ async function main() {
     lastConfig: "",
     configInstance,
   };
+  setupGlobalReciver();
   const apply = () => {
-    if (!recvconfig) return;
     if (configInstance.get("bypassNaver", defaultConfig.bypassNaver)) {
       bypassNaver();
     }
@@ -175,6 +162,19 @@ async function main() {
     });
   })();
 
-  apply();
+  request("/config").then((v) => {
+    configInstance.load(v);
+    window.chzzkExt.config = v;
+    window.dispatchEvent(new Event("chzzkExtConfig"));
+  });
+  addGlobalListener(
+    "/liveConfig",
+    (v) => {
+      configInstance.load(v);
+      window.chzzkExt.config = v;
+      window.dispatchEvent(new Event("chzzkExtConfig"));
+    },
+    "liveConfig"
+  );
 }
 main();

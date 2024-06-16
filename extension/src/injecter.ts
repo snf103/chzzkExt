@@ -1,4 +1,5 @@
 import log from "@log";
+import { dummy, router } from "#u/connectionServer";
 
 function injectScript(file_path: string, tag: string) {
   const node = document.getElementsByTagName(tag)[0];
@@ -6,14 +7,6 @@ function injectScript(file_path: string, tag: string) {
   script.setAttribute("type", "text/javascript");
   script.setAttribute("src", file_path);
   node.appendChild(script);
-  script.addEventListener("load", () => {
-    chrome.storage.local.get("config", (items) => {
-      window.postMessage(
-        "chzzkExt~" +
-          btoa(JSON.stringify({ type: "config", config: items.config }))
-      );
-    });
-  });
 }
 injectScript(chrome.runtime.getURL("js/content_script.js"), "body");
 
@@ -33,13 +26,9 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
       ", new value is",
       storageChange.newValue
     );
-    if (key == "config") {
-      window.postMessage(
-        "chzzkExt~" +
-          btoa(
-            JSON.stringify({ type: "config", config: storageChange.newValue })
-          )
-      );
-    }
+    if (key != "config") continue;
+    router.broadcast("/liveConfig", storageChange.newValue);
   }
 });
+
+dummy();
