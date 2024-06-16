@@ -7,7 +7,6 @@ import "#s/calertfix.css";
 import "#s/bugreport.css";
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
-import openModal from "./ui/modal";
 
 const Options = () => {
   const ConfigItem = ({
@@ -270,6 +269,36 @@ const Options = () => {
           })
         );
 
+  const extractInstallInfo = () => {
+    fetch("/manifest.json")
+      .then((r) => r.json())
+      .then((d) => {
+        const data = [navigator.userAgent, configInstance.config, d.version];
+        console.log(data);
+        const jj = btoa(JSON.stringify(data));
+        confirmAlert({
+          title: "설치 정보",
+          message: (() => {
+            const len = jj.length;
+            if (len < 30) return jj;
+            return jj.slice(0, 30) + " ...";
+          })(),
+          buttons: [
+            {
+              label: "복사하기",
+              onClick: () => {
+                navigator.clipboard.writeText(jj);
+              },
+            },
+            {
+              label: "취소",
+              onClick: () => {},
+            },
+          ],
+        });
+      });
+  };
+
   if (!show) return <></>;
   return (
     <>
@@ -289,44 +318,6 @@ const Options = () => {
         </a>
 
         <Title>공통</Title>
-        <button
-          className="bugreportud"
-          onClick={() => {
-            fetch("/manifest.json")
-              .then((r) => r.json())
-              .then((d) => {
-                const data = [
-                  navigator.userAgent,
-                  configInstance.config,
-                  d.version,
-                ];
-                console.log(data);
-                const jj = btoa(JSON.stringify(data));
-                confirmAlert({
-                  title: "설치 정보",
-                  message: (() => {
-                    const len = jj.length;
-                    if (len < 30) return jj;
-                    return jj.slice(0, 30) + " ...";
-                  })(),
-                  buttons: [
-                    {
-                      label: "복사하기",
-                      onClick: () => {
-                        navigator.clipboard.writeText(jj);
-                      },
-                    },
-                    {
-                      label: "취소",
-                      onClick: () => {},
-                    },
-                  ],
-                });
-              });
-          }}
-        >
-          설치 정보 추출
-        </button>
         <ConfigItem ikey="blocktracker" iname="트래커 차단" />
         <Desc>새로고침이 필요합니다</Desc>
 
@@ -415,6 +406,10 @@ const Options = () => {
           ikey="ed_hm_nw"
           iname="'신입 스트리머 인사드립니다' 숨기기"
         />
+
+        <button className="bugreportud" onClick={extractInstallInfo}>
+          설치 정보 추출
+        </button>
       </div>
     </>
   );
