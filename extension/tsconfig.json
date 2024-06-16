@@ -17,6 +17,7 @@
       "@log": ["src/log.ts"],
       "@/*": ["src/*"],
       "#c/*": ["src/components/*"],
+      "#e/*": ["src/constants/*"],
       "#u/*": ["src/utils/*"],
       "#s/*": ["src/static/*"]
     }

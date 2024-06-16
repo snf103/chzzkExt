@@ -1,4 +1,4 @@
-import bypassData from "@/constants/bypassData";
+import bypassData from "#e/bypassData";
 import configInstance, { defaultConfig } from "@config";
 
 type Listener = (

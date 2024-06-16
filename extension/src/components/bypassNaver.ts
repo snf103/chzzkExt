@@ -1,4 +1,4 @@
-import bypassData from "@/constants/bypassData";
+import bypassData from "#e/bypassData";
 
 export default function bypassNaver() {
   const overload = <T>(
