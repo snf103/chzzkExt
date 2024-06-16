@@ -8,7 +8,7 @@ import {
 export { configMessagePrefix, windowRequestPrefix };
 
 export function request<T = any>(endpoint: string, args: any = {}) {
-  return new Promise<T>((resolve, reject) => {
+  return new Promise<T>((resolve) => {
     const id = Math.random().toString(36).substr(2, 9);
     window.postMessage(
       windowRequestPrefix +
