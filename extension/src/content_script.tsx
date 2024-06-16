@@ -1,43 +1,9 @@
-import initAdBlock from "#c/initAdBlock";
-import initAdSkip from "#c/initAdSkip";
-import initautoShowChat from "#c/initautoShowChat";
-import intiChatFix from "#c/initChatFix";
-import initHideDonation from "#c/initHideDonation";
-import initLatencyView from "#c/initLatencyView";
-import initRefreshSidebar from "#c/initRefreshSidebar";
-import initReverseChat from "#c/initReverseChat";
-import initUI_ED from "#c/initUI_ed";
-import initVod from "#c/initVod";
-import initVodLoc from "#c/initVodLoc";
-import initVote from "#c/initVote";
-import initVoteOpenButton from "#c/initVoteOpenButton";
-import initRemoveOfflineChannel from "#c/initRemoveOfflineChannel";
+import applyComponents from "#c/index";
 import bypassNaver from "#c/bypassNaver";
 import { setupGlobalReciver, request, addGlobalListener } from "#u/connection";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
-
-declare global {
-  interface Window {
-    chzzkExt: any;
-    __getLiveInfo: () => {
-      // ex : 1080p
-      resolution: string;
-      // ex : 8000
-      bitrate: number;
-      // ex : 60.0
-      fps: string;
-      // milisecond
-      latency: number;
-    };
-
-    gladsdk: {
-      displayAd: () => void;
-      destroyAdSlots: () => void;
-    };
-  }
-}
 
 async function main() {
   window.chzzkExt = window.chzzkExt || {
@@ -46,28 +12,16 @@ async function main() {
   };
   setupGlobalReciver();
   const apply = () => {
-    if (configInstance.get("bypassNaver", defaultConfig.bypassNaver)) {
+    if (configInstance.get("bypassNaver", defaultConfig.bypassNaver))
       bypassNaver();
-    }
-    const nowPath = window.location.pathname;
-    const npsp = nowPath.split("/");
-    const sp = new URLSearchParams(window.location.search);
-
-    const comparePath = (p: string) => {
-      const psp = p.split("/");
-      if (psp.length != npsp.length) return false;
-      for (let i = 0; i < psp.length; i++) {
-        if (psp[i] == "*") continue;
-        if (psp[i] != npsp[i]) return false;
-      }
-      return true;
-    };
 
     if (
       window.chzzkExt.lastAppliedURL == window.location.href &&
       window.chzzkExt.lastAppliedConfig == JSON.stringify(configInstance.config)
     )
       return;
+
+    applyComponents();
 
     log(
       "Main",
@@ -78,67 +32,16 @@ async function main() {
     );
     window.chzzkExt.lastAppliedURL = window.location.href;
     window.chzzkExt.lastAppliedConfig = JSON.stringify(configInstance.config);
-
-    // ======================== 여기에 적용할 기능을 추가하세요 ========================
-    initVote(
-      configInstance.get("voteTool", defaultConfig.voteTool) &&
-        comparePath("/live/*/chat") &&
-        sp.get("ext") != null
-    );
-    initAdSkip(configInstance.get("adskip", defaultConfig.adskip));
-    initVoteOpenButton(
-      configInstance.get("voteTool", defaultConfig.voteTool) &&
-        comparePath("/live/*")
-    );
-    initAdBlock(configInstance.get("adblock", defaultConfig.adblock));
-    initHideDonation(
-      configInstance.get("hideDonation", defaultConfig.hideDonation)
-    );
-    initReverseChat(
-      configInstance.get("reversedChat", defaultConfig.reversedChat)
-    );
-    initautoShowChat(
-      configInstance.get("autoShowChat", defaultConfig.autoShowChat)
-    );
-    initLatencyView(
-      configInstance.get("latencyView", defaultConfig.latencyView),
-      configInstance.get("showBuffer", defaultConfig.showBuffer)
-    );
-    initVod(
-      configInstance.get("vodDownload", defaultConfig.vodDownload) &&
-        comparePath("/video/*")
-    );
-    initVodLoc(
-      configInstance.get("saveVodLoc", defaultConfig.saveVodLoc) &&
-        comparePath("/video/*")
-    );
-    intiChatFix(configInstance.get("chat_nfo", defaultConfig.chat_nfo));
-    initRefreshSidebar(
-      configInstance.get("refreshSidebar", defaultConfig.refreshSidebar)
-    );
-    initRemoveOfflineChannel(
-      configInstance.get(
-        "remove_offline_channel",
-        defaultConfig.remove_offline_channel
-      )
-    );
-
-    initUI_ED();
-    // UI fetch후 다시 적용
-    setTimeout(initUI_ED, 500);
-    setTimeout(initUI_ED, 1000);
-    setTimeout(initUI_ED, 1500);
-    setTimeout(initUI_ED, 2000);
-    // ======================= /여기에 적용할 기능을 추가하세요/ =======================
   };
 
   // on path change
-  window.addEventListener("popstate", apply);
-  window.addEventListener("hashchange", apply);
-  window.addEventListener("locationchange", apply);
-  window.addEventListener("pushstate", apply);
-  window.addEventListener("replacestate", apply);
-  window.addEventListener("chzzkExtConfig", apply);
+  const ael = window.addEventListener.bind(window);
+  ael("popstate", apply);
+  ael("hashchange", apply);
+  ael("locationchange", apply);
+  ael("pushstate", apply);
+  ael("replacestate", apply);
+  ael("chzzkExtConfig", apply);
 
   (() => {
     const oldPushState = history.pushState;
