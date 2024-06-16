@@ -24,6 +24,7 @@ export const defaultConfig = {
   // ui settings
   ed_chz: false,
   ed_tic: false,
+  ed_chkey: false,
   ed_noti: false,
   ed_mi_ban: false,
   ed_rec_live: false,

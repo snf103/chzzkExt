@@ -15,6 +15,10 @@ export default function initUI_ED() {
     document.querySelector(`[href="https://game.naver.com/notify"]`),
     configInstance.get("ed_noti", defaultConfig.ed_noti)
   );
+  onoffer(
+    document.querySelector(`[href="https://game.naver.com/profile#cheat_key"]`),
+    configInstance.get("ed_chkey", defaultConfig.ed_chkey)
+  );
 
   // 메인메뉴
   onoffer(
