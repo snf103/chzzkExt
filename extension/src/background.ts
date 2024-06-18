@@ -86,7 +86,7 @@ const applySidebarBlock = () => {
   })();
 };
 
-const main = () => {
+const main = async () => {
   log("Main", "Run with config", configInstance.config);
   clearRule();
   // ===============================
@@ -94,7 +94,7 @@ const main = () => {
   applyTrackerBlock();
   applyBannerBlock();
   applySidebarBlock();
-  applyBypassNaver(enableRule, disableRule);
+  await applyBypassNaver();
   // ===============================
   applyRule();
 };

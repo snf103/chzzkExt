@@ -1,16 +1,15 @@
+import { applyRandomAgent } from "@n/index";
+import { disable } from "@n/steps/apply";
 import configInstance, { defaultConfig } from "@config";
 
-export default function applyBypassNaver(
-  enableRule: (s: string) => void,
-  disableRule: (s: string) => void
-) {
-  const apply = (enable: boolean) => {
+export default async function applyBypassNaver() {
+  const apply = async (enable: boolean) => {
     if (!enable) {
-      disableRule("bypassnaver");
+      await disable();
       return;
     }
-
-    enableRule("bypassnaver");
+    const ua = await applyRandomAgent();
+    configInstance.set("userAgent", ua);
   };
-  apply(configInstance.get("bypassNaver", defaultConfig.bypassNaver));
+  await apply(configInstance.get("bypassNaver", defaultConfig.bypassNaver));
 }

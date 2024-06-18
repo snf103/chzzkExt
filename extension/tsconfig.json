@@ -19,7 +19,8 @@
       "#c/*": ["src/components/*"],
       "#e/*": ["src/constants/*"],
       "#u/*": ["src/utils/*"],
-      "#s/*": ["src/static/*"]
+      "#s/*": ["src/static/*"],
+      "@n/*": ["src/user-agent/*"]
     }
   }
 }

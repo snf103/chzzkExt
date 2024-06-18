@@ -3,7 +3,7 @@
 
   "name": "치직치지직 (ChzkChzzk)",
   "description": "치지직(chzzk.naver.com)을 더 유용하게!",
-  "version": "2.13.3",
+  "version": "2.13.4",
 
   "options_ui": {
     "page": "options.html"
@@ -53,11 +53,8 @@
     "webRequest",
     "scripting"
   ],
-  "host_permissions": [
-    "*://*.chzzk.naver.com/*",
-    "*://chzzk.naver.com/*",
-    "https://apis.naver.com/neonplayer/vodplay/v1/playback/*"
-  ],
+
+  "host_permissions": ["<all_urls>"],
 
   "declarative_net_request": {
     "rule_resources": [
@@ -90,11 +87,6 @@
         "id": "trackerblock",
         "enabled": false,
         "path": "rules/trackerblock.json"
-      },
-      {
-        "id": "bypassnaver",
-        "enabled": true,
-        "path": "rules/bypassNaver.json"
       }
     ]
   }

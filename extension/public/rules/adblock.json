@@ -38,5 +38,25 @@
     "condition": {
       "urlFilter": "*://*glad-vod.pstatic.net/*"
     }
+  },
+  {
+    "id": 1105,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "https://api.chzzk.naver.com/ad-polling/v1/lives/*"
+    }
+  },
+  {
+    "id": 1106,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://nam.veta.naver.com/call*"
+    }
   }
 ]
