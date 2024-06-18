@@ -94,7 +94,7 @@ const main = () => {
   applyTrackerBlock();
   applyBannerBlock();
   applySidebarBlock();
-  applyBypassNaver();
+  applyBypassNaver(enableRule, disableRule);
   // ===============================
   applyRule();
 };

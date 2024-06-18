@@ -90,6 +90,11 @@
         "id": "trackerblock",
         "enabled": false,
         "path": "rules/trackerblock.json"
+      },
+      {
+        "id": "bypassnaver",
+        "enabled": true,
+        "path": "rules/bypassNaver.json"
       }
     ]
   }
