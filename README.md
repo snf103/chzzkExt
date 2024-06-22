@@ -2,7 +2,7 @@
 
 # 치직치지직
 
-[![CodeFactor](https://www.codefactor.io/repository/github/oein/chzzkext/badge)](https://www.codefactor.io/repository/github/oein/chzzkext)
+[![CodeFactor](https://www.codefactor.io/repository/github/poikr/chzzkext/badge)](https://www.codefactor.io/repository/github/poikr/chzzkext)
 
 <div style="display: flex; gap: 5px; flex-wrap: wrap;">
   <a href="https://chromewebstore.google.com/detail/%EC%B9%98%EC%A7%81%EC%B9%98%EC%A7%80%EC%A7%81-chzkchzzk/gnhkgfmbflpjnkigambjmfndopabaoaj">
