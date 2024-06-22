@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Oein/chzzkExt.git"
+    "url": "https://github.com/poikr/chzzkExt.git"
   },
   "dependencies": {
     "fast-xml-parser": "^4.3.6",

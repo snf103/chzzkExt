@@ -303,7 +303,7 @@ const Options = () => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <a href="https://github.com/Oein/chzzkExt" target="_blank">
+        <a href="https://github.com/poikr/chzzkExt" target="_blank">
           <img
             src="assets/smallpro.png"
             style={{

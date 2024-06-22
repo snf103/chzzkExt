@@ -1,4 +1,4 @@
-<img src="https://github.com/Oein/chzzkExt/raw/main/assets/webstore_res/smallpro.png" height="256" style="aspect-ratio: 3/1; object-fit: cover;" />
+<img src="https://github.com/poikr/chzzkExt/raw/main/assets/webstore_res/smallpro.png" height="256" style="aspect-ratio: 3/1; object-fit: cover;" />
 
 # 치직치지직
 
