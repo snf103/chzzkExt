@@ -15,23 +15,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v4
         with:
-          bun-version: latest
-      - uses: actions/cache@v4
+          node-version: "20.x"
+      - name: Cache node modules
+        uses: actions/cache@v3
         with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-${{ matrix.bun }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.bun }}-bun-
+          path: node_modules
+          key: node_modules-${{hashFiles('yarn.lock')}}
+          restore-keys: node_modules-
       - name: Install node_modules
-        run: bun install
+        run: yarn
         working-directory: ./extension
-      - name: Build chrome extension
-        run: bun run build:chrome
-        working-directory: ./extension
-      - name: Build firefox extension
-        run: bun run build:firefox
+      - name: Build extension
+        run: npm run build:chrome & npm run build:firefox
         working-directory: ./extension
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
