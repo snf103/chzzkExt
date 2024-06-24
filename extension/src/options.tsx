@@ -138,7 +138,7 @@ const Options = () => {
     </div>
   );
 
-  const Desc = ({ children }: { children: string }) => (
+  const Desc = ({ children }: { children: any }) => (
     <div
       style={{
         fontSize: 12,
@@ -340,6 +340,16 @@ const Options = () => {
           iname="플러그인 없이 고화질 재생"
           askBefore={askBefore_bypassNaver}
         />
+        <Desc>
+          현재 작동하지 않습니다.{" "}
+          <a
+            href="https://blog.oein.kr/projects-chzkchzzk#b5339637b64448dca7994ec690769e6a"
+            target="_blank"
+          >
+            블로그
+          </a>
+          를 참조해 주세요.
+        </Desc>
         <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
 
         <Spacer />
