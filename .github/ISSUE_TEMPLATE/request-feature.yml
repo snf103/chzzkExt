@@ -1,0 +1,28 @@
+name: 기능 요청
+description: 기능 요청 양식이에요.
+title: "[Feat]: "
+labels: ["enhancement"]
+assignees:
+  - Oein
+body:
+  - type: markdown
+    attributes:
+      value: |
+        기능 요청 양식입니다. 제보해주셔서 감사합니다! 😊
+  - type: textarea
+    id: describe
+    attributes:
+      label: 원하는 기능을 설명해 주세요.
+      description: 어떤게 불편했고, 어떤 방식으로 문제를 고칠지 설명해주세요.
+    validations:
+      required: true
+  - type: checkboxes
+    id: validation
+    attributes:
+      label: 제출 전 확인 사항
+      description: 아래 사항들을 확인하고 체크해주세요.
+      options:
+        - label: 최신버전에 없는 기능인지 확인했습니다.
+          required: true
+        - label: 이미 제안된 기능인지 확인했습니다.
+          required: true
