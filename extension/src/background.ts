@@ -14,6 +14,7 @@ const enableRules: string[] = [];
 const disableRules: string[] = [];
 const clearRule = () => {
   enableRules.length = 0;
+  disableRules.length = 0;
 };
 const enableRule = (ruleId: string) => {
   enableRules.push(ruleId);
