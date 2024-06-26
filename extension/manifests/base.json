@@ -54,7 +54,18 @@
     "scripting"
   ],
 
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "*://*.chzzk.naver.com/*",
+    "*://chzzk.naver.com/*",
+    "*://*glad-vod.pstatic.net/*",
+    "*://nam.veta.naver.com/*",
+    "*://apis.naver.com/mcollector/*",
+    "*://lcs.naver.com/m*",
+    "*://siape.veta.naver.com/*",
+    "*://gfp.veta.naver.com/*",
+    "*://gfp.veta.naver.com/",
+    "*://ssl.pstatic.net/*"
+  ],
 
   "declarative_net_request": {
     "rule_resources": [
