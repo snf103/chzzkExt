@@ -3,8 +3,11 @@ import { createRoot } from "react-dom/client";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
+import dclogo from "#s/discordLogo.static.data";
+
 import "#s/calertfix.css";
 import "#s/bugreport.css";
+import "#s/options.css";
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
 
@@ -299,128 +302,150 @@ const Options = () => {
       });
   };
 
+  const DiscordLogoSVG = () => {
+    return (
+      <img
+        src={"data:image/svg+xml;base64," + btoa(dclogo)}
+        alt="Discord"
+        width={28}
+      />
+    );
+  };
+
   if (!show) return <></>;
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <a href="https://github.com/poikr/chzzkExt" target="_blank">
-          <img
-            src="assets/smallpro.png"
-            style={{
-              borderRadius: ".5rem",
-              width: "100%",
-              aspectRatio: "3/1",
-              objectFit: "cover",
-              marginBottom: "1rem",
-              boxShadow: "0 0 10px rgba(0,0,0,.2)",
-            }}
+      <div className="container">
+        <div className="header">
+          <div>
+            <a
+              href="https://github.com/poikr/chzzkExt"
+              target="_blank"
+              className="headerImageLink"
+            >
+              <img src="assets/smallpro.png" className="headerImage" />
+            </a>
+          </div>
+          <div className="rside">
+            <a
+              href="https://l.oein.kr/cczk-discord"
+              target="_blank"
+              className="headerImageLink"
+            >
+              <DiscordLogoSVG />
+            </a>
+          </div>
+        </div>
+
+        <div className="content">
+          <Title>공통</Title>
+          <ConfigItem ikey="blocktracker" iname="트래커 차단" />
+          <Desc>새로고침이 필요합니다</Desc>
+
+          <Spacer />
+          <Title>시청자용</Title>
+          <ConfigItem
+            ikey="adblock"
+            iname="광고 차단"
+            askBefore={askBefore_adblock}
           />
-        </a>
+          <Desc>
+            광고도 스트리머에게 중요한 수입원이에요. 사용하지 않는걸 적극
+            권장드려요
+          </Desc>
+          <Desc>새로고침이 필요합니다</Desc>
+          <ConfigItem ikey="adskip" iname="광고 스킵" />
+          <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
+          <ConfigItem
+            ikey="bypassNaver"
+            iname="플러그인 없이 고화질 재생"
+            askBefore={askBefore_bypassNaver}
+          />
+          <Desc>
+            현재 작동하지 않습니다.{" "}
+            <a
+              href="https://blog.oein.kr/projects-chzkchzzk#b5339637b64448dca7994ec690769e6a"
+              target="_blank"
+            >
+              블로그
+            </a>
+            를 참조해 주세요.
+          </Desc>
+          <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
 
-        <Title>공통</Title>
-        <ConfigItem ikey="blocktracker" iname="트래커 차단" />
-        <Desc>새로고침이 필요합니다</Desc>
+          <Spacer />
+          <Title>채팅</Title>
+          <ConfigItem ikey="chat_nfo" iname="작은 너비에서 아래에 두기" />
+          <ConfigItem ikey="hideDonation" iname="후원 채팅 숨기기" />
+          {/* handled in initUI_ed.ts */}
+          <ConfigItem ikey="disable_donate_rank" iname="후원 순위 숨기기" />
+          <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
+          <Desc>
+            "작은 너비에서 아래에 두기"와 같이 실행되있을경우 "작은 너비에서
+            아래에 두기"가 먼저 적용됩니다.
+          </Desc>
+          <ConfigItem
+            ikey="autoShowChat"
+            iname="채팅 숨김 처리 자동으로 끄기"
+          />
+          <ConfigItem ikey="latencyView" iname="레이턴시 표시" />
+          <ConfigItem ikey="showBuffer" iname="버퍼량 표시" />
 
-        <Spacer />
-        <Title>시청자용</Title>
-        <ConfigItem
-          ikey="adblock"
-          iname="광고 차단"
-          askBefore={askBefore_adblock}
-        />
-        <Desc>
-          광고도 스트리머에게 중요한 수입원이에요. 사용하지 않는걸 적극
-          권장드려요
-        </Desc>
-        <Desc>새로고침이 필요합니다</Desc>
-        <ConfigItem ikey="adskip" iname="광고 스킵" />
-        <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
-        <ConfigItem
-          ikey="bypassNaver"
-          iname="플러그인 없이 고화질 재생"
-          askBefore={askBefore_bypassNaver}
-        />
-        <Desc>
-          현재 작동하지 않습니다.{" "}
-          <a
-            href="https://blog.oein.kr/projects-chzkchzzk#b5339637b64448dca7994ec690769e6a"
-            target="_blank"
-          >
-            블로그
-          </a>
-          를 참조해 주세요.
-        </Desc>
-        <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
+          <Spacer />
+          <Title>스트리머용</Title>
+          <ConfigItem ikey="voteTool" iname="채팅 투표" />
 
-        <Spacer />
-        <Title>채팅</Title>
-        <ConfigItem ikey="chat_nfo" iname="작은 너비에서 아래에 두기" />
-        <ConfigItem ikey="hideDonation" iname="후원 채팅 숨기기" />
-        {/* handled in initUI_ed.ts */}
-        <ConfigItem ikey="disable_donate_rank" iname="후원 순위 숨기기" />
-        <ConfigItem ikey="reversedChat" iname="채팅 왼쪽에 두기" />
-        <Desc>
-          "작은 너비에서 아래에 두기"와 같이 실행되있을경우 "작은 너비에서
-          아래에 두기"가 먼저 적용됩니다.
-        </Desc>
-        <ConfigItem ikey="autoShowChat" iname="채팅 숨김 처리 자동으로 끄기" />
-        <ConfigItem ikey="latencyView" iname="레이턴시 표시" />
-        <ConfigItem ikey="showBuffer" iname="버퍼량 표시" />
+          <Spacer />
+          <Title>UI 수정</Title>
+          <SubTitle>상단바</SubTitle>
+          <ConfigItem ikey="ed_chz" iname="치즈 숨기기" />
+          <ConfigItem ikey="ed_tic" iname="라운지 티켓 숨기기" />
+          <ConfigItem ikey="ed_noti" iname="알림 숨기기" />
+          <ConfigItem ikey="ed_chkey" iname="치트키 숨기기" />
 
-        <Spacer />
-        <Title>스트리머용</Title>
-        <ConfigItem ikey="voteTool" iname="채팅 투표" />
+          <SubTitle>사이드바 상단</SubTitle>
+          <ConfigItem ikey="ed_si_sd" iname="스튜디오 숨기기" />
+          <ConfigItem ikey="ed_su_al" iname="전체 라이브 숨기기" />
+          <ConfigItem ikey="ed_si_rw" iname="다시보기 숨기기" />
+          <ConfigItem ikey="ed_si_ct" iname="카테고리 숨기기" />
+          <ConfigItem ikey="ed_si_fl" iname="팔로잉 숨기기" />
 
-        <Spacer />
-        <Title>UI 수정</Title>
-        <SubTitle>상단바</SubTitle>
-        <ConfigItem ikey="ed_chz" iname="치즈 숨기기" />
-        <ConfigItem ikey="ed_tic" iname="라운지 티켓 숨기기" />
-        <ConfigItem ikey="ed_noti" iname="알림 숨기기" />
-        <ConfigItem ikey="ed_chkey" iname="치트키 숨기기" />
+          <SubTitle>사이드바 채널추천</SubTitle>
+          <ConfigItem ikey="refreshSidebar" iname="30초마다 채널 새로고침" />
+          <ConfigItem ikey="ed_sc_fl" iname="팔로우 숨기기" />
+          <ConfigItem ikey="ed_sc_rc" iname="추천 숨기기" />
+          <ConfigItem ikey="ed_sc_pt" iname="파트너 숨기기" />
+          <ConfigItem
+            ikey="remove_offline_channel"
+            iname="오프라인 채널 숨기기"
+          />
 
-        <SubTitle>사이드바 상단</SubTitle>
-        <ConfigItem ikey="ed_si_sd" iname="스튜디오 숨기기" />
-        <ConfigItem ikey="ed_su_al" iname="전체 라이브 숨기기" />
-        <ConfigItem ikey="ed_si_rw" iname="다시보기 숨기기" />
-        <ConfigItem ikey="ed_si_ct" iname="카테고리 숨기기" />
-        <ConfigItem ikey="ed_si_fl" iname="팔로잉 숨기기" />
+          <SubTitle>사이드바 하단</SubTitle>
+          <ConfigItem ikey="ed_si_game" iname="게임 숨기기" />
+          <ConfigItem ikey="ed_si_esp" iname="e스포츠 숨기기" />
+          <ConfigItem ikey="ed_si_ori" iname="original 숨기기" />
+          <ConfigItem ikey="ed_si_pcg" iname="PC게임 숨기기" />
+          <ConfigItem ikey="ed_si_chr" iname="치지직 라운지 숨기기" />
 
-        <SubTitle>사이드바 채널추천</SubTitle>
-        <ConfigItem ikey="refreshSidebar" iname="30초마다 채널 새로고침" />
-        <ConfigItem ikey="ed_sc_fl" iname="팔로우 숨기기" />
-        <ConfigItem ikey="ed_sc_rc" iname="추천 숨기기" />
-        <ConfigItem ikey="ed_sc_pt" iname="파트너 숨기기" />
-        <ConfigItem
-          ikey="remove_offline_channel"
-          iname="오프라인 채널 숨기기"
-        />
+          <SubTitle>메인메뉴</SubTitle>
+          <ConfigItem ikey="ed_mi_ban" iname="상단 배너 숨기기" />
+          <Desc>새로고침이 필요합니다</Desc>
+          <ConfigItem ikey="ed_rec_live" iname="추천 라이브 숨기기" />
+          <Desc>
+            새로고침이 필요합니다, 사라지는것 뿐이지 재생은 되고있는거에요!
+          </Desc>
+          <ConfigItem ikey="ed_hm_fl" iname="'팔로잉 채널 라이브' 숨기기" />
+          <ConfigItem ikey="ed_hm_how" iname="'이 라이브 어때요?' 숨기기" />
+          <ConfigItem ikey="ed_hm_lk" iname="'좋아하실 것 같아요' 숨기기" />
+          <ConfigItem
+            ikey="ed_hm_nw"
+            iname="'신입 스트리머 인사드립니다' 숨기기"
+          />
 
-        <SubTitle>사이드바 하단</SubTitle>
-        <ConfigItem ikey="ed_si_game" iname="게임 숨기기" />
-        <ConfigItem ikey="ed_si_esp" iname="e스포츠 숨기기" />
-        <ConfigItem ikey="ed_si_ori" iname="original 숨기기" />
-        <ConfigItem ikey="ed_si_pcg" iname="PC게임 숨기기" />
-        <ConfigItem ikey="ed_si_chr" iname="치지직 라운지 숨기기" />
-
-        <SubTitle>메인메뉴</SubTitle>
-        <ConfigItem ikey="ed_mi_ban" iname="상단 배너 숨기기" />
-        <Desc>새로고침이 필요합니다</Desc>
-        <ConfigItem ikey="ed_rec_live" iname="추천 라이브 숨기기" />
-        <Desc>
-          새로고침이 필요합니다, 사라지는것 뿐이지 재생은 되고있는거에요!
-        </Desc>
-        <ConfigItem ikey="ed_hm_fl" iname="'팔로잉 채널 라이브' 숨기기" />
-        <ConfigItem ikey="ed_hm_how" iname="'이 라이브 어때요?' 숨기기" />
-        <ConfigItem ikey="ed_hm_lk" iname="'좋아하실 것 같아요' 숨기기" />
-        <ConfigItem
-          ikey="ed_hm_nw"
-          iname="'신입 스트리머 인사드립니다' 숨기기"
-        />
-
-        <button className="bugreportud" onClick={extractInstallInfo}>
-          설치 정보 추출
-        </button>
+          <button className="bugreportud" onClick={extractInstallInfo}>
+            설치 정보 추출
+          </button>
+        </div>
       </div>
     </>
   );
