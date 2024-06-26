@@ -1,0 +1,44 @@
+name: "버그 제보"
+description: 버그 제보 양식이에요.
+title: "[Bug]: "
+labels: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        버그 제보 양식입니다. 제보해주셔서 감사합니다! 😊
+  - type: textarea
+    id: describe
+    attributes:
+      label: 버그를 설명해 주세요.
+      description: 어떤게 문제인지 자세히 설명해주세요. 가능하다면 스크린샷도 첨부해주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduse
+    attributes:
+      label: 재현 방법
+      description: 어떻게 하면 버그를 재현할 수 있는지 설명해주세요.
+      value: |
+        1. Go to ...
+        2. Click on ...
+        3. Scroll down to ..
+        4. See error
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      description: 치직치지직 맨 아래 부분에 "설치 정보 추출" 버튼이 있어요. 그걸 눌러서 나오는 정보를 복사해주세요.
+      placeholder: e.g. WyJNb3ppbGxhLzU...
+    validations:
+      required: true
+  - type: checkboxes
+    id: validation
+    attributes:
+      label: 제출 전 확인 사항
+      description: 아래 사항들을 확인하고 체크해주세요.
+      options:
+        - label: 이미 제보된 버그인지 확인했습니다.
+          required: true
