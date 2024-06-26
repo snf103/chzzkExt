@@ -101,7 +101,9 @@ const main = async () => {
 };
 
 vod();
-configInstance.addAnyListener(main);
+configInstance.addListener("config", () => {
+  main();
+});
 configInstance.loadFromStorage().then(main);
 chrome.runtime.onInstalled.addListener(function () {
   log("Oninstall", "Thank you for installing!");
