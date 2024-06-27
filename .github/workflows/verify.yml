@@ -30,7 +30,7 @@ jobs:
         run: yarn
         working-directory: ./extension
       - name: Build extension
-        run: npm run build:chrome & npm run build:firefox
+        run: npm run build:chrome & npm run build:firefox & npm run build:electron
         working-directory: ./extension
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -42,5 +42,11 @@ jobs:
         with:
           name: firefox
           path: ./extension/dist-firefox
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron
+          path: ./extension/dist-electron
       - name: Report status
         run: echo "audit=success" >> $GITHUB_OUTPUT
