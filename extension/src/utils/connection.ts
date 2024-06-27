@@ -5,6 +5,7 @@ import {
   reqIDspliter,
   globalBroadcastPrefix,
 } from "#e/connectionData";
+import { isElectron } from "./browserInfo";
 export { configMessagePrefix, windowRequestPrefix };
 
 export function request<T = any>(endpoint: string, args: any = {}) {
@@ -18,13 +19,19 @@ export function request<T = any>(endpoint: string, args: any = {}) {
     );
 
     const listener = (event: MessageEvent) => {
-      if (event.data.indexOf(windowResponsePrefix) != 0) return;
+      if (
+        typeof event.data != "string" ||
+        event.data.indexOf(windowResponsePrefix) != 0
+      )
+        return;
       const data = event.data.substr(windowResponsePrefix.length);
       const recvid = data.substr(0, data.indexOf(reqIDspliter));
       if (recvid != id) return;
-      const response = JSON.parse(
-        atob(data.substr(data.indexOf(reqIDspliter) + 1))
-      );
+      let strdata = atob(data.substr(data.indexOf(reqIDspliter) + 1));
+      if (strdata == undefined || strdata == null || strdata == "undefined")
+        strdata = "{}";
+      const response = JSON.parse(strdata);
+
       resolve(response);
     };
     window.addEventListener("message", listener);

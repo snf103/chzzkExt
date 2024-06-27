@@ -7,7 +7,9 @@
     "watch:chrome": "webpack --config webpack-chrome/webpack.dev.js --watch",
     "build:chrome": "webpack --config webpack-chrome/webpack.prod.js",
     "watch:firefox": "webpack --config webpack-firefox/webpack.dev.js --watch",
-    "build:firefox": "webpack --config webpack-firefox/webpack.prod.js"
+    "build:firefox": "webpack --config webpack-firefox/webpack.prod.js",
+    "watch:electron": "webpack --config webpack-electron/webpack.dev.js --watch",
+    "build:electron": "webpack --config webpack-electron/webpack.prod.js"
   },
   "author": "",
   "license": "MIT",

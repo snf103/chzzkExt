@@ -276,7 +276,12 @@ const Options = () => {
     fetch("/manifest.json")
       .then((r) => r.json())
       .then((d) => {
-        const data = [navigator.userAgent, configInstance.config, d.version];
+        const data = [
+          navigator.userAgent,
+          configInstance.config,
+          d.version,
+          process.env.NODE_ENV,
+        ];
         console.log(data);
         const jj = btoa(JSON.stringify(data));
         confirmAlert({

@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const srcDir = path.join(__dirname, "..", "src");
-const distDir = path.join(__dirname, "..", "dist-chrome");
+const distDir = path.join(__dirname, "..", "dist-electron");
 const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
@@ -48,7 +48,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": '"chrome"',
+      "process.env.NODE_ENV": '"electron"',
     }),
     new CopyPlugin({
       patterns: [{ from: ".", to: "../", context: "public" }],

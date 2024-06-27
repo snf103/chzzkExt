@@ -47,6 +47,9 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin({})],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": '"firefox"',
+    }),
     new CopyPlugin({
       patterns: [{ from: ".", to: "../", context: "public" }],
       options: {},

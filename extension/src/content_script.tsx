@@ -6,6 +6,7 @@ import configInstance, { defaultConfig } from "@config";
 import log from "@log";
 
 async function main() {
+  log("Main", "Environment", process.env.NODE_ENV!);
   window.chzzkExt = window.chzzkExt || {
     lastConfig: "",
     configInstance,
