@@ -57,7 +57,7 @@
   "host_permissions": [
     "*://*.chzzk.naver.com/*",
     "*://chzzk.naver.com/*",
-    "*://*glad-vod.pstatic.net/*",
+    "*://tvetamovie.pstatic.net/*",
     "*://nam.veta.naver.com/*",
     "*://apis.naver.com/mcollector/*",
     "*://lcs.naver.com/m*",

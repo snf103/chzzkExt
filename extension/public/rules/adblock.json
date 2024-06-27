@@ -58,5 +58,15 @@
     "condition": {
       "urlFilter": "*://nam.veta.naver.com/call*"
     }
+  },
+  {
+    "id": 1106,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://tvetamovie.pstatic.net/libs/*"
+    }
   }
 ]
