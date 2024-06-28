@@ -123,6 +123,7 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
     win.webContents.send("version", latestVersion);
   });
 };
+app.disableHardwareAcceleration();
 
 const createWindow = async () => {
   configDir = join(app.getPath("appData"), "kr.poikr.chzkchzzkplus");
@@ -174,6 +175,7 @@ const createWindow = async () => {
       nodeIntegration: true,
       contextIsolation: false,
       webSecurity: false,
+      webgl: false,
     },
   });
   chzzkWindow.webContents.setUserAgent(uadata.ua);
