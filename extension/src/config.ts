@@ -1,4 +1,4 @@
-import { isChrome, isFirefox } from "#u/browserInfo";
+import { isElectron } from "#u/browserInfo";
 import log from "@log";
 
 export const defaultConfig = {
@@ -76,6 +76,19 @@ class ConfigInstance {
     this.emitAny();
   }
   public save() {
+    if (isElectron) {
+      fetch("chzzkext://saveConfig", {
+        body: JSON.stringify(this.config),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "no-cors",
+      }).then(() => {
+        log("ConfigInstance", "Saved config");
+      });
+      return;
+    }
     chrome.storage.local
       .set({
         config: this.config,
@@ -86,10 +99,21 @@ class ConfigInstance {
   }
   public async loadFromStorage(): Promise<void> {
     return new Promise((resolve) => {
-      chrome.storage.local.get(["config"], (result) => {
-        this.config = result.config || defaultConfig;
-        resolve();
-      });
+      if (isElectron) {
+        fetch("chzzkext://loadConfig", {
+          method: "GET",
+          mode: "no-cors",
+        })
+          .then((res) => res.json())
+          .then((config) => {
+            this.config = config || defaultConfig;
+            resolve();
+          });
+      } else
+        chrome.storage.local.get(["config"], (result) => {
+          this.config = result.config || defaultConfig;
+          resolve();
+        });
     });
   }
   public loadAsT<T>() {
@@ -129,60 +153,34 @@ class ConfigInstance {
 
   constructor() {
     this.anyListeners = [];
-    if (isChrome) {
-      if (!chrome) return;
-      if (!chrome.storage) return;
-      if (!chrome.storage.local) return;
-      this.loadFromStorage();
-      chrome.storage.onChanged.addListener((changes) => {
-        for (const key in changes) {
-          if (key == "config") {
-            // get diff from new value and my value
-            const newConfig = changes.config.newValue;
-            const oldConfig = this.config;
-            const diff = new Set([
-              ...Object.keys(newConfig),
-              ...Object.keys(oldConfig),
-            ]);
-            const diffs = Array.from(diff).filter(
-              (key) => newConfig[key] !== oldConfig[key]
-            );
-            for (const key of diffs) {
-              this.emit(key, newConfig[key]);
-            }
-            this.config = newConfig;
-            this.emitAny();
-          }
-        }
-      });
+    if (!chrome) return;
+    if (!chrome.storage) return;
+    if (!chrome.storage.local) return;
+    this.loadFromStorage();
+    if (isElectron) {
+      return;
     }
-    if (isFirefox) {
-      if (!browser) return;
-      if (!browser.storage) return;
-      if (!browser.storage.local) return;
-      this.loadFromStorage();
-      browser.storage.onChanged.addListener((changes) => {
-        for (const key in changes) {
-          if (key == "config") {
-            // get diff from new value and my value
-            const newConfig = changes.config.newValue;
-            const oldConfig = this.config;
-            const diff = new Set([
-              ...Object.keys(newConfig),
-              ...Object.keys(oldConfig),
-            ]);
-            const diffs = Array.from(diff).filter(
-              (key) => newConfig[key] !== oldConfig[key]
-            );
-            for (const key of diffs) {
-              this.emit(key, newConfig[key]);
-            }
-            this.config = newConfig;
-            this.emitAny();
+    chrome.storage.onChanged.addListener((changes) => {
+      for (const key in changes) {
+        if (key == "config") {
+          // get diff from new value and my value
+          const newConfig = changes.config.newValue;
+          const oldConfig = this.config;
+          const diff = new Set([
+            ...Object.keys(newConfig),
+            ...Object.keys(oldConfig),
+          ]);
+          const diffs = Array.from(diff).filter(
+            (key) => newConfig[key] !== oldConfig[key]
+          );
+          for (const key of diffs) {
+            this.emit(key, newConfig[key]);
           }
+          this.config = newConfig;
+          this.emitAny();
         }
-      });
-    }
+      }
+    });
   }
 }
 

@@ -9,7 +9,13 @@ const uadata = generateRandomAgent();
 protocol.registerSchemesAsPrivileged([
   {
     scheme: "chzzkext",
-    privileges: { secure: true, standard: true, supportFetchAPI: true },
+    privileges: {
+      secure: true,
+      standard: true,
+      supportFetchAPI: true,
+      allowServiceWorkers: true,
+      bypassCSP: true,
+    },
   },
 ]);
 
@@ -20,6 +26,7 @@ import extractZip from "extract-zip";
 
 let setLoadingMessage: (message: string) => void = () => {};
 let cfg: Config;
+let storagePath: string;
 let chzzkWindow: BrowserWindow;
 
 const installLatestExtension = async () => {
@@ -119,16 +126,30 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
 
 const createWindow = async () => {
   const configDir = app.getPath("userData");
+  console.log("[App Data]", configDir);
   fs.mkdirSync(configDir, { recursive: true });
   cfg = new Config(join(configDir, "config.json"));
+  storagePath = join(configDir, "storage.json");
 
   showNewUpdate();
 
   // =============================================
 
   protocol.handle("chzzkext", (request) => {
-    const filePath = request.url.slice("chzzkext://".length);
-    console.log(filePath);
+    const { hostname } = new URL(request.url);
+    if (hostname == "ua") return new Response(JSON.stringify(uadata));
+    if (hostname == "saveconfig") {
+      request.text().then((text) => {
+        fs.writeFileSync(storagePath, text);
+      });
+      return new Response("{}");
+    }
+    if (hostname == "loadconfig") {
+      const fileexists = fs.existsSync(storagePath);
+      if (!fileexists) return new Response("{}");
+      const data = fs.readFileSync(storagePath, "utf-8");
+      return new Response(data);
+    }
     return new Response("{}");
   });
 
@@ -151,7 +172,11 @@ const createWindow = async () => {
   chzzkWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    webPreferences: { nodeIntegration: true, contextIsolation: false },
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      webSecurity: false,
+    },
   });
   chzzkWindow.webContents.setUserAgent(uadata.ua);
   chzzkWindow.loadFile(join(__dirname, "..", "static", "loading.html"));
@@ -169,7 +194,7 @@ const createWindow = async () => {
 
   // =============================================
 
-  if (false)
+  if (true)
     session.defaultSession.loadExtension(
       join(__dirname, "..", "..", "extension", "dist-electron")
     );
