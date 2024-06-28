@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로딩중...</title>
+  </head>
+  <body>
+    <div class="a">
+      <div class="b">잠시만요!</div>
+      <div class="c">치직치지직을 불러오고 있어요</div>
+      <div class="d"></div>
+    </div>
+    <script>
+      const { ipcRenderer } = require("electron");
+      ipcRenderer.on("loading", (event, arg) => {
+        document.querySelector(".d").innerText = arg;
+      });
+    </script>
+    <style>
+      body {
+        background: #141517;
+      }
+      .a {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 20px;
+        text-align: center;
+      }
+      .b {
+        font-size: 40px;
+        margin-bottom: 20px;
+      }
+      .c {
+        color: #8e8e8e;
+      }
+      .d {
+        font-size: 12px;
+        color: #8e8e8e;
+        opacity: 0.6;
+        margin-top: 10px;
+      }
+    </style>
+  </body>
+</html>

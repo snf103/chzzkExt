@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>새로운 업데이트 발견!</title>
+    <style>
+      body {
+        background: #141517;
+        color: white;
+        margin: 0px;
+        padding: 0px;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        src: url("https://fonts.gstatic.com/s/notosanskr/v10/Pby6FmXiQ4QV9RJfMCsPRg.woff2")
+          format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      .a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+        color: white;
+        text-align: center;
+      }
+      .b {
+        font-size: 1.2rem;
+        margin-bottom: 0.3em;
+      }
+      .c {
+        color: #8e8e8e;
+      }
+      .d {
+        font-size: 1rem;
+        color: #8e8e8e;
+        margin-top: 10px;
+      }
+      button {
+        background: #2f80ed;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      button:hover {
+        background: #2f70ed;
+      }
+      .e {
+        background: #8e8e8e;
+        margin-right: 10px;
+      }
+      .e:hover {
+        background: #7e7e7e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="a">
+      <div class="b">새로운 업데이트 발견 (로딩중..)</div>
+      <div class="c">업데이트를 설치하려면 아래 버튼을 눌러주세요.</div>
+      <div class="d">
+        <button onclick="skipUpdate()" class="e">나중에 다시 물어보기</button>
+        <button onclick="installUpdate()">업데이트 설치</button>
+      </div>
+    </div>
+    <script>
+      const { ipcRenderer } = require("electron");
+      ipcRenderer.on("version", (event, arg) => {
+        document.querySelector(
+          ".b"
+        ).innerText = `새로운 업데이트 발견 (${arg})`;
+      });
+
+      function skipUpdate() {
+        ipcRenderer.send("skipUpdate");
+      }
+      function installUpdate() {
+        ipcRenderer.send("installUpdate");
+      }
+    </script>
+  </body>
+</html>
