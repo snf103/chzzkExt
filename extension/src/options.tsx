@@ -195,51 +195,10 @@ const Options = () => {
           onClick: () => resolve(false),
         };
       };
-      const step3 = [
-        makeNot("차단하지 않기"),
-        makeNot("광고 보기"),
-        makeNot("취소"),
-        makeNot("Cancel"),
-        {
-          label: "차단하기",
-          onClick: () => resolve(true),
-        },
-        makeNot("未遮断"),
-        makeNot("未切斷"),
-        makeNot("ไม่ต้องบล็อก"),
-      ];
-      const step2 = [
-        makeNot("차단하지 않기"),
-        {
-          label: "그래도 차단하기",
-          onClick: () =>
-            setTimeout(() =>
-              confirmAlert({
-                title: "정말로요?",
-                message:
-                  "그렇게 원하신다면 어쩔 수 없지만, 다시 한번 생각해주세요.",
-                buttons: shuffle(step3),
-                onClickOutside: () => resolve(false),
-                onKeypressEscape: () => resolve(false),
-              })
-            ),
-        },
-        makeNot("취소"),
-      ];
       const step1 = [
         {
           label: "네",
-          onClick: () =>
-            setTimeout(() =>
-              confirmAlert({
-                title: "진짜로 한번만 다시 생각해주세요",
-                message:
-                  "남일이 아니라 당신의 소중한 스트리머의 수익원을 차단하고 계십니다.",
-                onClickOutside: () => resolve(false),
-                onKeypressEscape: () => resolve(false),
-                buttons: shuffle(step2),
-              })
-            ),
+          onClick: () => () => resolve(true),
         },
         makeNot("아니요"),
       ];
