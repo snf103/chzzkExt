@@ -22,7 +22,7 @@
     "extract-zip": "^2.0.1"
   },
   "build": {
-    "productName": "치직치지직+",
+    "productName": "ChzkChzzkPlus",
     "appId": "kr.poi.chzkchzzkplus",
     "asar": true,
     "win": {
