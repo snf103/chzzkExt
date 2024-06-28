@@ -52,6 +52,7 @@ enum HeaderNames {
 }
 
 export default async function apply(config: UAConfig) {
+  console.log("Applying user agent", config);
   const brandsWithMajor = extractBrandsWithMajor(config);
   const brandsWithFull = extractBrandsWithFull(config);
 

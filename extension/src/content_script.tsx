@@ -4,6 +4,7 @@ import { setupGlobalReciver, request, addGlobalListener } from "#u/connection";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
+import { isElectron } from "./utils/browserInfo";
 
 async function main() {
   log("Main", "Environment", process.env.BUILD_ENV!);
@@ -13,7 +14,10 @@ async function main() {
   };
   setupGlobalReciver();
   const apply = () => {
-    if (configInstance.get("bypassNaver", defaultConfig.bypassNaver))
+    if (
+      isElectron ||
+      configInstance.get("bypassNaver", defaultConfig.bypassNaver)
+    )
       bypassNaver();
 
     if (

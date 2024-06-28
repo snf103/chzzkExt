@@ -1,6 +1,16 @@
-import bypassData from "#e/bypassData";
+import defaultData from "#e/bypassData";
+import { isElectron } from "@/utils/browserInfo";
 
-export default function bypassNaver() {
+export default async function bypassNaver() {
+  let bypassData = defaultData;
+  if (isElectron) {
+    const fdata = await fetch("chzzkext://ua/");
+    bypassData = {
+      ...defaultData,
+      ...(await fdata.json()).cfg,
+    };
+    console.log(bypassData);
+  }
   const overload = <T>(
     t: T,
     prop: T extends Navigator ? keyof T | "oscpu" : keyof T,

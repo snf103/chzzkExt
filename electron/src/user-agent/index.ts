@@ -84,5 +84,13 @@ export default function generateRandomAgent() {
     },
   });
 
-  return { ua, dt };
+  return {
+    ua,
+    dt,
+    cfg: {
+      bypassAgent: ua,
+      appVersion: ua.replace("Mozilla/", ""),
+      chromeVersion: chromeVersion[1],
+    },
+  };
 }
