@@ -3,8 +3,8 @@ import { session } from "electron";
 import { join } from "path";
 import { MenuBase } from "./menuTemplate";
 
-const UserAgent =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
+import generateRandomAgent from "./user-agent/index";
+const uadata = generateRandomAgent();
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -133,11 +133,16 @@ const createWindow = async () => {
   });
 
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    details.requestHeaders["User-Agent"] = UserAgent;
-    details.requestHeaders["Sec-CH-UA-Platform"] = '"macOS"';
-    details.requestHeaders["Sec-Ch-Ua-Mobile"] = "?0";
-    details.requestHeaders["Sec-CH-UA"] =
-      '"Not/A)Brand";v="8", "Chromium";v="126"';
+    for (const operation of uadata.dt) {
+      for (const header of operation.action.requestHeaders) {
+        if (header.operation == "remove") {
+          delete details.requestHeaders[header.header];
+        }
+        if (header.operation == "set") {
+          details.requestHeaders[header.header] = header.value!;
+        }
+      }
+    }
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
@@ -148,7 +153,7 @@ const createWindow = async () => {
     height: 800,
     webPreferences: { nodeIntegration: true, contextIsolation: false },
   });
-  chzzkWindow.webContents.setUserAgent(UserAgent);
+  chzzkWindow.webContents.setUserAgent(uadata.ua);
   chzzkWindow.loadFile(join(__dirname, "..", "static", "loading.html"));
 
   // =============================================
@@ -164,7 +169,11 @@ const createWindow = async () => {
 
   // =============================================
 
-  session.defaultSession.loadExtension(join(configDir, "extension"));
+  if (true)
+    session.defaultSession.loadExtension(
+      join(__dirname, "..", "..", "extension", "dist-electron")
+    );
+  else session.defaultSession.loadExtension(join(configDir, "extension"));
 
   // =============================================
 
