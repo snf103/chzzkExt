@@ -4,12 +4,12 @@
   "description": "chzzk-ext",
   "main": "index.js",
   "scripts": {
-    "watch:chrome": "webpack --config webpack-chrome/webpack.dev.js --watch",
-    "build:chrome": "webpack --config webpack-chrome/webpack.prod.js",
-    "watch:firefox": "webpack --config webpack-firefox/webpack.dev.js --watch",
-    "build:firefox": "webpack --config webpack-firefox/webpack.prod.js",
-    "watch:electron": "webpack --config webpack-electron/webpack.dev.js --watch",
-    "build:electron": "webpack --config webpack-electron/webpack.prod.js"
+    "watch:chrome": "NODE_ENV=\"development\" webpack --config webpack-chrome/webpack.dev.js --watch",
+    "build:chrome": "NODE_ENV=\"production\" webpack --mode production --config webpack-chrome/webpack.prod.js",
+    "watch:firefox": "NODE_ENV=\"development\" webpack --config webpack-firefox/webpack.dev.js --watch",
+    "build:firefox": "NODE_ENV=\"production\" webpack --mode production --config webpack-firefox/webpack.prod.js",
+    "watch:electron": "NODE_ENV=\"development\" webpack --config webpack-electron/webpack.dev.js --watch",
+    "build:electron": "NODE_ENV=\"production\" webpack --mode production --config webpack-electron/webpack.prod.js"
   },
   "author": "",
   "license": "MIT",
@@ -48,6 +48,7 @@
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.0.4",
     "webpack": "^5.91.0",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^4.0.0",
     "webpack-merge": "^5.0.0"
   }
