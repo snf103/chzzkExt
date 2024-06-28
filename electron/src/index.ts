@@ -27,6 +27,7 @@ import extractZip from "extract-zip";
 let setLoadingMessage: (message: string) => void = () => {};
 let cfg: Config;
 let storagePath: string;
+let configDir: string;
 let chzzkWindow: BrowserWindow;
 
 const installLatestExtension = async () => {
@@ -49,7 +50,6 @@ const installLatestExtension = async () => {
 
   setLoadingMessage("파일 쓰는중...");
 
-  const configDir = app.getPath("userData");
   const filePath = join(configDir, "electron.zip");
   fs.writeFileSync(filePath, Buffer.from(response.data, "binary"), "binary");
 
@@ -125,13 +125,11 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
 };
 
 const createWindow = async () => {
-  const configDir = app.getPath("userData");
+  configDir = join(app.getPath("appData"), "kr.poikr.chzkchzzkplus");
   console.log("[App Data]", configDir);
   fs.mkdirSync(configDir, { recursive: true });
   cfg = new Config(join(configDir, "config.json"));
   storagePath = join(configDir, "storage.json");
-
-  showNewUpdate();
 
   // =============================================
 
@@ -189,21 +187,16 @@ const createWindow = async () => {
 
   setLoadingMessage("확장프로그램 로딩중...");
   let vsr = cfg.get("version");
-  if (vsr == undefined) await installLatestExtension();
+  if (vsr == undefined || !fs.existsSync(join(configDir, "extension")))
+    await installLatestExtension();
+  else showNewUpdate();
   vsr = cfg.get("version");
 
   // =============================================
 
-  if (false)
-    session.defaultSession.loadExtension(
-      join(__dirname, "..", "..", "extension", "dist-electron")
-    );
-  else session.defaultSession.loadExtension(join(configDir, "extension"));
-
-  // =============================================
-
+  console.log("Loading extension...", join(configDir, "extension"));
   const ext = await session.defaultSession.loadExtension(
-    join(__dirname, "..", "..", "extension", "dist-electron")
+    join(configDir, "extension")
   );
 
   const isMac = process.platform === "darwin";
