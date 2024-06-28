@@ -60,13 +60,24 @@
     }
   },
   {
-    "id": 1106,
+    "id": 1107,
     "priority": 1,
     "action": {
       "type": "block"
     },
     "condition": {
       "urlFilter": "*://tvetamovie.pstatic.net/libs/*"
+    }
+  },
+  {
+    "id": 1108,
+    "priority": 1,
+
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "*://nam.veta.naver.com/call"
     }
   }
 ]
