@@ -6,14 +6,46 @@
   "devDependencies": {
     "@types/node": "^20.14.9",
     "electron": "^31.1.0",
+    "electron-builder": "^24.13.3",
     "typescript": "^5.5.2"
   },
   "scripts": {
     "build": "tsc",
-    "start": "electron ."
+    "start": "electron .",
+    "build:wx": "electron-builder --win --x64",
+    "build:mx": "electron-builder --mac --x64",
+    "build:ma": "electron-builder --mac --arm64",
+    "build:lx": "electron-builder --linux --x64"
   },
   "dependencies": {
     "axios": "^1.7.2",
     "extract-zip": "^2.0.1"
+  },
+  "build": {
+    "productName": "치직치지직+",
+    "appId": "kr.poi.chzkchzzkplus",
+    "asar": true,
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
+      ],
+      "icon": "./resources/logo512.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "./resources/logo512.png"
+    },
+    "directories": {
+      "output": "./build/",
+      "app": "."
+    }
   }
 }
