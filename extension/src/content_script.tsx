@@ -12,7 +12,7 @@ async function main() {
     lastConfig: "",
     configInstance,
   };
-  configInstance.syncConfig();
+  if (isElectron) configInstance.syncConfig();
   setupGlobalReciver();
   const apply = () => {
     if (
