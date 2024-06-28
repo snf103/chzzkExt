@@ -198,7 +198,7 @@ const Options = () => {
       const step1 = [
         {
           label: "네",
-          onClick: () => () => resolve(true),
+          onClick: () => resolve(true),
         },
         makeNot("아니요"),
       ];
