@@ -182,6 +182,23 @@ class ConfigInstance {
       }
     });
   }
+
+  public syncConfig() {
+    const interval = setInterval(async () => {
+      const config = await fetch("chzzkext://loadconfig").then((res) =>
+        res.json()
+      );
+      const diff = new Set([
+        ...Object.keys(config),
+        ...Object.keys(this.config),
+      ]);
+      const diffs = Array.from(diff).filter(
+        (key) => config[key] !== this.config[key]
+      );
+      if (diffs.length == 0) return;
+      this.load(config);
+    }, 1000);
+  }
 }
 
 const configInstance = new ConfigInstance();

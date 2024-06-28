@@ -12,6 +12,7 @@ async function main() {
     lastConfig: "",
     configInstance,
   };
+  configInstance.syncConfig();
   setupGlobalReciver();
   const apply = () => {
     if (
