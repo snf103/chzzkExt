@@ -169,7 +169,7 @@ const createWindow = async () => {
 
   // =============================================
 
-  if (true)
+  if (false)
     session.defaultSession.loadExtension(
       join(__dirname, "..", "..", "extension", "dist-electron")
     );
