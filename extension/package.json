@@ -9,7 +9,8 @@
     "watch:firefox": "NODE_ENV=\"development\" webpack --config webpack-firefox/webpack.dev.js --watch",
     "build:firefox": "NODE_ENV=\"production\" webpack --mode production --config webpack-firefox/webpack.prod.js",
     "watch:electron": "NODE_ENV=\"development\" webpack --config webpack-electron/webpack.dev.js --watch",
-    "build:electron": "NODE_ENV=\"production\" webpack --mode production --config webpack-electron/webpack.prod.js"
+    "build:electron": "NODE_ENV=\"production\" webpack --mode production --config webpack-electron/webpack.prod.js",
+    "build:all": "run-p build:chrome build:firefox build:electron"
   },
   "author": "",
   "license": "MIT",
@@ -41,6 +42,7 @@
     "imagemin-svgo": "^10.0.1",
     "json-minimizer-webpack-plugin": "^5.0.0",
     "merge-jsons-webpack-plugin": "^2.0.1",
+    "npm-run-all": "^4.1.5",
     "prop-types": "^15.8.1",
     "raw-loader": "^4.0.2",
     "style-loader": "^4.0.0",
