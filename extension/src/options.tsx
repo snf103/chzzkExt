@@ -10,6 +10,7 @@ import "#s/bugreport.css";
 import "#s/options.css";
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
+import { isElectron } from "./utils/browserInfo";
 
 const Options = () => {
   const ConfigItem = ({
@@ -280,7 +281,7 @@ const Options = () => {
           navigator.userAgent,
           configInstance.config,
           d.version,
-          process.env.NODE_ENV,
+          process.env.BUILD_ENV,
         ];
         console.log(data);
         const jj = btoa(JSON.stringify(data));
@@ -361,11 +362,18 @@ const Options = () => {
           <Desc>새로고침이 필요합니다</Desc>
           <ConfigItem ikey="adskip" iname="광고 스킵" />
           <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
-          <ConfigItem
-            ikey="bypassNaver"
-            iname="플러그인 없이 고화질 재생"
-            askBefore={askBefore_bypassNaver}
-          />
+          {isElectron ? (
+            <Desc>
+              Electron버전에서는 플러그인 없이 고화질 재생이 항상 활성화
+              되어있습니다.
+            </Desc>
+          ) : (
+            <ConfigItem
+              ikey="bypassNaver"
+              iname="플러그인 없이 고화질 재생"
+              askBefore={askBefore_bypassNaver}
+            />
+          )}
           <Desc>
             현재 작동하지 않습니다.{" "}
             <a
