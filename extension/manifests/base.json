@@ -38,7 +38,11 @@
       "matches": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"]
     },
     {
-      "resources": ["assets/logo512.png", "assets/smallpro.png"],
+      "resources": [
+        "assets/logo512.png",
+        "assets/smallpro.png",
+        "rules/*.json"
+      ],
       "matches": ["<all_urls>"]
     },
     {
