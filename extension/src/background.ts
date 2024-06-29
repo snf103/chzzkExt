@@ -3,6 +3,7 @@ import applyBypassNaver from "@/backgrounds/bypassNaver";
 
 import configInstance, { defaultConfig } from "@config";
 import log from "@log";
+import { isElectron } from "#u/browserInfo";
 
 /*
 10__ => trackblock
@@ -31,6 +32,19 @@ const applyRule = async () => {
     enableRules,
     disableRules,
   });
+  if(isElectron) {
+    fetch("chzzkext://applyrules", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "no-cors",
+      body: JSON.stringify({
+        enableRules,
+        disableRules,
+      })
+    })
+  }
 };
 const applyAdBlock = () => {
   const apply = (enable: boolean) => {
@@ -109,3 +123,6 @@ chrome.runtime.onInstalled.addListener(function () {
   log("Oninstall", "Thank you for installing!");
   main();
 });
+
+if(isElectron)
+  configInstance.syncConfigBackground(main);
