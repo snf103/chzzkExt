@@ -125,6 +125,8 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
 };
 app.disableHardwareAcceleration();
 
+const extensionOperations: any[] = [];
+
 const createWindow = async () => {
   configDir = join(app.getPath("appData"), "kr.poikr.chzkchzzkplus");
   console.log("[App Data]", configDir);
@@ -149,11 +151,28 @@ const createWindow = async () => {
       const data = fs.readFileSync(storagePath, "utf-8");
       return new Response(data);
     }
+    // if (hostname == "code") {
+    //   console.log("CODE INJECTED")
+    //   return new Response(
+    //     fs.readFileSync(
+    //       join(__dirname, "..", "resources", "main.bc9484b3.js"),
+    //       "utf-8",
+    //     ).toString().replace("`@REPL`", `{agent: "${uadata.ua}"}`),
+    //   );
+    // }
+    if (hostname == "applyrules") {
+      request.text().then((text) => {
+        const onoff = JSON.parse(text) as {
+          enableRules: string[];
+          disableRules: string[];
+        };
+      });
+    }
     return new Response("{}");
   });
 
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    for (const operation of uadata.dt) {
+    for (const operation of [...uadata.dt, ...extensionOperations]) {
       for (const header of operation.action.requestHeaders) {
         if (header.operation == "remove") {
           delete details.requestHeaders[header.header];
@@ -163,8 +182,21 @@ const createWindow = async () => {
         }
       }
     }
+
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
+  // session.defaultSession.webRequest.onBeforeRequest(
+  //   {
+  //     urls: [
+  //       "https://ssl.pstatic.net/static/nng/glive/resource/p/static/js/main.bc9484b3.js",
+  //     ],
+  //   },
+  //   (details, callback) => {
+  //     callback({
+  //       redirectURL: "chzzkext://code/",
+  //     });
+  //   },
+  // );
 
   // =============================================
 
@@ -178,6 +210,7 @@ const createWindow = async () => {
       webgl: false,
     },
   });
+
   chzzkWindow.webContents.setUserAgent(uadata.ua);
   chzzkWindow.loadFile(join(__dirname, "..", "static", "loading.html"));
 
@@ -196,10 +229,12 @@ const createWindow = async () => {
 
   // =============================================
 
-  console.log("Loading extension...", join(configDir, "extension"));
-  const ext = await session.defaultSession.loadExtension(
-    join(configDir, "extension")
-  );
+  const IS_DEV = process.env.NODE_ENV === "development";
+  const EXTDIR = IS_DEV
+    ? join(__dirname, "..", "..", "extension", "dist-electron")
+    : join(configDir, "extension");
+  console.log("Loading extension...", EXTDIR);
+  const ext = await session.defaultSession.loadExtension(EXTDIR);
 
   const isMac = process.platform === "darwin";
   const menu = Menu.buildFromTemplate([
