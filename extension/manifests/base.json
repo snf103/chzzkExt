@@ -1,10 +1,8 @@
 {
   "manifest_version": 3,
-
   "name": "치직치지직 (ChzkChzzk)",
   "description": "치지직(chzzk.naver.com)을 더 유용하게!",
   "version": "2.13.6",
-
   "options_ui": {
     "page": "options.html"
   },
@@ -25,11 +23,11 @@
     "256": "assets/logo256.png",
     "512": "assets/logo512.png"
   },
-
   "content_scripts": [
     {
       "matches": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"],
-      "js": ["js/vendor.js", "js/injecter.js"]
+      "js": ["js/vendor.js", "js/injecter.js"],
+      "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
@@ -50,14 +48,12 @@
       "matches": ["<all_urls>"]
     }
   ],
-
   "permissions": [
     "declarativeNetRequest",
     "storage",
     "webRequest",
     "scripting"
   ],
-
   "host_permissions": [
     "*://*.chzzk.naver.com/*",
     "*://chzzk.naver.com/*",
@@ -70,7 +66,6 @@
     "*://gfp.veta.naver.com/",
     "*://ssl.pstatic.net/*"
   ],
-
   "declarative_net_request": {
     "rule_resources": [
       {
