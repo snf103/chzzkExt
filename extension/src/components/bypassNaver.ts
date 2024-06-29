@@ -69,6 +69,7 @@ export default async function bypassNaver() {
   overload(n, "oscpu", bypassData.oscpu);
   overload(n, "product", bypassData.product);
   overload(n, "appName", bypassData.appName);
+  overload(n, "vendor", bypassData.vendor);
 
   const na = (navigator as any).userAgentData;
   if (na) {

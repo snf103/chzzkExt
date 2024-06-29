@@ -8,6 +8,7 @@ const bypassData = {
   product: "Gecko",
   chromeVersion: "125.0.6422.142",
   appName: "Netscape",
+  vendor: "Google Inc.",
 };
 
 export default bypassData;
