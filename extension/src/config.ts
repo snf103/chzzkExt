@@ -196,7 +196,32 @@ class ConfigInstance {
         (key) => config[key] !== this.config[key]
       );
       if (diffs.length == 0) return;
+      console.log("DIFF FOUND!", diffs);
+
       this.load(config);
+      window.chzzkExt.config = config;
+      window.dispatchEvent(new Event("chzzkExtConfig"));
+    }, 1000);
+  }
+
+
+  public syncConfigBackground(main: () => void) {
+    const interval = setInterval(async () => {
+      const config = await fetch("chzzkext://loadconfig").then((res) =>
+        res.json()
+      );
+      const diff = new Set([
+        ...Object.keys(config),
+        ...Object.keys(this.config),
+      ]);
+      const diffs = Array.from(diff).filter(
+        (key) => config[key] !== this.config[key]
+      );
+      if (diffs.length == 0) return;
+      console.log("DIFF FOUND!", diffs);
+
+      this.load(config);
+      main();
     }, 1000);
   }
 }
