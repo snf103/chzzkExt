@@ -51,6 +51,7 @@ type ConfigObject = {
   [key: string]: ConfigData;
 };
 type AnyListener = () => void;
+type CoditionListener = (changedKey: string[]) => boolean;
 type Listener = (key: string, newData: ConfigData) => void;
 
 class ConfigInstance {
@@ -141,14 +142,36 @@ class ConfigInstance {
   }
 
   anyListeners: AnyListener[];
+  conditionListeners: [CoditionListener, AnyListener][] = [];
   public addAnyListener(listener: AnyListener): void {
     this.anyListeners.push(listener);
   }
   public removeAnyListener(listener: AnyListener): void {
     this.anyListeners = this.anyListeners.filter((l) => l !== listener);
   }
+  public addConditionListener(
+    condition: CoditionListener,
+    listener: AnyListener
+  ): void {
+    this.conditionListeners.push([condition, listener]);
+  }
+  public removeConditionListener(
+    condition: CoditionListener,
+    listener: AnyListener
+  ): void {
+    this.conditionListeners = this.conditionListeners.filter(
+      ([c, l]) => c !== condition && l !== listener
+    );
+  }
   public emitAny(): void {
     this.anyListeners.forEach((l) => l());
+  }
+  public emitCondition(changes: string[]) {
+    this.conditionListeners.forEach(([c, l]) => {
+      if (c(changes)) {
+        l();
+      }
+    });
   }
 
   constructor() {
@@ -178,6 +201,7 @@ class ConfigInstance {
           }
           this.config = newConfig;
           this.emitAny();
+          this.emitCondition(diffs);
         }
       }
     });
@@ -196,14 +220,13 @@ class ConfigInstance {
         (key) => config[key] !== this.config[key]
       );
       if (diffs.length == 0) return;
-      console.log("DIFF FOUND!", diffs);
+      this.emitCondition(diffs);
 
       this.load(config);
       window.chzzkExt.config = config;
       window.dispatchEvent(new Event("chzzkExtConfig"));
     }, 1000);
   }
-
 
   public syncConfigBackground(main: () => void) {
     const interval = setInterval(async () => {
@@ -218,7 +241,7 @@ class ConfigInstance {
         (key) => config[key] !== this.config[key]
       );
       if (diffs.length == 0) return;
-      console.log("DIFF FOUND!", diffs);
+      this.emitCondition(diffs);
 
       this.load(config);
       main();

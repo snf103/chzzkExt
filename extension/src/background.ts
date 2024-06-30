@@ -32,7 +32,7 @@ const applyRule = async () => {
     enableRules,
     disableRules,
   });
-  if(isElectron) {
+  if (isElectron) {
     fetch("chzzkext://applyrules", {
       method: "POST",
       headers: {
@@ -42,8 +42,8 @@ const applyRule = async () => {
       body: JSON.stringify({
         enableRules,
         disableRules,
-      })
-    })
+      }),
+    });
   }
 };
 const applyAdBlock = () => {
@@ -115,14 +115,20 @@ const main = async () => {
 };
 
 vod();
-configInstance.addListener("config", () => {
-  main();
-});
+configInstance.addConditionListener(
+  (changes) => {
+    return changes.some((key) => {
+      return key in defaultConfig;
+    });
+  },
+  () => {
+    main();
+  }
+);
 configInstance.loadFromStorage().then(main);
 chrome.runtime.onInstalled.addListener(function () {
   log("Oninstall", "Thank you for installing!");
   main();
 });
 
-if(isElectron)
-  configInstance.syncConfigBackground(main);
+if (isElectron) configInstance.syncConfigBackground(main);
