@@ -6,6 +6,7 @@ const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { EsbuildPlugin } = require("esbuild-loader");
 
 module.exports = {
   gen: function (distDirX, BUILD_ENV, manifestName) {
@@ -32,13 +33,23 @@ module.exports = {
       module: {
         rules: [
           {
-            test: /\.tsx?$/,
-            use: "ts-loader",
-            exclude: /node_modules/,
+            test: /\.[jt]sx?$/,
+            loader: "esbuild-loader",
+            options: {
+              target: "es2015",
+              keepNames: true,
+              minify: false,
+            },
           },
           { test: /\.static\.txt$/, use: "raw-loader" },
-          { test: /\.static\.css$/, use: "raw-loader" },
-          { test: /\.static\.html$/, use: "raw-loader" },
+          {
+            test: /\.static\.css$/,
+            use: "raw-loader",
+          },
+          {
+            test: /\.static\.html$/,
+            use: "raw-loader",
+          },
           { test: /\.static\.data$/, use: "raw-loader" },
           {
             test: /(?<!\.static)\.css$/i,
@@ -51,8 +62,10 @@ module.exports = {
         plugins: [new TsconfigPathsPlugin({})],
       },
       plugins: [
-        new webpack.DefinePlugin({
-          "process.env.BUILD_ENV": '"' + BUILD_ENV + '"',
+        new EsbuildPlugin({
+          define: {
+            "process.env.BUILD_ENV": '"' + BUILD_ENV + '"',
+          },
         }),
         new CopyPlugin({
           patterns: [{ from: ".", to: "../", context: "public" }],

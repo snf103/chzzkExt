@@ -1,78 +1,87 @@
-const TerserPlugin = require("terser-webpack-plugin");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
-const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
+const webpack = require("webpack");
+const { EsbuildPlugin } = require("esbuild-loader");
+
+const HTML = require("html-minimizer-webpack-plugin");
+const JSON = require("json-minimizer-webpack-plugin");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+
+const smp = new SpeedMeasurePlugin();
+
 module.exports = {
-  mode: "production",
-  module: {
-    rules: [
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        type: "asset",
+  modify: function (config) {
+    config.optimization = {
+      splitChunks: {
+        name: "vendor",
+        chunks(chunk) {
+          return chunk.name !== "background";
+        },
       },
-    ],
-  },
-  optimization: {
-    mangleExports: false,
-    mangleWasmImports: false,
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        terserOptions: { compress: true, mangle: false },
-      }),
-      new ImageMinimizerPlugin({
-        minimizer: {
-          implementation: ImageMinimizerPlugin.imageminMinify,
-          options: {
-            // Lossless optimization with custom option
-            // Feel free to experiment with options for better result for you
-            plugins: [
-              ["gifsicle", { interlaced: true }],
-              ["jpegtran", { progressive: true }],
-              ["optipng", { optimizationLevel: 5 }],
-              // Svgo configuration here https://github.com/svg/svgo#configuration
-              [
-                "svgo",
-                {
-                  plugins: [
-                    {
-                      name: "preset-default",
-                      params: {
-                        overrides: {
-                          removeViewBox: false,
-                          addAttributesToSVGElement: {
-                            params: {
-                              attributes: [
-                                { xmlns: "http://www.w3.org/2000/svg" },
-                              ],
-                            },
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-              ],
-            ],
+      mangleExports: false,
+      mangleWasmImports: false,
+      minimize: true,
+      minimizer: [
+        new EsbuildPlugin({
+          target: "es2015",
+          keepNames: true,
+          minify: false,
+          minifySyntax: true,
+          minifyWhitespace: true,
+          mangleQuoted: true,
+          css: true,
+          treeShaking: true,
+        }),
+      ],
+    };
+    config.module.rules.length = 0;
+    config.module.rules = [
+      {
+        test: /\.[jt]sx?$/,
+        loader: "esbuild-loader",
+        options: {
+          target: "es2015",
+          keepNames: true,
+          minify: false,
+        },
+      },
+      { test: /\.static\.txt$/, use: "raw-loader" },
+      {
+        test: /\.static\.css$/,
+        use: [
+          "raw-loader",
+          {
+            loader: "esbuild-loader",
+            options: {
+              target: "es2015",
+              minify: true,
+            },
           },
-        },
-      }),
-      new CssMinimizerPlugin(),
-      new HtmlMinimizerPlugin({
-        minimizerOptions: {
-          collapseWhitespace: true,
-          removeComments: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          useShortDoctype: true,
-        },
-        parallel: true,
-      }),
-      new JsonMinimizerPlugin(),
-    ],
+        ],
+      },
+      {
+        test: /\.static\.html$/,
+        use: "raw-loader",
+      },
+      { test: /\.static\.data$/, use: "raw-loader" },
+      {
+        test: /(?<!\.static)\.css$/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "esbuild-loader",
+            options: {
+              target: "es2015",
+              minify: true,
+            },
+          },
+        ],
+      },
+    ];
+    config.plugins.push(new HTML());
+    config.plugins.push(new JSON());
+    if (process.env.SPD === "true") {
+      config = smp.wrap(config);
+    }
+    return config;
   },
-  plugins: [],
 };
