@@ -1,4 +1,3 @@
 const common = require("./webpack.common.js");
-const dev = require("../webpack-common/webpack.dev.js");
-
-module.exports = dev.modify(common);
+const prod = require("../webpack-common/webpack.prod.js");
+module.exports = prod.modify(common);
