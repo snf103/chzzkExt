@@ -19,7 +19,6 @@
     "url": "https://github.com/poikr/chzzkExt.git"
   },
   "dependencies": {
-    "fast-xml-parser": "^4.3.6",
     "react": "^18.2.0",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0"
