@@ -323,16 +323,30 @@ const Options = () => {
           <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
           {isElectron ? (
             <Desc>
-              Electron버전에서는 플러그인 없이 고화질 재생이 항상 활성화
+              Electron버전에서는 그리드 없이 고화질 재생이 항상 활성화
               되어있습니다.
             </Desc>
           ) : (
             <>
-              <ConfigItem
-                ikey="bypassNaver"
-                iname="플러그인 없이 고화질 재생"
-                askBefore={askBefore_bypassNaver}
-              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "5px",
+                  fontSize: 14,
+                  lineHeight: "1",
+                }}
+              >
+                <label
+                  style={{
+                    lineHeight: "1",
+                    fontSize: 14,
+                  }}
+                >
+                  그리드 없이 고화질 재생
+                </label>
+              </div>
 
               <Desc>
                 현재 Electron 버전 에서만 작동합니다.{" "}
