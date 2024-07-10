@@ -267,6 +267,8 @@ const Options = () => {
       });
   };
 
+  const reloadPage = () => fetch("chzzkext://reload");
+
   const DiscordLogoSVG = () => {
     return (
       <img
@@ -301,7 +303,14 @@ const Options = () => {
             </a>
           </div>
         </div>
-
+        {isElectron && (
+          <>
+            <Spacer />
+            <button className="bugreportud" onClick={reloadPage}>
+              새로고침
+            </button>
+          </>
+        )}
         <div className="content">
           <Title>공통</Title>
           <ConfigItem ikey="blocktracker" iname="트래커 차단" />

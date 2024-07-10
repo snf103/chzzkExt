@@ -171,6 +171,10 @@ const createWindow = async () => {
         };
       });
     }
+    if (hostname == "reload") {
+      chzzkWindow.webContents.reload();
+      return new Response("{}");
+    }
     return new Response("{}");
   });
 
@@ -283,6 +287,7 @@ const createWindow = async () => {
                 nodeIntegration: true,
               },
             });
+            window.setMenuBarVisibility(false);
             window.loadURL(ext.url + "/options.html");
           },
         },
@@ -299,6 +304,13 @@ const createWindow = async () => {
   chzzkWindow.webContents.send(
     "loading",
     `치지직 + 치직치지직(${vsr}) 로딩중...`
+  );
+
+  chzzkWindow.on("enter-full-screen", () =>
+    chzzkWindow.setMenuBarVisibility(false)
+  );
+  chzzkWindow.on("leave-full-screen", () =>
+    chzzkWindow.setMenuBarVisibility(true)
   );
 
   chzzkWindow.loadURL("https://chzzk.naver.com/");
