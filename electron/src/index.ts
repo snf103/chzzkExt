@@ -260,6 +260,13 @@ const createWindow = async () => {
           },
           accelerator: isMac ? "Cmd+Right" : "Alt+Right",
         },
+        {
+          label: "새로고침",
+          accelerator: isMac ? "Cmd+R" : "F5",
+          click: () => {
+            chzzkWindow.webContents.reload();
+          },
+        },
       ],
     },
     {
