@@ -337,25 +337,11 @@ const Options = () => {
             </Desc>
           ) : (
             <>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "5px",
-                  fontSize: 14,
-                  lineHeight: "1",
-                }}
-              >
-                <label
-                  style={{
-                    lineHeight: "1",
-                    fontSize: 14,
-                  }}
-                >
-                  그리드 없이 고화질 재생
-                </label>
-              </div>
+              <ConfigItem
+                ikey="bypassNaver"
+                iname="플러그인 없이 고화질 재생"
+                askBefore={askBefore_bypassNaver}
+              />
 
               <Desc>
                 현재 Electron 버전 에서만 작동합니다.{" "}
