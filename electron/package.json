@@ -12,10 +12,10 @@
   "scripts": {
     "build": "tsc",
     "start": "electron .",
-    "build:ma": "npx @electron/packager . ChzkChzzkPlus --platform=darwin --arch=arm64",
-    "build:mx": "npx @electron/packager . ChzkChzzkPlus --platform=darwin --arch=x64",
-    "build:wa": "npx @electron/packager . ChzkChzzkPlus --platform=win32 --arch=arm64",
-    "build:wx": "npx @electron/packager . ChzkChzzkPlus --platform=win32 --arch=x64"
+    "build:ma": "npx @electron/packager . ChzkChzzkPlus --platform=darwin --arch=arm64 --icon=./resources/logo512.icns",
+    "build:mx": "npx @electron/packager . ChzkChzzkPlus --platform=darwin --arch=x64 --icon=./resources/logo512.icns",
+    "build:wa": "npx @electron/packager . ChzkChzzkPlus --platform=win32 --arch=arm64 --icon=./resources/logo512.ico",
+    "build:wx": "npx @electron/packager . ChzkChzzkPlus --platform=win32 --arch=x64 --icon=./resources/logo512.ico"
   },
   "dependencies": {
     "axios": "^1.7.2",

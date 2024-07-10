@@ -335,12 +335,12 @@ const Options = () => {
               />
 
               <Desc>
-                현재 작동하지 않습니다.{" "}
+                현재 Electron 버전 에서만 작동합니다.{" "}
                 <a
-                  href="https://blog.oein.kr/projects-chzkchzzk#b5339637b64448dca7994ec690769e6a"
+                  href="https://github.com/poikr/chzzkExt/blob/main/electron/README.md"
                   target="_blank"
                 >
-                  블로그
+                  문서
                 </a>
                 를 참조해 주세요.
               </Desc>
