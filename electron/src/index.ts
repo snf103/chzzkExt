@@ -2,6 +2,7 @@ import { BrowserWindow, app, Menu, protocol, ipcMain } from "electron";
 import { session } from "electron";
 import { join } from "path";
 import { MenuBase } from "./menuTemplate";
+import wcmatch from "wildcard-match";
 
 import generateRandomAgent from "./user-agent/index";
 const uadata = generateRandomAgent();
@@ -123,9 +124,33 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
     win.webContents.send("version", latestVersion);
   });
 };
+
+let needUpdate = false;
+let checkingUpdateElec = false;
+const checkElectronUpdate = async () => {
+  if (checkingUpdateElec) return;
+  checkingUpdateElec = true;
+  const latest = await axios
+    .get("https://api.github.com/repos/poikr/chzkChzzkPlus/releases/latest")
+    .finally(() => {
+      checkingUpdateElec = false;
+    });
+  const latestVersion = latest.data.tag_name;
+  if (app.getVersion() == latestVersion) {
+    return;
+  }
+  console.log(app.getVersion(), latestVersion);
+  console.log("NEED UPDATE");
+  chzzkWindow.webContents.executeJavaScript(
+    fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8")
+  );
+  needUpdate = true;
+};
+
 app.disableHardwareAcceleration();
 
 const extensionOperations: any[] = [];
+const extOperation: any[] = [];
 
 const createWindow = async () => {
   configDir = join(app.getPath("appData"), "kr.poikr.chzkchzzkplus");
@@ -169,10 +194,38 @@ const createWindow = async () => {
           enableRules: string[];
           disableRules: string[];
         };
+
+        const manifestPath = join(configDir, "extension", "manifest.json");
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8")) as {
+          declarative_net_request: {
+            rule_resources: {
+              id: string;
+              enabled: boolean;
+              path: string;
+            }[];
+          };
+        };
+
+        extOperation.length = 0;
+
+        for (const rule of manifest.declarative_net_request.rule_resources) {
+          if (onoff.enableRules.includes(rule.id)) {
+            // rules/adblock.json
+            const path = join(configDir, "extension", rule.path);
+            const data = JSON.parse(fs.readFileSync(path, "utf-8"));
+            extOperation.push(...data);
+          }
+        }
       });
     }
     if (hostname == "reload") {
       chzzkWindow.webContents.reload();
+      return new Response("{}");
+    }
+    if (hostname == "update") {
+      require("electron").shell.openExternal(
+        "https://github.com/poikr/chzkChzzkPlus/releases/latest"
+      );
       return new Response("{}");
     }
     return new Response("{}");
@@ -186,6 +239,17 @@ const createWindow = async () => {
         }
         if (header.operation == "set") {
           details.requestHeaders[header.header] = header.value!;
+        }
+      }
+    }
+
+    for (const operation of extOperation) {
+      if (operation.action.type == "block") {
+        // *://nam.veta.naver.com/call
+        const filter = operation.condition.urlFilter;
+        if (wcmatch(filter)(details.url)) {
+          callback({ cancel: true });
+          return;
         }
       }
     }
@@ -233,6 +297,7 @@ const createWindow = async () => {
   if (vsr == undefined || !fs.existsSync(join(configDir, "extension")))
     await installLatestExtension();
   else showNewUpdate();
+  checkElectronUpdate();
   vsr = cfg.get("version");
 
   // =============================================
@@ -314,6 +379,13 @@ const createWindow = async () => {
   );
 
   chzzkWindow.loadURL("https://chzzk.naver.com/");
+  chzzkWindow.webContents.on("did-finish-load", () => {
+    console.log("INJECT", needUpdate);
+    if (needUpdate)
+      chzzkWindow.webContents.executeJavaScript(
+        fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8")
+      );
+  });
 };
 
 app.whenReady().then(createWindow);
