@@ -3,7 +3,7 @@ import itemHTML from "#s/voteItem.static.html";
 import myCSS from "#s/voteui.static.css";
 import myUI from "#s/voteui.static.html";
 
-import getChatWrapper from "./getChatWrapper";
+import getChatWrapper from "../getChatWrapper";
 import createCustomAlertBox from "./createCustomAlertBox";
 import { ChatItem, ExpendedSender, Sender } from "@/components/wsInject/type";
 import { chatEmitter } from "@/components/wsInject";

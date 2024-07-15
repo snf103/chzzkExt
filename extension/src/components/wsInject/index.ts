@@ -26,10 +26,19 @@ export const applyWSInject = async () => {
       for (const msg of data.bdy.messageList)
         emitter.dispatchEvent(new CustomEvent("message", { detail: msg }));
 
-      const uq = new URL(location.href).searchParams.get("user");
+      const u = new URL(location.href);
+      const uq = u.searchParams.get("user");
       if (uq != null) {
         data.bdy.messageList = data.bdy.messageList.filter(
           (msg: any) => JSON.parse(msg.profile).userIdHash == uq,
+        );
+        message.data = JSON.stringify(data);
+      }
+
+      const un = u.searchParams.get("name");
+      if (un != null) {
+        data.bdy.messageList = data.bdy.messageList.filter(
+          (msg: any) => JSON.parse(msg.profile).nickname == un,
         );
         message.data = JSON.stringify(data);
       }
@@ -38,10 +47,20 @@ export const applyWSInject = async () => {
         emitter.dispatchEvent(new CustomEvent("message", { detail: msg }));
       });
 
-      const uq = new URL(location.href).searchParams.get("user");
+      const u = new URL(location.href);
+      const uq = u.searchParams.get("user");
       if (uq != null) {
         data.bdy = data.bdy.filter(
           (msg: any) => JSON.parse(msg.profile).userIdHash == uq,
+        );
+
+        message.data = JSON.stringify(data);
+      }
+
+      const un = u.searchParams.get("name");
+      if (un != null) {
+        data.bdy = data.bdy.filter(
+          (msg: any) => JSON.parse(msg.profile).nickname == un,
         );
 
         message.data = JSON.stringify(data);

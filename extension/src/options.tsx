@@ -381,6 +381,8 @@ const Options = () => {
           <Spacer />
           <Title>스트리머용</Title>
           <ConfigItem ikey="voteTool" iname="채팅 투표" />
+          <ConfigItem ikey="viewerview" iname="특정 시청자의 채팅만 보기" />
+          <Desc>채팅창에서 시청자 아이디를 누르면 나와요!</Desc>
 
           <Spacer />
           <Title>UI 수정</Title>

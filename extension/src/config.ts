@@ -4,7 +4,10 @@ import log from "@log";
 export const defaultConfig = {
   adblock: false,
   adskip: false,
+
   voteTool: false,
+  viewerview: false,
+
   hideDonation: false,
   reversedChat: false,
   autoShowChat: false,
@@ -151,16 +154,16 @@ class ConfigInstance {
   }
   public addConditionListener(
     condition: CoditionListener,
-    listener: AnyListener
+    listener: AnyListener,
   ): void {
     this.conditionListeners.push([condition, listener]);
   }
   public removeConditionListener(
     condition: CoditionListener,
-    listener: AnyListener
+    listener: AnyListener,
   ): void {
     this.conditionListeners = this.conditionListeners.filter(
-      ([c, l]) => c !== condition && l !== listener
+      ([c, l]) => c !== condition && l !== listener,
     );
   }
   public emitAny(): void {
@@ -194,7 +197,7 @@ class ConfigInstance {
             ...Object.keys(oldConfig),
           ]);
           const diffs = Array.from(diff).filter(
-            (key) => newConfig[key] !== oldConfig[key]
+            (key) => newConfig[key] !== oldConfig[key],
           );
           for (const key of diffs) {
             this.emit(key, newConfig[key]);
@@ -210,14 +213,14 @@ class ConfigInstance {
   public syncConfig() {
     const interval = setInterval(async () => {
       const config = await fetch("chzzkext://loadconfig").then((res) =>
-        res.json()
+        res.json(),
       );
       const diff = new Set([
         ...Object.keys(config),
         ...Object.keys(this.config),
       ]);
       const diffs = Array.from(diff).filter(
-        (key) => config[key] !== this.config[key]
+        (key) => config[key] !== this.config[key],
       );
       if (diffs.length == 0) return;
       this.emitCondition(diffs);
@@ -231,14 +234,14 @@ class ConfigInstance {
   public syncConfigBackground(main: () => void) {
     const interval = setInterval(async () => {
       const config = await fetch("chzzkext://loadconfig").then((res) =>
-        res.json()
+        res.json(),
       );
       const diff = new Set([
         ...Object.keys(config),
         ...Object.keys(this.config),
       ]);
       const diffs = Array.from(diff).filter(
-        (key) => config[key] !== this.config[key]
+        (key) => config[key] !== this.config[key],
       );
       if (diffs.length == 0) return;
       this.emitCondition(diffs);

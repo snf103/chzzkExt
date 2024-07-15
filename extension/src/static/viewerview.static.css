@@ -1,0 +1,22 @@
+.vvbutton {
+    ms-flex-align: center;
+    align-items: center;
+    border-radius: 4px;
+    color: var(--color-content-02);
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 15px;
+    font-weight: 500;
+    gap: 0 6px;
+    height: 37px;
+    padding: 0 4px;
+    position: relative;
+    white-space: nowrap;
+    width: 100%;
+}
+.vvbutton:hover {
+    background-color: var(--color-bg-overlay-03);
+}
+.vvsvg {
+    color: var(--color-content-04);
+}
