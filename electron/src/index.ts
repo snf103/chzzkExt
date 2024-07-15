@@ -1,11 +1,11 @@
-import { BrowserWindow, app, Menu, protocol, ipcMain } from "electron";
+import { BrowserWindow, app, protocol, Extension } from "electron";
 import { session } from "electron";
 import { join } from "path";
-import { MenuBase } from "./menuTemplate";
-import wcmatch from "wildcard-match";
 
 import generateRandomAgent from "./user-agent/index";
-const uadata = generateRandomAgent();
+export const uadata = generateRandomAgent();
+
+export let ext: Extension;
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -23,107 +23,22 @@ protocol.registerSchemesAsPrivileged([
 import fs from "fs";
 import Config from "./configInstance";
 import axios from "axios";
-import extractZip from "extract-zip";
 
-let setLoadingMessage: (message: string) => void = () => {};
-let cfg: Config;
-let storagePath: string;
-let configDir: string;
-let chzzkWindow: BrowserWindow;
+export let setLoadingMessage: (message: string) => void = () => {};
+export let configDir: string = join(
+  app.getPath("appData"),
+  "kr.poikr.chzkchzzkplus",
+);
+export let cfg: Config = new Config(join(configDir, "config.json"));
+export let storagePath: string = join(configDir, "storage.json");
+export let chzzkWindow: BrowserWindow;
 
-const installLatestExtension = async () => {
-  setLoadingMessage("업데이트 확인중...");
-  // check latest update from https://github.com/poikr/chzzkExt/releases/latest
-  const latest = await axios.get(
-    "https://api.github.com/repos/poikr/chzzkExt/releases/latest"
-  );
-  const latestVersion = latest.data.tag_name;
-  setLoadingMessage(`업데이트(${latestVersion}) 다운로드중...`);
-
-  // download file with name electron.zip
-  const downloadUrl = latest.data.assets
-    .filter((asset: any) => asset.name == "electron.zip")
-    .map((asset: any) => asset.browser_download_url)[0];
-
-  const response = await axios.get(downloadUrl, {
-    responseType: "arraybuffer",
-  });
-
-  setLoadingMessage("파일 쓰는중...");
-
-  const filePath = join(configDir, "electron.zip");
-  fs.writeFileSync(filePath, Buffer.from(response.data, "binary"), "binary");
-
-  setLoadingMessage("기존 파일 삭제중...");
-  if (fs.existsSync(join(configDir, "extension")))
-    fs.rmSync(join(configDir, "extension"), { recursive: true, force: true });
-
-  setLoadingMessage("압축 풀기중...");
-
-  await extractZip(filePath, {
-    dir: join(configDir, "extension"),
-  });
-
-  setLoadingMessage("압축 파일 삭제중...");
-  fs.rmSync(filePath);
-
-  cfg.set("version", latestVersion);
-};
-
-let checkingUpdate = false;
-
-const showNoUpdate = () => {
-  const win = new BrowserWindow({
-    width: 400,
-    height: 150,
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  });
-  win.loadFile(join(__dirname, "..", "static", "noUpdate.html"));
-};
-
-const showNewUpdate = async (showNoUpdate_ = false) => {
-  if (checkingUpdate) return;
-  checkingUpdate = true;
-  const latest = await axios
-    .get("https://api.github.com/repos/poikr/chzzkExt/releases/latest")
-    .finally(() => {
-      checkingUpdate = false;
-    });
-  const latestVersion = latest.data.tag_name;
-  if (cfg.get("version") == latestVersion) {
-    if (showNoUpdate_) showNoUpdate();
-    return;
-  }
-
-  const win = new BrowserWindow({
-    width: 400,
-    height: 150,
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  });
-  win.loadFile(join(__dirname, "..", "static", "newUpdate.html"));
-  ipcMain.on("installUpdate", () => {
-    win.close();
-    chzzkWindow.loadFile(join(__dirname, "..", "static", "loading.html"));
-    installLatestExtension().then(() => {
-      chzzkWindow.loadURL("https://chzzk.naver.com/");
-    });
-  });
-  ipcMain.on("skipUpdate", () => {
-    win.close();
-  });
-  win.webContents.send("version", latestVersion);
-  win.webContents.on("did-finish-load", () => {
-    win.webContents.send("version", latestVersion);
-  });
-};
+import installLatestExtension from "./installLatestExtension";
+import showNewUpdate from "./showNewUpdate";
+import setupMenu from "./setupMenu";
+import setupProtocolHandler from "./protocolHandler";
+import setupCodeInjector from "./setupCodeInjector";
+import setupHeaderModifier from "./setupHeaderModifier";
 
 let needUpdate = false;
 let checkingUpdateElec = false;
@@ -142,133 +57,24 @@ const checkElectronUpdate = async () => {
   console.log(app.getVersion(), latestVersion);
   console.log("NEED UPDATE");
   chzzkWindow.webContents.executeJavaScript(
-    fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8")
+    fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),
   );
   needUpdate = true;
 };
 
+// if (fs.existsSync(join(configDir, "DISABLE_HW_ACCEL")))
 app.disableHardwareAcceleration();
 
-const extensionOperations: any[] = [];
-const extOperation: any[] = [];
+export const extensionOperations: any[] = [];
+export const extOperation: any[] = [];
 
 const createWindow = async () => {
-  configDir = join(app.getPath("appData"), "kr.poikr.chzkchzzkplus");
   console.log("[App Data]", configDir);
   fs.mkdirSync(configDir, { recursive: true });
-  cfg = new Config(join(configDir, "config.json"));
-  storagePath = join(configDir, "storage.json");
 
-  // =============================================
-
-  protocol.handle("chzzkext", (request) => {
-    const { hostname } = new URL(request.url);
-    if (hostname == "ua") return new Response(JSON.stringify(uadata));
-    if (hostname == "saveconfig") {
-      request.text().then((text) => {
-        fs.writeFileSync(storagePath, text);
-      });
-      return new Response("{}");
-    }
-    if (hostname == "loadconfig") {
-      const fileexists = fs.existsSync(storagePath);
-      if (!fileexists) return new Response("{}");
-      const data = fs.readFileSync(storagePath, "utf-8");
-      return new Response(data);
-    }
-    if (hostname == "code") {
-      console.log("CODE INJECTED");
-      return new Response(
-        fs
-          .readFileSync(
-            join(__dirname, "..", "resources", "main.c75d5db5.js"),
-            "utf-8"
-          )
-          .toString()
-          .replace("`@REPL`", `{agent: "${uadata.ua}"}`)
-      );
-    }
-    if (hostname == "applyrules") {
-      request.text().then((text) => {
-        const onoff = JSON.parse(text) as {
-          enableRules: string[];
-          disableRules: string[];
-        };
-
-        const manifestPath = join(configDir, "extension", "manifest.json");
-        const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8")) as {
-          declarative_net_request: {
-            rule_resources: {
-              id: string;
-              enabled: boolean;
-              path: string;
-            }[];
-          };
-        };
-
-        extOperation.length = 0;
-
-        for (const rule of manifest.declarative_net_request.rule_resources) {
-          if (onoff.enableRules.includes(rule.id)) {
-            // rules/adblock.json
-            const path = join(configDir, "extension", rule.path);
-            const data = JSON.parse(fs.readFileSync(path, "utf-8"));
-            extOperation.push(...data);
-          }
-        }
-      });
-    }
-    if (hostname == "reload") {
-      chzzkWindow.webContents.reload();
-      return new Response("{}");
-    }
-    if (hostname == "update") {
-      require("electron").shell.openExternal(
-        "https://github.com/poikr/chzkChzzkPlus/releases/latest"
-      );
-      return new Response("{}");
-    }
-    return new Response("{}");
-  });
-
-  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    for (const operation of [...uadata.dt, ...extensionOperations]) {
-      for (const header of operation.action.requestHeaders) {
-        if (header.operation == "remove") {
-          delete details.requestHeaders[header.header];
-        }
-        if (header.operation == "set") {
-          details.requestHeaders[header.header] = header.value!;
-        }
-      }
-    }
-
-    for (const operation of extOperation) {
-      if (operation.action.type == "block") {
-        // *://nam.veta.naver.com/call
-        const filter = operation.condition.urlFilter;
-        if (wcmatch(filter)(details.url)) {
-          callback({ cancel: true });
-          return;
-        }
-      }
-    }
-
-    callback({ cancel: false, requestHeaders: details.requestHeaders });
-  });
-
-  session.defaultSession.webRequest.onBeforeRequest(
-    {
-      urls: [
-        "https://ssl.pstatic.net/static/nng/glive/resource/p/static/js/main.*.js",
-      ],
-    },
-    (details, callback) => {
-      callback({
-        redirectURL: "chzzkext://code/",
-      });
-    }
-  );
+  setupProtocolHandler();
+  setupHeaderModifier();
+  setupCodeInjector();
 
   // =============================================
 
@@ -307,75 +113,19 @@ const createWindow = async () => {
     ? join(__dirname, "..", "..", "extension", "dist-electron")
     : join(configDir, "extension");
   console.log("Loading extension...", EXTDIR);
-  const ext = await session.defaultSession.loadExtension(EXTDIR);
+  ext = await session.defaultSession.loadExtension(EXTDIR);
+  setupMenu();
 
-  const isMac = process.platform === "darwin";
-  const menu = Menu.buildFromTemplate([
-    ...MenuBase,
-    {
-      label: "이동",
-      submenu: [
-        {
-          label: "뒤로",
-          click: () => {
-            chzzkWindow.webContents.goBack();
-          },
-          accelerator: isMac ? "Cmd+Left" : "Alt+Left",
-        },
-        {
-          label: "앞으로",
-          click: () => {
-            chzzkWindow.webContents.goForward();
-          },
-          accelerator: isMac ? "Cmd+Right" : "Alt+Right",
-        },
-        {
-          label: "새로고침",
-          accelerator: isMac ? "Cmd+R" : "F5",
-          click: () => {
-            chzzkWindow.webContents.reload();
-          },
-        },
-      ],
-    },
-    {
-      label: "치직치지직",
-      submenu: [
-        {
-          label: "설정 열기",
-          click: async () => {
-            const window = new BrowserWindow({
-              width: 300,
-              height: 600,
-              resizable: false,
-              webPreferences: {
-                nodeIntegration: true,
-              },
-            });
-            window.setMenuBarVisibility(false);
-            window.loadURL(ext.url + "/options.html");
-          },
-        },
-        {
-          label: "업데이트",
-          click: () => {
-            showNewUpdate(true);
-          },
-        },
-      ],
-    },
-  ]);
-  Menu.setApplicationMenu(menu);
   chzzkWindow.webContents.send(
     "loading",
-    `치지직 + 치직치지직(${vsr}) 로딩중...`
+    `치지직 + 치직치지직(${vsr}) 로딩중...`,
   );
 
   chzzkWindow.on("enter-full-screen", () =>
-    chzzkWindow.setMenuBarVisibility(false)
+    chzzkWindow.setMenuBarVisibility(false),
   );
   chzzkWindow.on("leave-full-screen", () =>
-    chzzkWindow.setMenuBarVisibility(true)
+    chzzkWindow.setMenuBarVisibility(true),
   );
 
   chzzkWindow.loadURL("https://chzzk.naver.com/");
@@ -383,8 +133,11 @@ const createWindow = async () => {
     console.log("INJECT", needUpdate);
     if (needUpdate)
       chzzkWindow.webContents.executeJavaScript(
-        fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8")
+        fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),
       );
+  });
+  chzzkWindow.on("close", () => {
+    app.quit();
   });
 };
 
