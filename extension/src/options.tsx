@@ -25,7 +25,7 @@ const Options = () => {
     const [state, setState] = useState(
       Object.keys(configInstance.config).includes(key)
         ? configInstance.config[key]
-        : (defaultConfig as any)[key]
+        : (defaultConfig as any)[key],
     );
     const ed = state ? "enable" : "disable";
 
@@ -169,7 +169,7 @@ const Options = () => {
       array: {
         label: string;
         onClick: () => void;
-      }[]
+      }[],
     ) => {
       let currentIndex = array.length;
 
@@ -229,18 +229,21 @@ const Options = () => {
                 onClick: () => r(false),
               },
             ],
-          })
+          }),
         );
 
   const extractInstallInfo = () => {
     fetch("/manifest.json")
       .then((r) => r.json())
-      .then((d) => {
+      .then(async (d) => {
         const data = [
           navigator.userAgent,
           configInstance.config,
           d.version,
           process.env.BUILD_ENV,
+          ...(isElectron
+            ? [await (await fetch("chzzkext://version")).text()]
+            : ["null"]),
         ];
         console.log(data);
         const jj = btoa(JSON.stringify(data));
@@ -440,5 +443,5 @@ const root = createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <Options />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

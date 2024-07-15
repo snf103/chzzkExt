@@ -1,4 +1,4 @@
-import { protocol } from "electron";
+import { app, protocol } from "electron";
 import {
   chzzkWindow,
   configDir,
@@ -76,6 +76,9 @@ export default function setupProtocolHandler() {
         "https://github.com/poikr/chzkChzzkPlus/releases/latest",
       );
       return new Response("{}");
+    }
+    if (hostname == "version") {
+      return new Response(app.getVersion());
     }
     return new Response("{}");
   });
