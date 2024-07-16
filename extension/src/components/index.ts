@@ -1,5 +1,8 @@
 import configInstance, { defaultConfig } from "@config";
 
+import { applyWSInject, expose2chzzk } from "./wsInject";
+import { applyChatTools } from "./chat";
+
 import iAdSkip from "./initAdSkip";
 import iVoteOpenButton from "./initVoteOpenButton";
 import iAdBlock from "./initAdBlock";
@@ -13,9 +16,7 @@ import iVodLoc from "./initVodLoc";
 import iRefreshSidebar from "./initRefreshSidebar";
 import iRemoveOfflineChannel from "./initRemoveOfflineChannel";
 import iUI_ED from "./initUI_ed";
-
-import { applyChatTools } from "./chat";
-import { applyWSInject, expose2chzzk } from "./wsInject";
+import initStaticLogo from "./initStaticLogo";
 
 export default function apply() {
   const nowPath = window.location.pathname;
@@ -54,6 +55,7 @@ export default function apply() {
   iChatFix(cfg("chat_nfo"));
   iRefreshSidebar(cfg("refreshSidebar"));
   iRemoveOfflineChannel(cfg("remove_offline_channel"));
+  initStaticLogo(cfg("staticlogo"));
 
   iUI_ED();
   // UI fetch후 다시 적용

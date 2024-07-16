@@ -8,6 +8,8 @@ export const defaultConfig = {
   voteTool: false,
   viewerview: false,
 
+  staticlogo: false,
+
   hideDonation: false,
   reversedChat: false,
   autoShowChat: false,

@@ -391,6 +391,8 @@ const Options = () => {
           <ConfigItem ikey="ed_tic" iname="라운지 티켓 숨기기" />
           <ConfigItem ikey="ed_noti" iname="알림 숨기기" />
           <ConfigItem ikey="ed_chkey" iname="치트키 숨기기" />
+          <ConfigItem ikey="staticlogo" iname="움직이지 않는 로고" />
+          <Desc>새로고침이 필요합니다</Desc>
 
           <SubTitle>사이드바 상단</SubTitle>
           <ConfigItem ikey="ed_si_sd" iname="스튜디오 숨기기" />

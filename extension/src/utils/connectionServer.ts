@@ -4,6 +4,7 @@ import {
   windowRequestPrefix,
   globalBroadcastPrefix,
 } from "#e/connectionData";
+import log from "@log";
 
 class Router {
   routes: {
@@ -14,12 +15,12 @@ class Router {
   }
   handle<T = any>(
     endpoint: string,
-    handler: (req: any, res: (data: T) => void) => void | Promise<void>
+    handler: (req: any, res: (data: T) => void) => void | Promise<void>,
   ) {
     this.routes[endpoint] = (req: T, id: string) => {
       handler(req, (data: T) => {
         window.postMessage(
-          windowResponsePrefix + id + reqIDspliter + btoa(JSON.stringify(data))
+          windowResponsePrefix + id + reqIDspliter + btoa(JSON.stringify(data)),
         );
       });
     };
@@ -39,7 +40,7 @@ class Router {
   }
   broadcast<T = any>(endpoint: string, args: T) {
     window.postMessage(
-      globalBroadcastPrefix + btoa(JSON.stringify({ endpoint, args }))
+      globalBroadcastPrefix + btoa(JSON.stringify({ endpoint, args })),
     );
   }
 }
@@ -52,4 +53,10 @@ router.handle<string>("/config", (req, res) => {
   chrome.storage.local.get("config", (items) => {
     res(items.config);
   });
+});
+router.handle<string>("/getLogoURL_light", (req, res) => {
+  res(chrome.runtime.getURL("assets/light.png"));
+});
+router.handle<string>("/getLogoURL_dark", (req, res) => {
+  res(chrome.runtime.getURL("assets/dark.png"));
 });
