@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "치직치지직 (ChzkChzzk)",
   "description": "치지직(chzzk.naver.com)을 더 유용하게!",
-  "version": "2.14.1",
+  "version": "2.15",
   "options_ui": {
     "page": "options.html"
   },

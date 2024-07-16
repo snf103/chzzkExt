@@ -1,7 +1,10 @@
 import defaultData from "#e/bypassData";
 import { isElectron } from "@/utils/browserInfo";
+import applyBypassXML from "./applyBypassXML";
 
 export default async function bypassNaver() {
+  applyBypassXML();
+
   let bypassData = defaultData;
   if (isElectron) {
     const fdata = await fetch("chzzkext://ua/");
@@ -19,7 +22,7 @@ export default async function bypassNaver() {
       force: false,
       configurable: false,
       writable: false,
-    }
+    },
   ): void => {
     let target: T = t;
 
@@ -106,7 +109,7 @@ export default async function bypassNaver() {
             platform: "macOS",
           };
         },
-      })
+      }),
     );
 
     overload(
@@ -156,10 +159,10 @@ export default async function bypassNaver() {
                   resolve(data);
                 })
                 .catch(reject);
-            }
+            },
           );
         },
-      })
+      }),
     );
   }
 }

@@ -333,7 +333,12 @@ const Options = () => {
           <Desc>새로고침이 필요합니다</Desc>
           <ConfigItem ikey="adskip" iname="광고 스킵" />
           <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
-          {isElectron ? (
+          <ConfigItem
+            ikey="bypassNaver"
+            iname="플러그인 없이 고화질 재생"
+            askBefore={askBefore_bypassNaver}
+          />
+          {/* {isElectron ? (
             <Desc>
               Electron버전에서는 그리드 없이 고화질 재생이 항상 활성화
               되어있습니다.
@@ -357,7 +362,7 @@ const Options = () => {
                 를 참조해 주세요.
               </Desc>
             </>
-          )}
+          )} */}
           <ConfigItem ikey="saveVodLoc" iname="VOD 이어보기" />
 
           <Spacer />
