@@ -18,6 +18,8 @@ export const expose2chzzk = () => {
 };
 
 export const applyWSInject = async () => {
+  if (wsHook.inited) return;
+  wsHook.setInited(true);
   wsHook.after = (message, url, ws) => {
     if (!url.endsWith(".chat.naver.com/chat")) return message;
 

@@ -7,7 +7,9 @@
  * Reference: http://www.w3.org/TR/2011/WD-websockets-20110419/#websocket
  */
 
-export var wsHook = {};
+export var wsHook = {
+  inited: false,
+};
 (function () {
   // Mutable MessageEvent.
   // Subclasses MessageEvent and makes data, origin and other MessageEvent properites mutatble.
@@ -46,6 +48,9 @@ export var wsHook = {};
     wsHook.after = after;
     wsHook.modifyUrl = modifyUrl;
   };
+  wsHook.setInited = (data) => {
+    wsHook.inited = data;
+  };
 
   var _WS = WebSocket;
   WebSocket = function (url, protocols) {
@@ -76,7 +81,7 @@ export var wsHook = {};
             arguments[0] = wsHook.after(
               new MutableMessageEvent(arguments[0]),
               WSObject.url,
-              WSObject
+              WSObject,
             );
             if (arguments[0] === null) return;
             userFunc.apply(eventThis, arguments);
@@ -94,7 +99,7 @@ export var wsHook = {};
           arguments[0] = wsHook.after(
             new MutableMessageEvent(arguments[0]),
             WSObject.url,
-            WSObject
+            WSObject,
           );
           if (arguments[0] === null) return;
           userFunc.apply(eventThis, arguments);
