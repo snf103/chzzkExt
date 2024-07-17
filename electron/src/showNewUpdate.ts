@@ -29,6 +29,8 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
       contextIsolation: false,
     },
   });
+
+  updateWindow.setMenuBarVisibility(false);
   updateWindow.loadFile(join(__dirname, "..", "static", "newUpdate.html"));
   ipcMain.on("installUpdate", () => {
     updateWindow.close();

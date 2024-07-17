@@ -118,3 +118,7 @@ document.getElementById("newtab").addEventListener("click", () => {
 });
 
 console.log(chromeTabs);
+
+document.getElementById("chzmenu").addEventListener("click", () => {
+  fetch("chzzkext://openopt");
+});

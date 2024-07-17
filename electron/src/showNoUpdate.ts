@@ -12,6 +12,7 @@ const showNoUpdate = () => {
     },
   });
   win.loadFile(join(__dirname, "..", "static", "noUpdate.html"));
+  win.setMenuBarVisibility(false);
 };
 
 export default showNoUpdate;

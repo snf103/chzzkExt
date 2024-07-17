@@ -6,6 +6,7 @@ let configWindow: BrowserWindow | null = null;
 export default function openConfig() {
   if (configWindow) {
     configWindow.focus();
+    configWindow.setMenuBarVisibility(false);
   } else {
     configWindow = new BrowserWindow({
       width: 300,

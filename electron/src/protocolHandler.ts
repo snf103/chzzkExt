@@ -8,6 +8,7 @@ import {
 } from "./index";
 import fs from "fs";
 import { join } from "path";
+import openConfig from "./openConfig";
 
 export default function setupProtocolHandler() {
   protocol.handle("chzzkext", (request) => {
@@ -92,6 +93,9 @@ export default function setupProtocolHandler() {
     }
     if (hostname == "close") {
       app.quit();
+    }
+    if (hostname == "openopt") {
+      openConfig();
     }
     return new Response("{}");
   });
