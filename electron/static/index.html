@@ -1,0 +1,57 @@
+<!doctype html>
+<html style="color-scheme: dark">
+    <head>
+        <link
+            rel="stylesheet"
+            href="../node_modules/chrome-tabs/css/chrome-tabs-dark-theme.css"
+        />
+        <link
+            rel="stylesheet"
+            href="../node_modules/chrome-tabs/css/chrome-tabs.css"
+        />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+            }
+
+            #views {
+                flex-grow: 1;
+                width: 100%;
+                height: 100%;
+            }
+            :root {
+                --color-content-02: #dfe2ea;
+                --color-bg-topbanner: #1e2022;
+            }
+            .flex {
+                display: flex;
+            }
+            .chrome-tabs {
+                -webkit-app-region: drag;
+            }
+            .chrome-tabs-content {
+                flex-grow: 1;
+            }
+            #win-buttons {
+            }
+        </style>
+    </head>
+    <body>
+        <div class="chrome-tabs">
+            <div class="flex">
+                <div id="buttons"></div>
+                <div class="chrome-tabs-content"></div>
+                <div id="win-buttons"></div>
+            </div>
+            <div class="chrome-tabs-bottom-bar"></div>
+        </div>
+        <div id="views"></div>
+
+        <script src="./main.js"></script>
+    </body>
+</html>

@@ -80,6 +80,9 @@ export default function setupProtocolHandler() {
     if (hostname == "version") {
       return new Response(app.getVersion());
     }
+    if (hostname == "ismac") {
+      return new Response(process.platform == "darwin" ? "true" : "false");
+    }
     return new Response("{}");
   });
 }

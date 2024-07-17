@@ -43,23 +43,27 @@ import setupHeaderModifier from "./setupHeaderModifier";
 let needUpdate = false;
 let checkingUpdateElec = false;
 const checkElectronUpdate = async () => {
-  if (checkingUpdateElec) return;
-  checkingUpdateElec = true;
-  const latest = await axios
-    .get("https://api.github.com/repos/poikr/chzkChzzkPlus/releases/latest")
-    .finally(() => {
-      checkingUpdateElec = false;
-    });
-  const latestVersion = latest.data.tag_name;
-  if (app.getVersion() == latestVersion) {
-    return;
+  try {
+    if (checkingUpdateElec) return;
+    checkingUpdateElec = true;
+    const latest = await axios
+      .get("https://api.github.com/repos/poikr/chzkChzzkPlus/releases/latest")
+      .finally(() => {
+        checkingUpdateElec = false;
+      });
+    const latestVersion = latest.data.tag_name;
+    if (app.getVersion() == latestVersion) {
+      return;
+    }
+    console.log(app.getVersion(), latestVersion);
+    console.log("NEED UPDATE");
+    chzzkWindow.webContents.executeJavaScript(
+      fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),
+    );
+    needUpdate = true;
+  } catch (e) {
+    console.error(e);
   }
-  console.log(app.getVersion(), latestVersion);
-  console.log("NEED UPDATE");
-  chzzkWindow.webContents.executeJavaScript(
-    fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),
-  );
-  needUpdate = true;
 };
 
 // if (fs.existsSync(join(configDir, "DISABLE_HW_ACCEL")))
@@ -86,7 +90,10 @@ const createWindow = async () => {
       contextIsolation: false,
       webSecurity: false,
       webgl: false,
+      webviewTag: true,
     },
+    titleBarStyle: "hidden",
+    trafficLightPosition: { x: 14, y: 14 },
   });
 
   chzzkWindow.webContents.setUserAgent(uadata.ua);
@@ -100,10 +107,18 @@ const createWindow = async () => {
 
   setLoadingMessage("확장프로그램 로딩중...");
   let vsr = cfg.get("version");
-  if (vsr == undefined || !fs.existsSync(join(configDir, "extension")))
-    await installLatestExtension();
-  else showNewUpdate();
-  checkElectronUpdate();
+  try {
+    if (vsr == undefined || !fs.existsSync(join(configDir, "extension")))
+      await installLatestExtension();
+    else showNewUpdate();
+  } catch (e) {
+    console.error(e);
+  }
+  try {
+    checkElectronUpdate();
+  } catch (e) {
+    console.error(e);
+  }
   vsr = cfg.get("version");
 
   // =============================================
@@ -128,7 +143,7 @@ const createWindow = async () => {
     chzzkWindow.setMenuBarVisibility(true),
   );
 
-  chzzkWindow.loadURL("https://chzzk.naver.com/");
+  chzzkWindow.loadFile(join(__dirname, "..", "static", "index.html"));
   chzzkWindow.webContents.on("did-finish-load", () => {
     console.log("INJECT", needUpdate);
     if (needUpdate)

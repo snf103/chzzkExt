@@ -19,7 +19,12 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
+    "chrome-tabs": "^5.4.0",
+    "draggabilly": "^3.0.0",
+    "ev-emitter": "^2.1.2",
     "extract-zip": "^2.0.1",
+    "jquery": "^3.7.1",
+    "unipointer": "^2.4.0",
     "wildcard-match": "^5.1.3"
   }
 }

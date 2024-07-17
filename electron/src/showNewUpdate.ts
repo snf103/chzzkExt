@@ -34,7 +34,7 @@ const showNewUpdate = async (showNoUpdate_ = false) => {
     updateWindow.close();
     chzzkWindow.loadFile(join(__dirname, "..", "static", "loading.html"));
     installLatestExtension().then(() => {
-      chzzkWindow.loadURL("https://chzzk.naver.com/");
+      chzzkWindow.loadFile(join(__dirname, "..", "static", "index.html"));
     });
   });
   ipcMain.on("skipUpdate", () => {

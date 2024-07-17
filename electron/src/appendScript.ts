@@ -24,16 +24,26 @@
 
   const h1 = document.createElement("h3");
   h1.innerText = "치직치지직+ 새로운 버전 발견!";
+  h1.style.margin = "0px";
 
   const closeButton = document.createElement("button");
-  closeButton.innerText = "X";
-  closeButton.style.padding = ".3rem";
-  closeButton.style.borderRadius = "1rem";
+  closeButton.style.background = "none";
   closeButton.style.color = "var(--color-content-02)";
   closeButton.style.border = "none";
   closeButton.style.cursor = "pointer";
   closeButton.style.fontSize = "1rem";
   closeButton.style.transition = "background .3s";
+  closeButton.style.aspectRatio = "1/1";
+  closeButton.style.height = "1.5rem";
+  closeButton.style.display = "flex";
+  closeButton.style.alignItems = "center";
+  closeButton.style.justifyContent = "center";
+
+  const innerContent = document.createElement("span");
+  innerContent.innerText = "✖";
+  innerContent.style.color = "#ff5e57";
+  innerContent.style.lineHeight = "1";
+  closeButton.appendChild(innerContent);
 
   closeButton.onclick = () => {
     elem.remove();
