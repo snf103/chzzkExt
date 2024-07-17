@@ -30,14 +30,52 @@
             }
             .flex {
                 display: flex;
+                height: 100%;
             }
             .chrome-tabs {
                 -webkit-app-region: drag;
             }
-            .chrome-tabs-content {
+            .newtab {
                 flex-grow: 1;
             }
             #win-buttons {
+                display: none;
+                align-items: center;
+                padding-bottom: 8px;
+                z-index: 100;
+                -webkit-app-region: no-drag;
+            }
+            #win-buttons button {
+                background: none;
+                border: none;
+                color: var(--color-content-02);
+                font-size: 1.5rem;
+                padding: 0.5rem 0.8rem;
+                cursor: pointer;
+                line-height: 1;
+            }
+            #win-buttons button:hover {
+                background: var(--color-bg-topbanner);
+            }
+            .chrome-tab {
+                -webkit-app-region: no-drag;
+            }
+            #newtab {
+                background: none;
+                border: none;
+                color: var(--color-content-02);
+                font-size: 1.5rem;
+                cursor: pointer;
+                line-height: 1;
+            }
+            #newtab:hover {
+                background: var(--color-bg-topbanner);
+            }
+            #newtabwrp {
+                align-items: center;
+                padding-bottom: 8px;
+                z-index: 100;
+                -webkit-app-region: no-drag;
             }
         </style>
     </head>
@@ -45,8 +83,15 @@
         <div class="chrome-tabs">
             <div class="flex">
                 <div id="buttons"></div>
+                <div id="newtabwrp">
+                    <button id="newtab">+</button>
+                </div>
                 <div class="chrome-tabs-content"></div>
-                <div id="win-buttons"></div>
+                <div id="win-buttons">
+                    <button id="minimize">-</button>
+                    <button id="maximize">+</button>
+                    <button id="close">x</button>
+                </div>
             </div>
             <div class="chrome-tabs-bottom-bar"></div>
         </div>

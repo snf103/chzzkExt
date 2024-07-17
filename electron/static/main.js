@@ -1,6 +1,6 @@
 const ChromeTabs = require("chrome-tabs");
 const el = document.querySelector(".chrome-tabs");
-const chromeTabs = new ChromeTabs();
+const chromeTabs = new ChromeTabs(true, true);
 const views = document.getElementById("views");
 chromeTabs.init(el, {
   tabOverlapDistance: 14,
@@ -76,5 +76,45 @@ chromeTabs.addTab({
 fetch("chzzkext://ismac")
   .then((v) => v.text())
   .then((t) => {
-    if (t == "true") document.getElementById("buttons").style.width = "74px";
+    const isMac = t == "true";
+    if (isMac) {
+      document.getElementById("buttons").style.width = "74px";
+      document.getElementById("buttons").style.minWidth = "74px";
+      document.getElementById("newtabwrp").style.paddingLeft = "5px";
+    } else {
+      document.getElementById("win-buttons").style.display = "flex";
+      document.getElementById("newtabwrp").style.paddingLeft = "7px";
+    }
+
+    // keybinds
+    document.addEventListener("keydown", (e) => {
+      const ctrled = isMac ? e.metaKey : e.ctrlKey;
+      if (ctrled && e.key === "t") {
+        chromeTabs.addTab({
+          title: "New Tab",
+          favicon: false,
+        });
+      }
+      if (ctrled && e.key === "w") {
+        chromeTabs.removeTab(chromeTabs.activeTabEl);
+      }
+    });
   });
+
+document.getElementById("minimize").addEventListener("click", () => {
+  fetch("chzzkext://minimize");
+});
+document.getElementById("maximize").addEventListener("click", () => {
+  fetch("chzzkext://maximize");
+});
+document.getElementById("close").addEventListener("click", () => {
+  fetch("chzzkext://close");
+});
+document.getElementById("newtab").addEventListener("click", () => {
+  chromeTabs.addTab({
+    title: "New Tab",
+    favicon: false,
+  });
+});
+
+console.log(chromeTabs);

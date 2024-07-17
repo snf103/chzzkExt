@@ -10,10 +10,6 @@ export const MenuBase: MenuItemConstructorOptions[] = [
       ]
     : []) as MenuItemConstructorOptions[]),
 
-  {
-    role: "fileMenu",
-  },
   { role: "editMenu" },
   { role: "viewMenu" },
-  { role: "windowMenu" },
 ];

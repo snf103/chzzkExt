@@ -142,10 +142,15 @@ const createWindow = async () => {
   chzzkWindow.on("leave-full-screen", () =>
     chzzkWindow.setMenuBarVisibility(true),
   );
+  chzzkWindow.setMenuBarVisibility(true);
 
   chzzkWindow.loadFile(join(__dirname, "..", "static", "index.html"));
   chzzkWindow.webContents.on("did-finish-load", () => {
     console.log("INJECT", needUpdate);
+    const ur = chzzkWindow.webContents.getURL();
+    if (ur.endsWith("newUpdate.html")) return;
+    if (ur.endsWith("noUpdate.html")) return;
+    if (ur.endsWith("loading.html")) return;
     if (needUpdate)
       chzzkWindow.webContents.executeJavaScript(
         fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),

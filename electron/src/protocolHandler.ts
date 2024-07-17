@@ -83,6 +83,16 @@ export default function setupProtocolHandler() {
     if (hostname == "ismac") {
       return new Response(process.platform == "darwin" ? "true" : "false");
     }
+    if (hostname == "minimize") {
+      chzzkWindow.minimize();
+    }
+    if (hostname == "maximize") {
+      if (chzzkWindow.isMaximized()) chzzkWindow.unmaximize();
+      else chzzkWindow.maximize();
+    }
+    if (hostname == "close") {
+      app.quit();
+    }
     return new Response("{}");
   });
 }
