@@ -4,6 +4,7 @@ import log from "@log";
 export const defaultConfig = {
   adblock: false,
   adskip: false,
+  // hideck: false,
 
   voteTool: false,
   viewerview: false,

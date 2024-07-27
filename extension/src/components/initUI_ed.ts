@@ -2,81 +2,75 @@ import configInstance, { defaultConfig } from "@config";
 import onoffer from "#u/onoffer";
 
 export default function initUI_ED() {
+  const cfg = (key: keyof typeof defaultConfig) => {
+    return configInstance.get(key, defaultConfig[key]);
+  };
   // 상단바
   onoffer(
     document.querySelector(`[href="https://game.naver.com/profile#cash"]`),
-    configInstance.get("ed_chz", defaultConfig.ed_chz)
+    cfg("ed_chz"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/ticket"]`),
-    configInstance.get("ed_tic", defaultConfig.ed_tic)
+    cfg("ed_tic"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/notify"]`),
-    configInstance.get("ed_noti", defaultConfig.ed_noti)
+    cfg("ed_noti"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/profile#cheat_key"]`),
-    configInstance.get("ed_chkey", defaultConfig.ed_chkey)
+    cfg("ed_chkey"),
   );
 
   // 메인메뉴
   onoffer(
     document.querySelector(`[class*="top_banner_container"]`),
-    configInstance.get("ed_mi_ban", defaultConfig.ed_mi_ban)
+    cfg("ed_mi_ban"),
   );
   onoffer(
     document.querySelector(`[class*="recommend_live_container"]`),
-    configInstance.get("ed_rec_live", defaultConfig.ed_rec_live)
+    cfg("ed_rec_live"),
   );
 
   // 사이드바 하단
   onoffer(
     document.querySelector(`[href="https://game.naver.com"]`),
-    configInstance.get("ed_si_game", defaultConfig.ed_si_game)
+    cfg("ed_si_game"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/esports"]`),
-    configInstance.get("ed_si_esp", defaultConfig.ed_si_esp)
+    cfg("ed_si_esp"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/original_series"]`),
-    configInstance.get("ed_si_ori", defaultConfig.ed_si_ori)
+    cfg("ed_si_ori"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/pcgame"]`),
-    configInstance.get("ed_si_pcg", defaultConfig.ed_si_pcg)
+    cfg("ed_si_pcg"),
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/lounge/chzzk/home"]`),
-    configInstance.get("ed_si_chr", defaultConfig.ed_si_chr)
+    cfg("ed_si_chr"),
   );
 
   // 사이드바 상단
-  onoffer(
-    document.querySelector(`[href="/lives"]`),
-    configInstance.get("ed_su_al", defaultConfig.ed_su_al)
-  );
-  onoffer(
-    document.querySelector(`[href="/videos"]`),
-    configInstance.get("ed_si_rw", defaultConfig.ed_si_rw)
-  );
-  onoffer(
-    document.querySelector(`[href="/category"]`),
-    configInstance.get("ed_si_ct", defaultConfig.ed_si_ct)
-  );
-  onoffer(
-    document.querySelector(`[href="/following"]`),
-    configInstance.get("ed_si_fl", defaultConfig.ed_si_fl)
-  );
-  onoffer(
-    document.querySelector(`[class*="toolbar_studio"]`),
-    configInstance.get("ed_si_sd", defaultConfig.ed_si_sd)
-  );
+  onoffer(document.querySelector(`[href="/lives"]`), cfg("ed_su_al"));
+  onoffer(document.querySelector(`[href="/videos"]`), cfg("ed_si_rw"));
+  onoffer(document.querySelector(`[href="/category"]`), cfg("ed_si_ct"));
+  onoffer(document.querySelector(`[href="/following"]`), cfg("ed_si_fl"));
+  onoffer(document.querySelector(`[class*="toolbar_studio"]`), cfg("ed_si_sd"));
+
   onoffer(
     document.querySelector(`[class*="live_chatting_ranking_container"]`),
-    configInstance.get("disable_donate_rank", defaultConfig.disable_donate_rank)
+    cfg("disable_donate_rank"),
   );
+
+  // onoffer(
+  //   document.querySelector(`[class*="live_chatting_ranking_container"]`),
+  //   cfg("hideck"),
+  // );
 
   // 사이드바 navi
   const navicont = document.querySelector(`nav[id="navigation"]`);
@@ -91,18 +85,9 @@ export default function initUI_ED() {
       }
     }
 
-    onoffer(
-      contents["팔로우"],
-      configInstance.get("ed_sc_fl", defaultConfig.ed_sc_fl)
-    );
-    onoffer(
-      contents["추천"],
-      configInstance.get("ed_sc_rc", defaultConfig.ed_sc_rc)
-    );
-    onoffer(
-      contents["파트너"],
-      configInstance.get("ed_sc_pt", defaultConfig.ed_sc_pt)
-    );
+    onoffer(contents["팔로우"], cfg("ed_sc_fl"));
+    onoffer(contents["추천"], cfg("ed_sc_rc"));
+    onoffer(contents["파트너"], cfg("ed_sc_pt"));
   }
 
   // home menu
@@ -116,11 +101,11 @@ export default function initUI_ED() {
   const minc = Object.keys(matchHKey);
   if (homecont) {
     const sections = homecont.querySelectorAll(
-      `section[class*="component_container"]`
+      `section[class*="component_container"]`,
     );
     for (let i = 0; i < sections.length; i++) {
       const sectionTitleElement = sections[i].querySelector(
-        `strong[class*="component_title"]`
+        `strong[class*="component_title"]`,
       );
       if (!sectionTitleElement) continue;
       const sectionTitle =

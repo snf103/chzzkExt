@@ -438,6 +438,9 @@ const Options = () => {
             iname="'신입 스트리머 인사드립니다' 숨기기"
           />
 
+          {/* <SubTitle>방송 화면</SubTitle>
+          <ConfigItem ikey="hideck" iname="치트키 팝업 숨기기" /> */}
+
           <button className="bugreportud" onClick={extractInstallInfo}>
             설치 정보 추출
           </button>
