@@ -31,7 +31,7 @@ export default function setupProtocolHandler() {
       return new Response(
         fs
           .readFileSync(
-            join(__dirname, "..", "resources", "main.c75d5db5.js"),
+            join(__dirname, "..", "resources", "main.7ba6251e.js"),
             "utf-8",
           )
           .toString()
