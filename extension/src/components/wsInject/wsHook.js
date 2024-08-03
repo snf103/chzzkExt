@@ -114,4 +114,5 @@ export var wsHook = {
 
     return WSObject;
   };
+  WebSocket.toString = _WS.toString.bind(_WS);
 })();
