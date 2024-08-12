@@ -182,6 +182,12 @@ class ConfigInstance {
 
   constructor() {
     this.anyListeners = [];
+    try {
+      if (!chrome) return;
+    } catch (e) {
+      console.error(e);
+      return;
+    }
     if (!chrome) return;
     if (!chrome.storage) return;
     if (!chrome.storage.local) return;
