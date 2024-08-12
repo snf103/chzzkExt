@@ -64,7 +64,6 @@ body {
 .headerImageLink {
   width: fit-content;
   height: fit-content;
-  display: block;
 
   line-height: 1;
   padding: 0px;
