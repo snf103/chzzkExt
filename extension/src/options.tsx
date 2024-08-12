@@ -25,7 +25,7 @@ const Options = () => {
     const [state, setState] = useState(
       Object.keys(configInstance.config).includes(key)
         ? configInstance.config[key]
-        : (defaultConfig as any)[key],
+        : (defaultConfig as any)[key]
     );
     const ed = state ? "enable" : "disable";
 
@@ -169,7 +169,7 @@ const Options = () => {
       array: {
         label: string;
         onClick: () => void;
-      }[],
+      }[]
     ) => {
       let currentIndex = array.length;
 
@@ -229,7 +229,7 @@ const Options = () => {
                 onClick: () => r(false),
               },
             ],
-          }),
+          })
         );
 
   const extractInstallInfo = () => {
@@ -402,7 +402,7 @@ const Options = () => {
           <SubTitle>사이드바 상단</SubTitle>
           <ConfigItem ikey="ed_si_sd" iname="스튜디오 숨기기" />
           <ConfigItem ikey="ed_su_al" iname="전체 라이브 숨기기" />
-          <ConfigItem ikey="ed_si_rw" iname="다시보기 숨기기" />
+          <ConfigItem ikey="ed_si_rw" iname="인기 클립 숨기기" />
           <ConfigItem ikey="ed_si_ct" iname="카테고리 숨기기" />
           <ConfigItem ikey="ed_si_fl" iname="팔로잉 숨기기" />
 
@@ -455,5 +455,5 @@ const root = createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <Options />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
