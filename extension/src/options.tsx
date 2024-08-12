@@ -333,6 +333,7 @@ const Options = () => {
           <Desc>새로고침이 필요합니다</Desc>
           <ConfigItem ikey="adskip" iname="광고 스킵" />
           <ConfigItem ikey="vodDownload" iname="VOD 다운로드" />
+          <ConfigItem ikey="clipDownload" iname="클립 다운로드" />
           <ConfigItem
             ikey="bypassNaver"
             iname="플러그인 없이 고화질 재생"

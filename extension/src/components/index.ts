@@ -17,6 +17,7 @@ import iRefreshSidebar from "./initRefreshSidebar";
 import iRemoveOfflineChannel from "./initRemoveOfflineChannel";
 import iUI_ED from "./initUI_ed";
 import initStaticLogo from "./initStaticLogo";
+import initShortsDL from "./initShortsDL";
 
 export default function apply() {
   const nowPath = window.location.pathname;
@@ -56,6 +57,8 @@ export default function apply() {
   iRefreshSidebar(cfg("refreshSidebar"));
   iRemoveOfflineChannel(cfg("remove_offline_channel"));
   initStaticLogo(cfg("staticlogo"));
+
+  initShortsDL(cfg("clipDownload") && comparePath("/clips/*"));
 
   iUI_ED();
   // UI fetch후 다시 적용

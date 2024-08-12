@@ -19,6 +19,7 @@ export const defaultConfig = {
   vodDownload: false,
   blocktracker: true,
   bypassNaver: true,
+  clipDownload: false,
   saveVodLoc: true,
   chat_nfo: true,
 

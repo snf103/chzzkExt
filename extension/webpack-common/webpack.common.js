@@ -17,6 +17,7 @@ module.exports = {
         background: path.join(srcDir, "background.ts"),
         content_script: path.join(srcDir, "content_script.tsx"),
         injecter: path.join(srcDir, "injecter.ts"),
+        shortsInjecter: path.join(srcDir, "shortsInjecter.ts"),
       },
       output: {
         path: path.join(distDir, "js"),
