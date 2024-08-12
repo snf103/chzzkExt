@@ -8,63 +8,63 @@ export default function initUI_ED() {
   // 상단바
   onoffer(
     document.querySelector(`[href="https://game.naver.com/profile#cash"]`),
-    cfg("ed_chz"),
+    cfg("ed_chz")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/ticket"]`),
-    cfg("ed_tic"),
+    cfg("ed_tic")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/notify"]`),
-    cfg("ed_noti"),
+    cfg("ed_noti")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/profile#cheat_key"]`),
-    cfg("ed_chkey"),
+    cfg("ed_chkey")
   );
 
   // 메인메뉴
   onoffer(
     document.querySelector(`[class*="top_banner_container"]`),
-    cfg("ed_mi_ban"),
+    cfg("ed_mi_ban")
   );
   onoffer(
     document.querySelector(`[class*="recommend_live_container"]`),
-    cfg("ed_rec_live"),
+    cfg("ed_rec_live")
   );
 
   // 사이드바 하단
   onoffer(
     document.querySelector(`[href="https://game.naver.com"]`),
-    cfg("ed_si_game"),
+    cfg("ed_si_game")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/esports"]`),
-    cfg("ed_si_esp"),
+    cfg("ed_si_esp")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/original_series"]`),
-    cfg("ed_si_ori"),
+    cfg("ed_si_ori")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/pcgame"]`),
-    cfg("ed_si_pcg"),
+    cfg("ed_si_pcg")
   );
   onoffer(
     document.querySelector(`[href="https://game.naver.com/lounge/chzzk/home"]`),
-    cfg("ed_si_chr"),
+    cfg("ed_si_chr")
   );
 
   // 사이드바 상단
   onoffer(document.querySelector(`[href="/lives"]`), cfg("ed_su_al"));
-  onoffer(document.querySelector(`[href="/videos"]`), cfg("ed_si_rw"));
+  onoffer(document.querySelector(`[href="/clips"]`), cfg("ed_si_rw"));
   onoffer(document.querySelector(`[href="/category"]`), cfg("ed_si_ct"));
   onoffer(document.querySelector(`[href="/following"]`), cfg("ed_si_fl"));
   onoffer(document.querySelector(`[class*="toolbar_studio"]`), cfg("ed_si_sd"));
 
   onoffer(
     document.querySelector(`[class*="live_chatting_ranking_container"]`),
-    cfg("disable_donate_rank"),
+    cfg("disable_donate_rank")
   );
 
   // onoffer(
@@ -101,11 +101,11 @@ export default function initUI_ED() {
   const minc = Object.keys(matchHKey);
   if (homecont) {
     const sections = homecont.querySelectorAll(
-      `section[class*="component_container"]`,
+      `section[class*="component_container"]`
     );
     for (let i = 0; i < sections.length; i++) {
       const sectionTitleElement = sections[i].querySelector(
-        `strong[class*="component_title"]`,
+        `strong[class*="component_title"]`
       );
       if (!sectionTitleElement) continue;
       const sectionTitle =
