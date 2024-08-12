@@ -197,14 +197,14 @@ const Options = () => {
       };
       const step1 = [
         {
-          label: "네",
+          label: "광고 차단",
           onClick: () => resolve(true),
         },
-        makeNot("아니요"),
+        makeNot("광고차단 하지 않기"),
       ];
       confirmAlert({
-        title: "진짜로 사용하실꺼에요?",
-        message: "스트리머의 소중한 수익원인 광고를 차단합니다.",
+        title: "그.. 개발자 커피좀 사주세요",
+        message: "중딩이 개발자 열심히 일하고 있어요. 하나은행 23494287439737",
         onClickOutside: () => resolve(false),
         onKeypressEscape: () => resolve(false),
         buttons: shuffle(step1),
@@ -216,16 +216,16 @@ const Options = () => {
       ? Promise.resolve(true)
       : new Promise<boolean>((r) =>
           confirmAlert({
-            title: "힌반만 더 생각해주세요",
+            title: "그.. 개발자 커피좀 사주세요",
             message:
-              "그리드가 불편한거 알지만, 그래도 치지직이 망사용료로 트위치처럼 되는건 싫잖아요. 한번만 생각해 주세요.",
+              "중딩이 개발자 열심히 일하고 있어요. 하나은행 23494287439737",
             buttons: [
               {
-                label: "사용",
+                label: "그리드 우회 사용",
                 onClick: () => r(true),
               },
               {
-                label: "취소",
+                label: "그리드 우회 취소",
                 onClick: () => r(false),
               },
             ],
