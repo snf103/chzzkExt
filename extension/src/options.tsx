@@ -203,7 +203,7 @@ const Options = () => {
         makeNot("광고차단 하지 않기"),
       ];
       confirmAlert({
-        title: "그.. 개발자 커피좀 사주세요",
+        title: "그.. 개발자 까까좀 사주세요",
         message: "중딩이 개발자 열심히 일하고 있어요. 하나은행 23494287439737",
         onClickOutside: () => resolve(false),
         onKeypressEscape: () => resolve(false),
@@ -216,7 +216,7 @@ const Options = () => {
       ? Promise.resolve(true)
       : new Promise<boolean>((r) =>
           confirmAlert({
-            title: "그.. 개발자 커피좀 사주세요",
+            title: "그.. 개발자 까까좀 사주세요",
             message:
               "중딩이 개발자 열심히 일하고 있어요. 하나은행 23494287439737",
             buttons: [
