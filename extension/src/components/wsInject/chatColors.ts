@@ -247,7 +247,7 @@ export const colors: {
 };
 
 export const genColor = (name: string) => {
-  var n,
+  let n,
     r = 0;
   for (n in name.split("")) (r = (r << 5) - r + n.charCodeAt(0)), (r |= 0);
   return Object.values(colors)[Math.abs(r) % Object.keys(colors).length];

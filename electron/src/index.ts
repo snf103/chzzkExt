@@ -25,12 +25,12 @@ import Config from "./configInstance";
 import axios from "axios";
 
 export let setLoadingMessage: (message: string) => void = () => {};
-export let configDir: string = join(
+export const configDir: string = join(
   app.getPath("appData"),
-  "kr.poikr.chzkchzzkplus",
+  "kr.poikr.chzkchzzkplus"
 );
-export let cfg: Config = new Config(join(configDir, "config.json"));
-export let storagePath: string = join(configDir, "storage.json");
+export const cfg: Config = new Config(join(configDir, "config.json"));
+export const storagePath: string = join(configDir, "storage.json");
 export let chzzkWindow: BrowserWindow;
 
 import installLatestExtension from "./installLatestExtension";
@@ -58,7 +58,7 @@ const checkElectronUpdate = async () => {
     console.log(app.getVersion(), latestVersion);
     console.log("NEED UPDATE");
     chzzkWindow.webContents.executeJavaScript(
-      fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),
+      fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8")
     );
     needUpdate = true;
   } catch (e) {
@@ -133,14 +133,14 @@ const createWindow = async () => {
 
   chzzkWindow.webContents.send(
     "loading",
-    `치지직 + 치직치지직(${vsr}) 로딩중...`,
+    `치지직 + 치직치지직(${vsr}) 로딩중...`
   );
 
   chzzkWindow.on("enter-full-screen", () =>
-    chzzkWindow.setMenuBarVisibility(false),
+    chzzkWindow.setMenuBarVisibility(false)
   );
   chzzkWindow.on("leave-full-screen", () =>
-    chzzkWindow.setMenuBarVisibility(true),
+    chzzkWindow.setMenuBarVisibility(true)
   );
   chzzkWindow.setMenuBarVisibility(true);
 
@@ -153,7 +153,7 @@ const createWindow = async () => {
     if (ur.endsWith("loading.html")) return;
     if (needUpdate)
       chzzkWindow.webContents.executeJavaScript(
-        fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8"),
+        fs.readFileSync(join(__dirname, "appendScript.js"), "utf-8")
       );
   });
   chzzkWindow.on("close", () => {
