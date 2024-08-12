@@ -6,5 +6,16 @@
     "gecko": {
       "id": "{90af4420-1514-42ca-884c-77a523a79f6c}"
     }
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"],
+      "js": ["js/vendor.js", "js/injecter.js"]
+    },
+    {
+      "matches": ["*://m.naver.com/shorts/*", "*://naver.com/shorts/*"],
+      "js": ["js/vendor.js", "js/shortsInjecter.js"],
+      "all_frames": true
+    }
+  ]
 }

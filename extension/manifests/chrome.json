@@ -2,5 +2,17 @@
   "background": {
     "service_worker": "js/background.js",
     "type": "module"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.chzzk.naver.com/*", "*://chzzk.naver.com/*"],
+      "js": ["js/vendor.js", "js/injecter.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://m.naver.com/shorts/*", "*://naver.com/shorts/*"],
+      "js": ["js/vendor.js", "js/shortsInjecter.js"],
+      "all_frames": true
+    }
+  ]
 }
