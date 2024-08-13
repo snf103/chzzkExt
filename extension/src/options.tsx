@@ -197,14 +197,13 @@ const Options = () => {
       };
       const step1 = [
         {
-          label: "광고 차단",
+          label: "고려는 해볼게요",
           onClick: () => resolve(true),
         },
-        makeNot("광고차단 하지 않기"),
       ];
       confirmAlert({
         title: "그.. 개발자 까까좀 사주세요",
-        message: "중딩이 개발자 열심히 일하고 있어요. 토스뱅크 1000 8000 6970",
+        message: "중딩이 개발자 열심히 일하고 있어요.",
         onClickOutside: () => resolve(false),
         onKeypressEscape: () => resolve(false),
         buttons: shuffle(step1),
@@ -217,16 +216,11 @@ const Options = () => {
       : new Promise<boolean>((r) =>
           confirmAlert({
             title: "그.. 개발자 까까좀 사주세요",
-            message:
-              "중딩이 개발자 열심히 일하고 있어요. 토스뱅크 1000 8000 6970",
+            message: "중딩이 개발자 열심히 일하고 있어요.",
             buttons: [
               {
-                label: "그리드 우회 사용",
+                label: "고려는 해볼게요",
                 onClick: () => r(true),
-              },
-              {
-                label: "그리드 우회 취소",
-                onClick: () => r(false),
               },
             ],
           })
@@ -282,6 +276,12 @@ const Options = () => {
     );
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const openModalX = () => {
+    setShowModal(true);
+  };
+
   if (!show) return <></>;
   return (
     <>
@@ -316,6 +316,9 @@ const Options = () => {
         )}
         <div className="content">
           <Title>공통</Title>
+          <button className="bugreportud" onClick={openModalX}>
+            개발자 까까 사주기
+          </button>
           <ConfigItem ikey="blocktracker" iname="트래커 차단" />
           <Desc>새로고침이 필요합니다</Desc>
 
@@ -447,6 +450,58 @@ const Options = () => {
           </button>
         </div>
       </div>
+      {showModal && (
+        <>
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
+              zIndex: 100,
+            }}
+            onClick={() => setShowModal(false)}
+          ></div>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              padding: "8px",
+              borderRadius: "8px",
+              backgroundColor: "white",
+              boxSizing: "border-box",
+              width: "280px",
+              zIndex: 101,
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "24px",
+                marginBottom: "8px",
+                fontWeight: "bold",
+                marginTop: "0px",
+              }}
+            >
+              개발자 까까 사주기
+            </h2>
+            <div>여기에 들어오신 것만 해도 정말 감사할 따름입니다!</div>
+            <div>
+              <div>계좌 : 토스뱅크 1000 8000 6970</div>
+              <div>
+                Buy Me A Coffee :{" "}
+                <a target="_blank" href="https://buymeacoffee.com/oein0219">
+                  Link
+                </a>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
