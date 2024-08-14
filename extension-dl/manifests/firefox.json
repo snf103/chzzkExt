@@ -4,7 +4,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "{90af4420-1514-42ca-884c-77a523a79f6c}"
+      "id": "{90af4420-1514-42ca-884c-77a523a79f6d}"
     }
   },
   "content_scripts": [
