@@ -1,0 +1,16 @@
+.react-confirm-alert-body {
+  max-width: 90vw;
+  padding: 20px;
+  width: fit-content;
+}
+
+.react-confirm-alert-button-group > button {
+  padding: 6px 8px;
+  margin: 0px;
+}
+
+.react-confirm-alert-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}

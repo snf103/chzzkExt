@@ -1,0 +1,48 @@
+{
+  "name": "chzzk-ext-dl",
+  "version": "1.0.0",
+  "description": "chzzk-ext",
+  "main": "index.js",
+  "scripts": {
+    "watch:chrome": "NODE_ENV=\"development\" webpack --config webpack-chrome/webpack.dev.js --watch",
+    "build:chrome": "NODE_ENV=\"production\" webpack --mode production --config webpack-chrome/webpack.prod.js",
+    "watch:firefox": "NODE_ENV=\"development\" webpack --config webpack-firefox/webpack.dev.js --watch",
+    "build:firefox": "NODE_ENV=\"production\" webpack --mode production --config webpack-firefox/webpack.prod.js",
+    "watch:electron": "NODE_ENV=\"development\" webpack --config webpack-electron/webpack.dev.js --watch",
+    "build:electron": "NODE_ENV=\"production\" webpack --mode production --config webpack-electron/webpack.prod.js",
+    "build:all": "run-p build:chrome build:firefox build:electron"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/poikr/chzzkExt.git"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-confirm-alert": "^3.0.6",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.158",
+    "@types/firefox-webext-browser": "^120.0.3",
+    "@types/react": "^18.0.29",
+    "@types/react-dom": "^18.0.11",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^7.1.2",
+    "esbuild-loader": "^4.2.0",
+    "html-minimizer-webpack-plugin": "^5.0.0",
+    "json-minimizer-webpack-plugin": "^5.0.0",
+    "merge-jsons-webpack-plugin": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "prop-types": "^15.8.1",
+    "raw-loader": "^4.0.2",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "style-loader": "^4.0.0",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.0.4",
+    "webpack": "^5.91.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^4.0.0"
+  }
+}

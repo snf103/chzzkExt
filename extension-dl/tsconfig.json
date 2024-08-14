@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es6",
+    "moduleResolution": "bundler",
+    "module": "ES6",
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "rootDir": "src",
+    "outDir": "dist/js",
+    "noEmitOnError": true,
+    "jsx": "react",
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "@config": ["src/config.ts"],
+      "@log": ["src/log.ts"],
+      "@/*": ["src/*"],
+      "#c/*": ["src/components/*"],
+      "#e/*": ["src/constants/*"],
+      "#u/*": ["src/utils/*"],
+      "#s/*": ["src/static/*"],
+      "@n/*": ["src/user-agent/*"]
+    }
+  }
+}
