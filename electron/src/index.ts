@@ -29,6 +29,7 @@ export const configDir: string = join(
   app.getPath("appData"),
   "kr.poikr.chzkchzzkplus"
 );
+fs.mkdirSync(configDir, { recursive: true });
 export const cfg: Config = new Config(join(configDir, "config.json"));
 export const storagePath: string = join(configDir, "storage.json");
 export let chzzkWindow: BrowserWindow;
