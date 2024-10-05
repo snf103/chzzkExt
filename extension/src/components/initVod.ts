@@ -76,72 +76,8 @@ export default function initVod(enable: boolean) {
         voditem.setAttribute("chzzkExt", "voddl_" + id);
 
         voditem.onclick = async () => {
-          if (downloading) return;
-          downloading = true;
-          document
-            .querySelectorAll(`button[chzzkExt^="voddl_"]`)
-            .forEach((v) => {
-              v.setAttribute("disabled", "true");
-            });
-          const signal = new AbortController();
-          const response = await fetch(v.BaseURL, {
-            signal: signal.signal,
-          });
-          onclis.push(() => signal.abort());
-          if (!response.body) {
-            downloading = false;
-            document
-              .querySelectorAll(`button[chzzkExt^="voddl_"]`)
-              .forEach((v) => {
-                v.removeAttribute("disabled");
-              });
-            return;
-          }
-
-          const reader = response.body.getReader();
-
-          // Step 2: get total length
-          const contentLength = +(
-            response.headers.get("Content-Length") || "0"
-          );
-
-          // Step 3: read the data
-          let receivedLength = 0; // received that many bytes at the moment
-          const chunks = []; // array of received binary chunks (comprises the body)
-          while (true) {
-            const { done, value } = await reader.read();
-
-            if (done) {
-              break;
-            }
-
-            chunks.push(value);
-            receivedLength += value.length;
-
-            log(`Downloader`, `Received ${receivedLength} of ${contentLength}`);
-            voditem.innerText = `${(
-              (receivedLength / contentLength) *
-              100
-            ).toFixed(2)}% 다운로드중`;
-          }
-
-          const blob = new Blob(chunks);
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.download = `vod_${v.quality}p_${v.frameRate}fps.mp4`;
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(url);
-          downloading = false;
-          document
-            .querySelectorAll(`button[chzzkExt^="voddl_"]`)
-            .forEach((v) => {
-              v.removeAttribute("disabled");
-            });
-          a.remove();
-          voditem.innerText = `${v.quality}p ${v.frameRate}fps`;
+          // open url v.BaseURL
+          window.open(v.BaseURL, "_blank");
         };
 
         return voditem;
