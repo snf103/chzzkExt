@@ -47,7 +47,7 @@ export default function applyBypassXML() {
         get: function () {
           if (actual.responseType != "") return actual.response;
           const url = actual.responseURL;
-          if (!url.endsWith("/live-detail")) return actual.response;
+          if (!url.includes("/live-detail")) return actual.response;
           if (
             !url.startsWith("https://api.chzzk.naver.com/service/v3/channels/")
           )
