@@ -187,7 +187,7 @@ const Options = () => {
         <div className="header">
           <div>
             <a
-              href="https://github.com/poikr/chzzkExt"
+              href="https://poi.kr/chzzkgit"
               target="_blank"
               className="headerImageLink"
             >
@@ -196,7 +196,7 @@ const Options = () => {
           </div>
           <div className="rside">
             <a
-              href="https://l.oein.kr/cczk-discord"
+              href="https://poi.kr/chzzkdis"
               target="_blank"
               className="headerImageLink"
             >

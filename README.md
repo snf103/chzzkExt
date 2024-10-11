@@ -18,7 +18,7 @@
 
 # 포함된 기능
 
-자세한 리스트는 [blog.oein.kr/projects-chzkchzzk](https://blog.oein.kr/projects-chzkchzzk#ebc4c070caf041199a430eaba8a7c1a5) 를 참조해 주세요.
+자세한 리스트는 [poi.kr/chzzkblog](https://blog.oein.kr/projects-chzkchzzk#ebc4c070caf041199a430eaba8a7c1a5) 를 참조해 주세요.
 
 - 광고 차단
 - VOD 다운로드
