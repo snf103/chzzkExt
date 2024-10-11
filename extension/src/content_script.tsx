@@ -15,6 +15,19 @@ async function main() {
   if (isElectron) configInstance.syncConfig();
   setupGlobalReciver();
   const apply = () => {
+    try {
+      (() => {
+        const editElem = document.querySelector(
+          `[class*=footer_container] > [class*=footer_cell]:last-child > a:last-child`
+        );
+        if (!editElem) return;
+        if (editElem.childElementCount != 1) return;
+        const elem = editElem.children[0];
+        if (!elem) return;
+        elem.textContent = `치직치지직 (${process.env.VERSION} / ${process.env.BUILDDATE})`;
+        editElem.setAttribute("href", "https://poi.kr/chzzkgit");
+      })();
+    } catch (e) {}
     if (
       isElectron ||
       configInstance.get("bypassNaver", defaultConfig.bypassNaver)

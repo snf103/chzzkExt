@@ -11,6 +11,10 @@ const { EsbuildPlugin } = require("esbuild-loader");
 module.exports = {
   gen: function (distDirX, BUILD_ENV, manifestName) {
     const distDir = path.join(__dirname, "..", distDirX);
+    const date = new Date();
+    const dateStr = `${date.getFullYear()}.${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")}`;
     return {
       entry: {
         options: path.join(srcDir, "options.tsx"),
@@ -66,6 +70,9 @@ module.exports = {
         new EsbuildPlugin({
           define: {
             "process.env.BUILD_ENV": '"' + BUILD_ENV + '"',
+            "process.env.VERSION":
+              '"' + require("../manifests/base.json").version + '"',
+            "process.env.BUILDDATE": '"' + dateStr + '"',
           },
         }),
         new CopyPlugin({
