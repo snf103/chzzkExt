@@ -7,9 +7,7 @@ const initVoteOpenButton = async (enable: boolean) => {
   }
   if (document.getElementById("chzzk-vote-open-button") != null) return;
   const selector = () => {
-    return document.querySelector(
-      "#layout-body > section > aside > div > div:nth-child(3)"
-    );
+    return document.querySelector("[class*=live_chatting_header_menu]");
   };
   const waitForSel = async () => {
     return new Promise<HTMLDivElement>((resolve) => {
