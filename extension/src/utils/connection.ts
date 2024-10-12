@@ -5,7 +5,6 @@ import {
   reqIDspliter,
   globalBroadcastPrefix,
 } from "#e/connectionData";
-import { isElectron } from "./browserInfo";
 export { configMessagePrefix, windowRequestPrefix };
 
 export function request<T = any>(endpoint: string, args: any = {}) {
@@ -15,7 +14,7 @@ export function request<T = any>(endpoint: string, args: any = {}) {
       windowRequestPrefix +
         id +
         reqIDspliter +
-        btoa(JSON.stringify({ endpoint, args }))
+        btoa(encodeURIComponent(JSON.stringify({ endpoint, args })))
     );
 
     const listener = (event: MessageEvent) => {
@@ -27,7 +26,9 @@ export function request<T = any>(endpoint: string, args: any = {}) {
       const data = event.data.substr(windowResponsePrefix.length);
       const recvid = data.substr(0, data.indexOf(reqIDspliter));
       if (recvid != id) return;
-      let strdata = atob(data.substr(data.indexOf(reqIDspliter) + 1));
+      let strdata = decodeURIComponent(
+        atob(data.substr(data.indexOf(reqIDspliter) + 1))
+      );
       if (strdata == undefined || strdata == null || strdata == "undefined")
         strdata = "{}";
       const response = JSON.parse(strdata);
@@ -45,7 +46,7 @@ export function setupGlobalReciver() {
     if (typeof event.data !== "string") return;
     if (event.data.indexOf(globalBroadcastPrefix) != 0) return;
     const data = JSON.parse(
-      atob(event.data.substr(globalBroadcastPrefix.length))
+      decodeURIComponent(atob(event.data.substr(globalBroadcastPrefix.length)))
     );
     if (listeners[data.endpoint])
       listeners[data.endpoint].forEach((l) => l(data.args));

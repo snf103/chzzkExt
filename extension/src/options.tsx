@@ -282,6 +282,38 @@ const Options = () => {
     setShowModal(true);
   };
 
+  const HideCat = () => {
+    const [state, setState] = useState(
+      Object.keys(configInstance.config).includes("hidecat")
+        ? configInstance.config["hidecat"]
+        : ""
+    );
+
+    useEffect(() => {
+      configInstance.addListener("hidecat", (k, v) => {
+        if (k == "hidecat") {
+          setState(v as string);
+        }
+      });
+    });
+
+    return (
+      <div>
+        <div>숨길 카테고리</div>
+        <Desc>숨길 카테고리의 이름을 엔터로 구분하여 입력해 주세요.</Desc>
+        <textarea
+          placeholder="예시: 이 방송 어때요?"
+          value={state.toString()}
+          onChange={(e) => {
+            configInstance.set("hidecat", e.target.value);
+            configInstance.save();
+            setState(e.target.value);
+          }}
+        ></textarea>
+      </div>
+    );
+  };
+
   if (!show) return <></>;
   return (
     <>
@@ -434,13 +466,7 @@ const Options = () => {
           <Desc>
             새로고침이 필요합니다, 사라지는것 뿐이지 재생은 되고있는거에요!
           </Desc>
-          <ConfigItem ikey="ed_hm_fl" iname="'팔로잉 채널 라이브' 숨기기" />
-          <ConfigItem ikey="ed_hm_how" iname="'이 라이브 어때요?' 숨기기" />
-          <ConfigItem ikey="ed_hm_lk" iname="'좋아하실 것 같아요' 숨기기" />
-          <ConfigItem
-            ikey="ed_hm_nw"
-            iname="'신입 스트리머 인사드립니다' 숨기기"
-          />
+          <HideCat />
 
           {/* <SubTitle>방송 화면</SubTitle>
           <ConfigItem ikey="hideck" iname="치트키 팝업 숨기기" /> */}

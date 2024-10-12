@@ -4,7 +4,6 @@ import {
   windowRequestPrefix,
   globalBroadcastPrefix,
 } from "#e/connectionData";
-import log from "@log";
 
 class Router {
   routes: {
@@ -15,12 +14,13 @@ class Router {
   }
   handle<T = any>(
     endpoint: string,
-    handler: (req: any, res: (data: T) => void) => void | Promise<void>,
+    handler: (req: any, res: (data: T) => void) => void | Promise<void>
   ) {
     this.routes[endpoint] = (req: T, id: string) => {
       handler(req, (data: T) => {
+        const strd = encodeURIComponent(JSON.stringify(data));
         window.postMessage(
-          windowResponsePrefix + id + reqIDspliter + btoa(JSON.stringify(data)),
+          windowResponsePrefix + id + reqIDspliter + btoa(strd)
         );
       });
     };
@@ -34,14 +34,15 @@ class Router {
       if (event.data.indexOf(windowRequestPrefix) != 0) return;
       const data = event.data.substr(windowRequestPrefix.length);
       const recvid = data.substr(0, data.indexOf(reqIDspliter));
-      const req = JSON.parse(atob(data.substr(data.indexOf(reqIDspliter) + 1)));
+      const req = JSON.parse(
+        decodeURIComponent(atob(data.substr(data.indexOf(reqIDspliter) + 1)))
+      );
       this.request(req.endpoint, req.args, recvid);
     });
   }
   broadcast<T = any>(endpoint: string, args: T) {
-    window.postMessage(
-      globalBroadcastPrefix + btoa(JSON.stringify({ endpoint, args })),
-    );
+    const strd = encodeURIComponent(JSON.stringify({ endpoint, args }));
+    window.postMessage(globalBroadcastPrefix + btoa(strd));
   }
 }
 

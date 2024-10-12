@@ -92,28 +92,24 @@ export default function initUI_ED() {
 
   // home menu
   const homecont = document.querySelector(`section[class*="home_section"]`);
-  const matchHKey: { [key: string]: string } = {
-    "좋아하실 것 같아요": "ed_hm_lk",
-    "신입 스트리머 인사드립니다!": "ed_hm_nw",
-    "이 라이브 어때요?": "ed_hm_how",
-    "팔로잉 채널 라이브": "ed_hm_fl",
-  };
-  const minc = Object.keys(matchHKey);
+  const hideCat = (configInstance.get("hidecat", "") as string).split("\n");
+  console.log("HIDECAT", hideCat);
   if (homecont) {
     const sections = homecont.querySelectorAll(
-      `section[class*="component_container"]`
+      `section[class*="home_component_container"]`
     );
+    console.log("SECTIONS", sections);
     for (let i = 0; i < sections.length; i++) {
       const sectionTitleElement = sections[i].querySelector(
-        `strong[class*="component_title"]`
+        `strong[class*="home_component_title"]`
       );
       if (!sectionTitleElement) continue;
-      const sectionTitle =
-        sectionTitleElement.textContent || sectionTitleElement.innerHTML;
+      const sectionTitle = (
+        sectionTitleElement.textContent || sectionTitleElement.innerHTML
+      ).trim();
+      console.log("SECTIONTITLE", sectionTitle);
 
-      const hide =
-        minc.includes(sectionTitle) &&
-        configInstance.get(matchHKey[sectionTitle], false);
+      const hide = hideCat.includes(sectionTitle);
 
       onoffer(sections[i] as HTMLDivElement, hide);
     }
