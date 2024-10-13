@@ -22,6 +22,7 @@ export const defaultConfig = {
   clipDownload: false,
   saveVodLoc: true,
   chat_nfo: true,
+  chat_nff: false,
 
   disable_donate_rank: false, //handled in initUI_ed.ts
   refreshSidebar: true,

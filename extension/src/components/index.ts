@@ -53,7 +53,7 @@ export default function apply() {
   iReverseChat(cfg("reversedChat"));
   iautoShowChat(cfg("autoShowChat"));
   iLatencyView(cfg("latencyView"), cfg("showBuffer"));
-  iChatFix(cfg("chat_nfo"));
+  iChatFix(cfg("chat_nfo"), cfg("chat_nff"));
   iRefreshSidebar(cfg("refreshSidebar"));
   iRemoveOfflineChannel(cfg("remove_offline_channel"));
   initStaticLogo(cfg("staticlogo"));

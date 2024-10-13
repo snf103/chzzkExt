@@ -404,6 +404,7 @@ const Options = () => {
           <Spacer />
           <Title>채팅</Title>
           <ConfigItem ikey="chat_nfo" iname="작은 너비에서 아래에 두기" />
+          <ConfigItem ikey="chat_nff" iname="아래에 고정하기" />
           <ConfigItem ikey="hideDonation" iname="후원 채팅 숨기기" />
           {/* handled in initUI_ed.ts */}
           <ConfigItem ikey="disable_donate_rank" iname="후원 순위 숨기기" />
