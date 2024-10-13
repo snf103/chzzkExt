@@ -1,0 +1,9 @@
+section[class*="live_container"] > [class*="live_wrapper"] {
+  flex-direction: row-reverse;
+}
+@media screen and (max-aspect-ratio: 1 / 1) {
+  section[class*="live_container"][class*="live_chatting_is_large"]
+    > [class*="live_wrapper"] {
+    flex-direction: column;
+  }
+}
