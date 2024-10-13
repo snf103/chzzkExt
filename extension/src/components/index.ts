@@ -7,7 +7,7 @@ import iAdSkip from "./initAdSkip";
 import iVoteOpenButton from "./initVoteOpenButton";
 import iAdBlock from "./initAdBlock";
 import iHideDonation from "./initHideDonation";
-import iReverseChat from "./initReverseChat";
+import iReverseChat from "./chat/initReverseChat";
 import iautoShowChat from "./initautoShowChat";
 import iLatencyView from "./initLatencyView";
 import iVod from "./initVod";
