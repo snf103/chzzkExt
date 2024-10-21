@@ -26,7 +26,8 @@ class Router {
     };
   }
   request<T = any>(endpoint: string, args: any, id: string) {
-    this.routes[endpoint] && this.routes[endpoint](args, id);
+    typeof this.routes[endpoint] == "function" &&
+      this.routes[endpoint](args, id);
   }
   setup() {
     window.addEventListener("message", (event) => {
