@@ -6,6 +6,10 @@ enum MessageCommand {
   "HISTORY" = 15101,
   "CHAT" = 93101,
   "DONATION" = 93102,
+  "RESTRICT" = 93006,
+  "CLEANBOT" = 94008,
+  "PING60" = 10000,
+  "PING0" = 0,
 }
 
 class Emitter extends EventTarget {}
@@ -32,7 +36,7 @@ export const applyWSInject = async () => {
       const uq = u.searchParams.get("user");
       if (uq != null) {
         data.bdy.messageList = data.bdy.messageList.filter(
-          (msg: any) => JSON.parse(msg.profile).userIdHash == uq,
+          (msg: any) => JSON.parse(msg.profile).userIdHash == uq
         );
         message.data = JSON.stringify(data);
       }
@@ -40,7 +44,7 @@ export const applyWSInject = async () => {
       const un = u.searchParams.get("name");
       if (un != null) {
         data.bdy.messageList = data.bdy.messageList.filter(
-          (msg: any) => JSON.parse(msg.profile).nickname == un,
+          (msg: any) => JSON.parse(msg.profile).nickname == un
         );
         message.data = JSON.stringify(data);
       }
@@ -53,7 +57,7 @@ export const applyWSInject = async () => {
       const uq = u.searchParams.get("user");
       if (uq != null) {
         data.bdy = data.bdy.filter(
-          (msg: any) => JSON.parse(msg.profile).userIdHash == uq,
+          (msg: any) => JSON.parse(msg.profile).userIdHash == uq
         );
 
         message.data = JSON.stringify(data);
@@ -62,7 +66,7 @@ export const applyWSInject = async () => {
       const un = u.searchParams.get("name");
       if (un != null) {
         data.bdy = data.bdy.filter(
-          (msg: any) => JSON.parse(msg.profile).nickname == un,
+          (msg: any) => JSON.parse(msg.profile).nickname == un
         );
 
         message.data = JSON.stringify(data);
@@ -77,12 +81,20 @@ export const applyWSInject = async () => {
       if (uq != null) {
         data.bdy = data.bdy.filter(
           (msg: any) =>
-            msg.profile != null && JSON.parse(msg.profile).userIdHash == uq,
+            msg.profile != null && JSON.parse(msg.profile).userIdHash == uq
         );
 
         message.data = JSON.stringify(data);
       }
-    } else log("WebSocket", "Unknown message type", data);
+    } else if (data.cmd == MessageCommand.CLEANBOT)
+      log("WebSocket", "Known type but not handled:", data);
+    else if (data.cmd == MessageCommand.PING0)
+      log("WebSocket", "Known type but not handled:", data);
+    else if (data.cmd == MessageCommand.PING60)
+      log("WebSocket", "Known type but not handled:", data);
+    else if (data.cmd == MessageCommand.RESTRICT)
+      log("WebSocket", "Known type but not handled:", data);
+    else log("WebSocket", "Unknown message type", data);
 
     return message;
   };
