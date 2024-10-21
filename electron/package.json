@@ -18,7 +18,7 @@
     "build:wx": "npx @electron/packager . ChzkChzzkPlus --platform=win32 --arch=x64 --icon=./resources/logo512.ico"
   },
   "dependencies": {
-    "axios": "^1.7.2",
+    "axios": "^1.7.7",
     "chrome-tabs": "^5.4.0",
     "draggabilly": "^3.0.0",
     "ev-emitter": "^2.1.2",
@@ -26,5 +26,6 @@
     "jquery": "^3.7.1",
     "unipointer": "^2.4.0",
     "wildcard-match": "^5.1.3"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
