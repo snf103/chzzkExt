@@ -26,7 +26,7 @@ class Router {
     };
   }
   request<T = any>(endpoint: string, args: any, id: string) {
-    this.routes[endpoint](args, id);
+    this.routes[endpoint] && this.routes[endpoint](args, id);
   }
   setup() {
     window.addEventListener("message", (event) => {

@@ -15,18 +15,18 @@ class Router {
   }
   handle<T = any>(
     endpoint: string,
-    handler: (req: any, res: (data: T) => void) => void | Promise<void>,
+    handler: (req: any, res: (data: T) => void) => void | Promise<void>
   ) {
     this.routes[endpoint] = (req: T, id: string) => {
       handler(req, (data: T) => {
         window.postMessage(
-          windowResponsePrefix + id + reqIDspliter + btoa(JSON.stringify(data)),
+          windowResponsePrefix + id + reqIDspliter + btoa(JSON.stringify(data))
         );
       });
     };
   }
   request<T = any>(endpoint: string, args: any, id: string) {
-    this.routes[endpoint](args, id);
+    this.routes[endpoint] && this.routes[endpoint](args, id);
   }
   setup() {
     window.addEventListener("message", (event) => {
@@ -40,7 +40,7 @@ class Router {
   }
   broadcast<T = any>(endpoint: string, args: T) {
     window.postMessage(
-      globalBroadcastPrefix + btoa(JSON.stringify({ endpoint, args })),
+      globalBroadcastPrefix + btoa(JSON.stringify({ endpoint, args }))
     );
   }
 }
