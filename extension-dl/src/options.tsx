@@ -140,7 +140,7 @@ const Options = () => {
           process.env.BUILD_ENV + "(DLONLY)",
         ];
         console.log(data);
-        const jj = btoa(JSON.stringify(data));
+        const jj = btoa(encodeURIComponent(JSON.stringify(data)));
         confirmAlert({
           title: "설치 정보",
           message: (() => {
